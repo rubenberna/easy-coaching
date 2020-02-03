@@ -20,7 +20,7 @@ export default class Admin extends Component {
 
   renderViews = () => {
     const {view, activeTasks, allTasks} = this.state
-    if(view === 'edit') return <AdminPanel coaches={this.props.coaches} activeTasks={activeTasks} allTasks={allTasks}/>
+    if(view === 'edit') return <AdminPanel coaches={this.props.coaches} activeTasks={activeTasks} allTasks={allTasks} getCoaches={this.props.getCoaches}/>
     else return <NewCoachForm getCoaches={this.props.getCoaches}/>
   }
 

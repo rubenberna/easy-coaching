@@ -6,7 +6,11 @@ const sendEmail = require('../sendEmail')
 // Get all coaches
 router.get('/coaches', async (req, res) => {
   const snapshot = await firebase.coaches.get()
-  const records = snapshot.docs.map(doc => doc.data())
+  const records = snapshot.docs.map(doc => {
+    let coach = doc.data()
+    coach.id = doc.id
+    return coach
+  })
   res.status(201).send(records)
 })
 
@@ -108,6 +112,23 @@ router.post('/createNewCoach', async (req, res) => {
   const coach = req.body
   firebase.coaches.add({...coach})
   res.status(201).send(`Coach ${coach.name} saved`)
+})
+
+// Edit Coach
+router.post('/editCoach', async (req, res) => {
+  const coach = req.body
+  const coachRef = firebase.coaches.doc(coach.id)
+  coachRef.update({
+    name: coach.name,
+    email: coach.email,
+    intro: coach.intro,
+    password: coach.password,
+    role: coach.role,
+    started: coach.started,
+    calendarColor: coach.calendarColor,
+    photo: coach.photo,
+  })
+  res.status(201).send(`Coach ${coach.name} updated`)
 })
 
 getSingleCoach = async name => {

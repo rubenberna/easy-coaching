@@ -3,18 +3,22 @@ import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
 import { TextInput, Textarea, Button } from 'react-materialize'
 import { CirclePicker } from 'react-color'
-import { createNewCoach } from '../../modules/dbQueries'
 
-class NewCoach extends Component {
+import { editCoach } from '../../modules/dbQueries'
+
+class EditCoach extends Component {
+
   state = {
-    name: null,
-    email: null,
-    intro: null,
-    password: null,
-    photo: null,
-    role: null,
-    started: null,
+    name: this.props.coach.name,
+    email: this.props.coach.email,
+    intro: this.props.coach.intro,
+    password: this.props.coach.password,
+    img: null,
+    role: this.props.coach.role,
+    started: this.props.coach.started,
     calendarColor: '#fff',
+    id: this.props.coach.id,
+    photo: this.props.coach.photo,
     tooBig: false
   }
 
@@ -32,7 +36,7 @@ class NewCoach extends Component {
   handleFileUpload = (e) => {
     const file = e.target.files[0]
     if (file.size > 1000000 ) this.setState({ tooBig: true })
-    else this.setState({ photo: file })
+    else this.setState({ img: file })
   }
 
   renderFileIsTooBig = () => {
@@ -47,53 +51,54 @@ class NewCoach extends Component {
 
   handleSubmit = async () => {
     const coach = _.omit(this.state, 'tooBig')
-    await createNewCoach(coach)
+    await editCoach(coach)
     await this.props.getCoaches()
     this.props.history.push('/')
   }
 
-  renderSubmitButton = () => {
-    const coach = _.omit(this.state, 'tooBig')
-    let array = Object.values(coach)
-    let incomplete = array.some(value => {return value === null})
-    if (!incomplete && !this.state.tooBig) return (
-      <Button
-        waves="light"
-        style={{marginRight: '5px', background: '#009688', color: '#FFF'}}
-        onClick={ this.handleSubmit }>
-        Create
-      </Button>
-    )
-  }
-
   render() {
-    return (
-      <div className='new-coach-form container'>
-        <h3>New Coach form</h3>
-        <TextInput label="Name" onChange={e => this.handleChange('name', e)}/>
-        <TextInput label="Start date" type='date' onChange={e => this.handleChange('started', e)}/>
-        <Textarea label="Introduction" onChange={e => this.handleChange('intro', e)}/>
-        <TextInput label="Role" onChange={e => this.handleChange('role', e)}/>
+    const { name,
+      email,
+      intro,
+      password,
+      role,
+      started,
+      calendarColor
+    } = this.state
+
+    return(
+      <div className='edit-coach-form'>
+        <h3>Edit Coach form</h3>
+        <TextInput label="Name" value={name} onChange={e => this.handleChange('name', e)}/>
+        <TextInput label="Start date" type='date' value={started} onChange={e => this.handleChange('started', e)}/>
+        <Textarea label="Introduction" value={intro} onChange={e => this.handleChange('intro', e)}/>
+        <TextInput label="Role" value={role} onChange={e => this.handleChange('role', e)}/>
         <TextInput
           email
           label="Email"
+          value={email}
           validate
           onChange={e => this.handleChange('email', e)}
         />
-        <TextInput label="Password" onChange={e => this.handleChange('password', e)}/>
+        <TextInput label="Password" value={password} onChange={e => this.handleChange('password', e)}/>
         <label>Select calendar color</label>
-        <CirclePicker color={this.state.calendarColor} onChangeComplete={this.handleChangeColor}/>
+        <CirclePicker color={this.state.calendarColor} value={calendarColor} onChangeComplete={this.handleChangeColor}/>
         <input type="file" id="file-uploader" aria-label="File browser example" onChange={e => this.handleFileUpload(e) }/>
         <label htmlFor="file-uploader">Upload photo</label>
         { this.state.photo && <span>{this.state.photo.name}</span> }
         { this.renderClearFileBtn() }
         { this.renderFileIsTooBig() }
         <div>
-          { this.renderSubmitButton() }
+          <Button
+            waves="light"
+            style={{marginRight: '5px', background: '#009688', color: '#FFF'}}
+            onClick={ this.handleSubmit }>
+            Update
+          </Button>
         </div>
       </div>
     )
   }
 }
 
-export default withRouter(NewCoach)
+export default withRouter(EditCoach);

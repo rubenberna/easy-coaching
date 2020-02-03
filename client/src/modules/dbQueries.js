@@ -72,6 +72,17 @@ export const createNewCoach = async (coach) => {
   return res.data
 }
 
+export const editCoach = async (coach) => {
+  console.log(coach);
+  if (coach.img) {
+    coach.photo = await uploadPhoto(coach.img)
+  }
+  let res = await axios.post('/api/firebase/editCoach', coach )
+  return res.data
+}
+
+
+
 const uploadPhoto = async photo => {
   const storageRef = firebase.storage().ref('photos');
   const imageRef = storageRef.child(photo.name)

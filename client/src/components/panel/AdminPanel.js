@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom'
 import { Collapsible, CollapsibleItem, Icon } from 'react-materialize'
 
 import Chart from '../charts/PieChart'
+import EditCoach from '../forms/EditCoach'
 
-export default class EditProfileContainer extends Component {
+class AdminPanel extends Component {
+
+  state = {
+    editProfile: false,
+    currCoach: null
+  }
 
   renderNotStarted = coach => {
     const { activeTasks } = this.props
@@ -29,8 +36,13 @@ export default class EditProfileContainer extends Component {
     return count.length
   }
 
+  toggleEditProfile = (coach) => {
+    this.setState({ editProfile: !this.state.editProfile, currCoach: coach })
+  }
+
   renderAccordion = () => {
     const { coaches } = this.props
+    const { editProfile } = this.state
     return coaches.map((coach, i) => {
       return (
         <CollapsibleItem
@@ -46,11 +58,25 @@ export default class EditProfileContainer extends Component {
             <p><span>Planned:</span><span></span> {this.renderPlanned(coach)}</p>
             <p><span>Feedback call:</span><span> {this.renderFeedbackCall(coach)}</span></p>
             <p><span>Completed:</span><span> {this.renderCompleted(coach)}</span></p>
-            <span className='admin-stats-body-edit'>feedback</span>
+            <span className='admin-stats-body-edit' onClick={ e => this.toggleEditProfile(coach) }>{ !editProfile ? 'Edit profile' : 'Close edit'}</span>
           </div>
         </CollapsibleItem>
       )
     })
+  }
+
+  conditionalRender = () => {
+    const { editProfile, currCoach } = this.state
+    if (editProfile) {
+      return <EditCoach coach={currCoach} getCoaches={this.props.getCoaches}/>
+    } else {
+      return (
+        <>
+        <h3>General view</h3>
+          <Chart tasks={this.props.allTasks}/>
+        </>
+      )
+    }
   }
 
   render () {
@@ -63,10 +89,11 @@ export default class EditProfileContainer extends Component {
           </Collapsible>
         </div>
         <div className='admin-panel-general'>
-          <h3>General view</h3>
-          <Chart tasks={this.props.allTasks}/>
+          { this.conditionalRender() }
         </div>
       </div>
     )
   }
 }
+
+export default withRouter(AdminPanel)
