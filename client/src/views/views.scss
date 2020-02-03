@@ -57,10 +57,13 @@ h6, p {
 }
 
 // Developer profile page
-.developer-profile {
+.coach-profile {
   display: flex;
   align-items: center;
   margin-top: 90px;
+  @media #{$medium-and-down}  {
+    margin-top: 43px;
+  }
 }
 
 .task-view {

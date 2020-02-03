@@ -29,7 +29,7 @@ class CoachProfile extends Component {
 
   render() {
     return(
-      <div className='developer-profile container'>
+      <div className='coach-profile container'>
         <ProfileCard profile={ this.state.profile } taskList={this.state.tasks}/>
       </div>
     )
