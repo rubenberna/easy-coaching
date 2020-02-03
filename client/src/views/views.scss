@@ -23,7 +23,7 @@ h6, p {
 .home {
   display: flex;
   justify-content: space-between;
-  margin: 35px 90px;
+  margin: 35px 120px;
   @media #{$medium-and-down}  {
     flex-direction: column-reverse;
     align-items: center;
