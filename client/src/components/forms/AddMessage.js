@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Textarea, TextInput, Icon, Toast } from 'react-materialize'
+import { Button, Textarea, TextInput, Icon } from 'react-materialize'
 
 class AddMessage extends Component {
 

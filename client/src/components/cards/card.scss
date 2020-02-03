@@ -1,3 +1,6 @@
+$medium-screen: 992px !default;
+$medium-and-down: "only screen and (max-width : #{$medium-screen})" !default;
+
 .img-frame {
   cursor: pointer;
   position: relative;
@@ -12,6 +15,10 @@
     object-fit: cover;
     border-radius: 50%;
     height: 167px;
+    @media #{$medium-and-down}  {
+      width: 88px;
+      height: 88px;
+    }
   }
 
   .img-frame-name {

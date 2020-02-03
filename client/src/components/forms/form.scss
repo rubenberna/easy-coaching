@@ -1,3 +1,5 @@
+$medium-screen: 992px !default;
+$medium-and-down: "only screen and (max-width : #{$medium-screen})" !default;
 
 // New task form
 .task-form {
@@ -8,6 +10,13 @@
   max-width: 655px;
   margin-top: 50px;
 
+  @media #{$medium-and-down}  {
+    width: 285px;
+    min-width: 0;
+    margin-top: 20px
+    // margin: 20 0 auto;
+  }
+
   textarea {
     font-weight: 200;
   }
@@ -15,6 +24,9 @@
   .task-form-date {
     display: flex;
     justify-content: space-between;
+    @media #{$medium-and-down}  {
+      flex-direction: column;
+    }
   }
   .MuiInputBase-root {
     width: 170px;

@@ -54,8 +54,6 @@ class TaskView extends Component {
   render() {
     const { task } = this.props.location.state
     const { userLoggedIn } = this.props
-    console.log('task: ', task);
-    console.log( 'user: ', userLoggedIn);
 
     return(
       <>

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 
-import './galery.scss'
 import ImageCard from '../cards/ImageCard'
 import Loader from '../loader/Loader'
 

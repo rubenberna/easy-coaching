@@ -1,4 +1,6 @@
 @import "./calendar.scss";
+$medium-screen: 992px !default;
+$medium-and-down: "only screen and (max-width : #{$medium-screen})" !default;
 
 a {
   text-decoration: none !important;
@@ -19,11 +21,35 @@ h6, p {
 
 // Homepage
 .home {
-  // min-height: 90vh;
-  display: grid;
-  grid-column-gap: 20px;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  justify-content: space-between;
   margin: 35px 90px;
+  @media #{$medium-and-down}  {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+}
+
+// Home-galery
+.gallery {
+
+  display: flex;
+  width: 40%;
+  justify-content: center;
+  flex-direction: column;
+  h4 {
+    margin-left: 40px;
+  }
+
+  @media #{$medium-and-down}  {
+    width: 260px;
+    margin-top: 30px;
+  }
+
+  .gallery-images {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 // OngoingProjects page
