@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap');
+
+nav {
+  .nav-wrapper {
+    background: #fafafa;
+    a {
+      color: #00796b;
+    }
+    .brand-logo {
+      font-family: 'Shadows Into Light', cursive;
+    }
+    .logo {
+      width: 54px;
+      margin: 0 20px;
+    }
+    .brand-logo {
+      display: flex;
+    }
+  }
+
+  .navbar-photo {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 64px;
+    img {
+      height: 30px;
+      width: 30px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  }
+}

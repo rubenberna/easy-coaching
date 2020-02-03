@@ -1,0 +1,69 @@
+.img-frame {
+  cursor: pointer;
+  position: relative;
+  padding: 3px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  img {
+    width: 170px;
+    object-fit: cover;
+    border-radius: 50%;
+    height: 167px;
+  }
+
+  .img-frame-name {
+    position: absolute;
+    margin: 0 auto;
+    bottom: 5%;
+    color: black;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  .profile-card-frame {
+    display: flex;
+
+  }
+
+  .details-card {
+    margin-left: 15px;
+    background: #FBFFFE;
+    min-height: 400px;
+    width: 645px;
+    padding: 30px;
+    filter: drop-shadow(2px 4px 6px black);
+    .details-card-spec {
+      color: #ef6c00;
+    }
+    ul {
+    -webkit-column-count: 3;
+    -moz-column-count: 3;
+    column-count: 3;
+    }
+  }
+}
+
+.flashy {
+  img {
+    filter: grayscale(1);
+    transition: all 1s;
+    &:hover {
+      filter: grayscale(0);
+    }
+  }
+}
+
+.bigger {
+  img {
+    margin-top: -2px;
+    height: 398px;
+    width: 316px;
+  }
+}

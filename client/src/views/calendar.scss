@@ -1,0 +1,32 @@
+@import '~@fullcalendar/core/main.css';
+@import '~@fullcalendar/daygrid/main.css';
+@import '~@fullcalendar/timegrid/main.css';
+
+.calendar {
+  margin-top: 50px;
+  .calendar-app {
+    margin: 0 auto;
+    max-width: 900px;
+    .fc-time-grid .fc-slats td {
+      height: 2.2em
+    }
+  }
+  .fc-time-grid .fc-content-skeleton {
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+  }
+}
+
+.fade.modal.show {
+  background: transparent !important;
+  height: 100vh !important;
+  max-height: 100vh !important;
+}
+
+.modal-footer {
+  height: 80px !important;
+}
