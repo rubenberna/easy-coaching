@@ -14,19 +14,20 @@ const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
-
 const initialState = {
   status: '',
-  assignee: ''
+  assignee: '',
+  hideCompleted: true
 }
 
 class TableTasks extends Component {
+
   state = initialState
 
   renderTable = () => {
-    const { list, coaches } = this.props;
-    const { assignee, status } = this.state
-    if (list.length < 1) return <Loader/>
+    const { coaches, list } = this.props;
+    const { assignee, status, hideCompleted } = this.state
+    if (!list) return <Loader/>
     else {
       return(
         <div className='table-board'>
@@ -45,6 +46,7 @@ class TableTasks extends Component {
             <h6>FILTERS</h6>
             <FilterStatus setFilter={this.setFilter} status={status}/>
             <FilterAssigneeDropdown setFilter={this.setFilter} assignee={assignee} coaches={coaches}/>
+            <Button className='table-hide-completed'  flat onClick={e => this.setState({ hideCompleted: !this.state.hideCompleted })}>{ hideCompleted ? 'Show completed' : 'Hide completed'}</Button>
             <Button className='table-clear-filter' onClick={e => this.clearFilters()}>Clear</Button>
             { this.renderExcel() }
           </div>
@@ -56,7 +58,7 @@ class TableTasks extends Component {
   renderExcel = () => {
     const { list } = this.props
     return (
-      <ExcelFile element={<Button className='excel-btn'>Export</Button>} filename='TaskList'>
+      <ExcelFile element={<Button className='excel-btn'>Export to excel</Button>} filename='TaskList'>
         <ExcelSheet data={list} name="TaskList">
           <ExcelColumn label="Title" value="title" />
           <ExcelColumn label="Reason" value="type" />
@@ -98,12 +100,14 @@ class TableTasks extends Component {
 
   renderTaskBody = () => {
     let taskList = []
-    const { list } = this.props;
-    const { status, assignee } = this.state
+    const { list } = this.props
+    const { status, assignee, hideCompleted } = this.state
 
    if (status && assignee) taskList = list.filter(task => task.status === status && task.assignee === assignee)
    else if (status && !assignee) taskList = list.filter(task => task.status === status)
    else if (!status && assignee) taskList = list.filter(task => task.assignee === assignee)
+   else if (hideCompleted) taskList = list.filter(task => task.status !== 'completed')
+   else if (!hideCompleted) taskList = list.filter(task => task.status === 'completed')
    else taskList = list
 
     return taskList.map((task, index) => {

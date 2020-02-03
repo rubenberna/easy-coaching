@@ -52,9 +52,11 @@ table {
   display: flex;
   flex-direction: column;
   width: 20%;
-  height: 170px;
+  height: 407px;
   justify-content: space-between;
-  padding: 16px;
+  padding: 19px;
+  border: 0.5px solid #e0e0e0;
+  border-radius: 5px;
 
   .table-clear-filter {
     background: #bdbdbd !important;
