@@ -2,8 +2,14 @@
 @import '~@fullcalendar/daygrid/main.css';
 @import '~@fullcalendar/timegrid/main.css';
 
+$medium-screen: 992px !default;
+$medium-and-down: "only screen and (max-width : #{$medium-screen})" !default;
+
 .calendar {
   margin-top: 50px;
+  @media #{$medium-and-down}  {
+    margin: 50px 10px;
+  }
   .calendar-app {
     margin: 0 auto;
     max-width: 900px;
@@ -18,6 +24,13 @@
     left: 0;
     right: 0;
     height: 100%;
+  }
+  .fc-toolbar.fc-header-toolbar {
+    @media #{$medium-and-down}  {
+      display: flex;
+      flex-direction: column;
+      height: 153px;
+    }
   }
 }
 
