@@ -163,8 +163,17 @@ h6, p {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media #{$medium-and-down}  {
+    flex-direction: column;
+    align-items: center;
+  }
 
   .admin-panel-coaches {
+    @media #{$medium-and-down}  {
+      flex-direction: column-reverse;
+      align-items: center;
+      margin-bottom: 20px;
+    }
     h3 {
       margin-bottom: 15px;
     }
@@ -176,6 +185,10 @@ h6, p {
     align-items: center;
     height: 500px;
     justify-content: space-between;
+    @media #{$medium-and-down}  {
+      width: 200px;
+      height: 393px;
+    }
   }
 }
 

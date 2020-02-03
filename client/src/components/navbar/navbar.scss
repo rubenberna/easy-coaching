@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap');
+$medium-screen: 992px !default;
+$medium-and-down: "only screen and (max-width : #{$medium-screen})" !default;
 
 nav {
   .nav-wrapper {
@@ -28,6 +30,10 @@ nav {
       width: 30px;
       object-fit: cover;
       border-radius: 50%;
+      // @media #{$medium-and-down}  {
+      //   width: 30px;
+      //   border-radius: 50%;
+      // }
     }
   }
 }
