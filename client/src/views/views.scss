@@ -109,6 +109,11 @@ h6, p {
       background-color: #01579b;
     }
   }
+  @media #{$medium-and-down}  {
+    min-height: 0;
+    width: 362px;
+    margin-bottom: 10px;
+  }
 }
 
 // Login page

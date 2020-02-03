@@ -30,10 +30,14 @@ nav {
       width: 30px;
       object-fit: cover;
       border-radius: 50%;
-      // @media #{$medium-and-down}  {
-      //   width: 30px;
-      //   border-radius: 50%;
-      // }
     }
+  }
+}
+
+#mobile-nav {
+  img {
+    margin-top: 10px;
+    width: 40px;
+    border-radius: 50%;
   }
 }
