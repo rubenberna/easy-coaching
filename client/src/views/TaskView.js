@@ -19,7 +19,6 @@ class TaskView extends Component {
   }
 
   changeStatus = async (task) => {
-    console.log('task: ', task);
     let res = await changeTaskStatus(task)
     if (res === 'success') this.props.history.push('/ongoing')
   }
@@ -55,6 +54,8 @@ class TaskView extends Component {
   render() {
     const { task } = this.props.location.state
     const { userLoggedIn } = this.props
+    console.log('task: ', task);
+    console.log( 'user: ', userLoggedIn);
 
     return(
       <>
@@ -70,8 +71,9 @@ class TaskView extends Component {
             </Tab>
             <Tab title="Message">
               <AddMessage
-                sendTo={ userLoggedIn ? task.requester : `${task.dev}@redcarrots.be`} sendMessage={ this.sendMessage }
-                from={ userLoggedIn ? `${task.dev}@redcarrots.be` : task.requester }
+                from={ userLoggedIn ? userLoggedIn.email : 'coaching@easylifedc.be' }
+                sendTo={ !userLoggedIn ? task.assigneeEmail : (userLoggedIn.email === 'Sara.troisfontaine@easylifedc.be' ? task.assigneeEmail : 'Sara.troisfontaine@easylifedc.be')}
+                sendMessage={ this.sendMessage }
                 task={ task }
                 fetchLogs={this.fetchLogs}
               />

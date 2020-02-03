@@ -40,32 +40,35 @@ class AddMessage extends Component {
   }
 
   render() {
+    const { disabled, inputKey, msg, tooBig } = this.state
 
     return(
       <form
         className='add-message'
-        disabled={ this.state.disabled }
+        disabled={ disabled }
         onSubmit={ this.handleSubmit }>
       <div>
-        Reply to:
-        <p><strong>{this.props.sendTo}</strong></p>
+        From:
+        <p>{this.props.from}</p>
+        To:
+        <p>{this.props.sendTo}</p>
         <div className='add-message-text'>
           <Icon>mode_edit</Icon>
           <Textarea
             onChange={e => this.setState({ msg: e.target.value })}
-            disabled={ this.state.disabled }
+            disabled={ disabled }
           />
         </div>
       </div>
         <div className='add-message-send'>
           <div className='add-message-send-with-error'>
             <div className='add-message-send-file'>
-              <TextInput type='file' key={ this.state.inputKey } onChange={e => this.handleFileUpload(e) } />
+              <TextInput type='file' key={ inputKey } onChange={e => this.handleFileUpload(e) } />
               { this.renderClearFileBtn() }
             </div>
             { this.renderFileIsTooBig() }
           </div>
-          { this.state.msg && !this.state.tooBig && <Toast options={{ html: 'Message sent!', classes: 'rounded'}}>Send</Toast>}
+          { msg && !tooBig && <Button>Send</Button>}
         </div>
       </form>
     )

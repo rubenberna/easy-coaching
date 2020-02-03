@@ -74,7 +74,7 @@ router.post('/changeTaskStatus', async (req, res) => {
   const [ recordId ] = snapshot.docs.map(doc => doc.id)
   let taskRef = firebase.tasks.doc(recordId)
   taskRef.update({ status: task.status })
-  sendEmail.taskFinished(task)
+  sendEmail.taskChanged(task)
   res.status(201).send('success')
 })
 

@@ -13,14 +13,13 @@ class TableCompleted extends Component {
     const { tasks } = this.props
     if(tasks.length) {
       tasksCompleted = tasks.filter(task => {
-        return task.status === 'complete'
+        return task.status === 'completed'
       })
       if (tasksCompleted.length) return (
         <Table className='highlight'>
           <thead>
             <tr>
               <th data-field="title">Title</th>
-              <th data-field="requester">By who</th>
               <th data-field="date">Requested</th>
               <th data-field="status">Status</th>
             </tr>
@@ -39,9 +38,6 @@ class TableCompleted extends Component {
           <tr>
             <td>
               { task.title }
-            </td>
-            <td>
-                { task.requester }
             </td>
             <td>
               { moment(task.reqDate).format("MMM Do")  || '' }

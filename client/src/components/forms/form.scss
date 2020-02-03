@@ -68,6 +68,7 @@
     display: flex;
     width: 90%;
     justify-content: space-between;
+    align-items: center;
     .add-message-send-file {
       display: flex;
       align-items: center;
@@ -92,7 +93,7 @@
     }
   }
   button {
-    margin-top: -34px;
+    // margin-top: -34px;
     background: transparent;
     color: gray;
     &:focus {
