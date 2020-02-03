@@ -73,7 +73,6 @@ export const createNewCoach = async (coach) => {
 }
 
 export const editCoach = async (coach) => {
-  console.log(coach);
   if (coach.img) {
     coach.photo = await uploadPhoto(coach.img)
   }
