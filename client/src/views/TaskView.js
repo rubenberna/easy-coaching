@@ -27,11 +27,13 @@ class TaskView extends Component {
     if (coach) this.props.history.push(`/profile/${coach}`)
   }
 
-  assignTask = async (coach) => {
+  assignTask = async (coachName) => {
     const { task } = this.props.location.state
+    const coach = this.props.coaches.find(coach => coach.name === coachName)
     const taskObj = {
       task,
-      assignee: coach
+      assignee: coach.name,
+      assigneeEmail: coach.email
     }
     await assignTask(taskObj)
     this.props.history.push('/ongoing')
