@@ -46,9 +46,9 @@ export const changeTaskStatus = async (task) => {
   return res.data
 }
 
-export const assignTask = async (taskObj) => {
+export const assignTask = async (task) => {
   let res = await axios.post('/api/firebase/assignTask', {
-    taskObj
+    task
   })
   return res.data
 }

@@ -30,12 +30,10 @@ class TaskView extends Component {
   assignTask = async (coachName) => {
     const { task } = this.props.location.state
     const coach = this.props.coaches.find(coach => coach.name === coachName)
-    const taskObj = {
-      task,
-      assignee: coach.name,
-      assigneeEmail: coach.email
-    }
-    await assignTask(taskObj)
+    console.log(coach);
+    task.assignee = coach.name
+    task.assigneeEmail = coach.email
+    await assignTask(task)
     this.props.history.push('/ongoing')
   }
 
@@ -56,6 +54,8 @@ class TaskView extends Component {
   render() {
     const { task } = this.props.location.state
     const { userLoggedIn } = this.props
+    console.log('task: ', task);
+    console.log('user: ', userLoggedIn);
 
     return(
       <>
@@ -72,7 +72,7 @@ class TaskView extends Component {
             <Tab title="Message">
               <AddMessage
                 from={ userLoggedIn ? userLoggedIn.email : 'coaching@easylifedc.be' }
-                sendTo={ !userLoggedIn ? task.assigneeEmail : (userLoggedIn.email === 'Sara.troisfontaine@easylifedc.be' ? task.assigneeEmail : 'Sara.troisfontaine@easylifedc.be')}
+                sendTo={ !userLoggedIn ? task.assigneeEmail : (userLoggedIn.email.toLowerCase() === 'Sara.troisfontaine@easylifedc.be'.toLowerCase() ? task.assigneeEmail : 'Sara.troisfontaine@easylifedc.be')}
                 sendMessage={ this.sendMessage }
                 task={ task }
                 fetchLogs={this.fetchLogs}

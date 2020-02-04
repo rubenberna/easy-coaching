@@ -20,18 +20,18 @@ const taskCreated = (task) => {
   triggerEmail(message)
 }
 
-const taskAssigned = (taskObj) => {
+const taskAssigned = (task) => {
   const message = {
     from: '"Coaching team" <coaching@easylifedc.be>',
-    to: `<${taskObj.assigneeEmail}>`,
+    to: `<${task.assigneeEmail}>`,
     subject: 'Task assigned',
     html: `<p>Hi,</p>
-      <p>This task has been assigned to: ${taskObj.assignee}</p>
-      <p><span><b>Title:</b></span> ${taskObj.task.title}</p>
-      <p><span><b>Description:</b></span> ${taskObj.task.description}</p>
-      <p><span><b>Type:</b></span> ${taskObj.task.type}</p>
-      <p><span><b>Start:</b></span> ${moment(taskObj.task.start).format('MMMM Do YYYY, h:mm a')}</p>
-      <p><span><b>End:</b></span> ${moment(taskObj.task.end).format('MMMM Do YYYY, h:mm a')}</p>
+      <p>This task has been assigned to: ${task.assignee}</p>
+      <p><span><b>Title:</b></span> ${task.title}</p>
+      <p><span><b>Description:</b></span> ${task.description}</p>
+      <p><span><b>Type:</b></span> ${task.type}</p>
+      <p><span><b>Start:</b></span> ${moment(task.start).format('MMMM Do YYYY, h:mm a')}</p>
+      <p><span><b>End:</b></span> ${moment(task.end).format('MMMM Do YYYY, h:mm a')}</p>
       <p>Thanks!</p>
       <p>Coaching team</p>
     `
