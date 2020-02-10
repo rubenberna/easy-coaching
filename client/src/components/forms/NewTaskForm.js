@@ -10,6 +10,7 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker
 } from '@material-ui/pickers'
+import ClientSearch from '../inputs/ClientSearch'
 
 import './form.scss'
 
@@ -117,11 +118,12 @@ class NewTaskForm extends Component {
       <div className='task-form'>
         <h4>New task</h4>
         <TextInput  label='Title' onChange={e => this.handleChange('title', e)}/>
-        <Textarea label='Description'onChange={e => this.handleChange('description', e)} />
+        <Textarea label='Extra info'onChange={e => this.handleChange('description', e)} />
         <TaskDropdown setSelection={ this.handleSelectType }/>
         <AssigneeDropdown
           coaches={this.props.coaches}
           setSelection={this.handleSelectType}/>
+        <ClientSearch />
         <div className='task-form-date'>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
