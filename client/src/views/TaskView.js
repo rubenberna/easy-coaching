@@ -7,6 +7,7 @@ import { changeTaskStatus, assignTask, fetchLogs } from '../modules/dbQueries'
 import { sendMsg } from '../modules/sendMsg'
 import TaskCard from '../components/cards/TaskCard'
 import Logs from '../components/tables/Logs'
+import ContactsCard from '../components/cards/ContactsCard'
 
 class TaskView extends Component {
   state = {
@@ -54,8 +55,6 @@ class TaskView extends Component {
   render() {
     const { task } = this.props.location.state
     const { userLoggedIn } = this.props
-    console.log('task: ', task);
-    console.log('user: ', userLoggedIn);
 
     return(
       <>
@@ -68,6 +67,9 @@ class TaskView extends Component {
                 userLoggedIn={userLoggedIn}
                 changeStatus={this.changeStatus}
               />
+            </Tab>
+            <Tab title="Contacts">
+              <ContactsCard task={task}/>
             </Tab>
             <Tab title="Message">
               <AddMessage

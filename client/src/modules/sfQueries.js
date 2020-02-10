@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const getClient = async id => {
-  const client = await axios.post('/api/querySF/get_client', {id})
+export const getUser = async id => {
+  const client = await axios.post('/api/querySF/get_user', {id})
   return client.data
 }

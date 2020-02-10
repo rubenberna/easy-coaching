@@ -1,16 +1,18 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
-import { addTask } from '../../modules/dbQueries'
 import { TextInput, Textarea, Toast, Button } from 'react-materialize'
-import TaskDropdown from '../dropdowns/TaskDropdown'
-import AssigneeDropdown from '../dropdowns/AssigneeDropdown'
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
   KeyboardDatePicker
 } from '@material-ui/pickers'
+import _ from 'lodash'
+import { addTask } from '../../modules/dbQueries'
+import TaskDropdown from '../dropdowns/TaskDropdown'
+import AssigneeDropdown from '../dropdowns/AssigneeDropdown'
 import ClientSearch from '../inputs/ClientSearch'
+import HKSearch from '../inputs/HKSearch'
 
 import './form.scss'
 
@@ -23,6 +25,10 @@ class NewTaskForm extends Component {
     date: null,
     start: null,
     end: null,
+    client: null,
+    houseKeeper: null,
+    status: 'not started',
+    reqDate: new Date(),
     ready: false,
     redirect: false
   }
@@ -58,25 +64,20 @@ class NewTaskForm extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault()
-    const { title, assignee, description, type, start, end } = this.state
-    const coach = this.props.coaches.find(coach => coach.name === assignee)
+    const task = _.omit(this.state, ['redirect', 'ready', 'date'])
+    const coach = this.props.coaches.find(coach => coach.name === this.state.assignee)
+    task.coach = coach
 
-    const task = {
-      title,
-      assignee,
-      description,
-      type,
-      start,
-      end,
-      backgroundColor: coach.color,
-      complete: false,
-      status: 'not started',
-      reqDate: new Date()
-    }
     const res = await addTask(task)
     console.log(res);
     await this.props.getTasks()
     this.setState({ ready: true  })
+  }
+
+  setUser = (type, data) => {
+    let obj = {}
+    obj[type] = data
+    this.setState({ ...obj })
   }
 
   renderButton = () => {
@@ -123,7 +124,8 @@ class NewTaskForm extends Component {
         <AssigneeDropdown
           coaches={this.props.coaches}
           setSelection={this.handleSelectType}/>
-        <ClientSearch />
+        <ClientSearch setUser={this.setUser}/>
+        <HKSearch setUser={this.setUser}/>
         <div className='task-form-date'>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker

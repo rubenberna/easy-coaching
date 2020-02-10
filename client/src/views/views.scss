@@ -90,7 +90,7 @@ input[type=number] {
   justify-content: flex-start;
   position: relative;
   li.tab.col {
-    width: 33.3%;
+    width: 25%;
   }
   .row {
     margin-top: 30px;
@@ -100,10 +100,11 @@ input[type=number] {
     min-height: 320px;
     padding: 20px;
   }
-  .task-details {
-    .task-spec {
-      font-weight: 600;
-    }
+  .task-spec {
+    font-weight: 600;
+  }
+  a {
+    font-weight: 300;
   }
 
   .tabs {

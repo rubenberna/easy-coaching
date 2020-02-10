@@ -14,7 +14,7 @@ const StyledDetails = styled.div`
   margin-top: 10px;
   margin-bottom: 17px;
   padding: 17px;
-  background: #a5d6a7;
+  background: #e3f2fd ;
   position: relative;
   border-radius: 15px;
 `
@@ -23,43 +23,42 @@ const StyledClose = styled.span`
   position: absolute;
   top: 8px;
   right: 14px;
-  color: #2e7d32;
+  color: #1e88e5;
   cursor: pointer;
   transition: 0.3s all;
   &:hover {
-    color: #1b5e20;
+    color: #1976d2;
   }
 }
 `
 
-const ClientSearch = ({setUser}) => {
-  const [client, setClient] = useState('')
-  const [clientID, setClientID] = useState('')
+const HKSearch = ({setUser}) => {
+  const [hk, setHk] = useState('')
+  const [hkID, setHkID] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  useEffect(() => setUser('client', client), [client, setUser])
+  useEffect(() => setUser('houseKeeper', hk), [hk, setUser])
 
-  const searchClient = async () => {
+  const searchHk = async () => {
     setLoading(true)
-    const res = await getUser(clientID)
+    const res = await getUser(hkID)
     if (typeof res === 'string') setError(res)
-    if (typeof res === 'object') setClient(res)
+    if (typeof res === 'object') setHk(res)
     setLoading(false)
   }
 
   const renderInput = () => {
-    if(!client && !error) {
+    if(!hk && !error) {
       return (
         <StyledInput>
           <TextInput
             icon={<Icon>account_circle</Icon>}
-            label="Client id"
-            type="number"
-            onChange={e => setClientID(e.target.value)}
+            label="HouseKeeper id"
+            onChange={e => setHkID(e.target.value)}
           />
           <Preloader active={loading} size='small' color='yellow'/>
-          <Button onClick={searchClient}>Go</Button>
+          <Button onClick={searchHk}>Go</Button>
         </StyledInput>
       )
     } else if (error) {
@@ -67,13 +66,13 @@ const ClientSearch = ({setUser}) => {
     } else {
       return (
         <>
-          <h5>Client details:</h5>
+          <h5>HouseKeeper details:</h5>
           <StyledDetails>
-            <p>Client Name: {client.Name}</p>
-            <p>Email: <a href={`mailto:${client.Email}`} target="_blank" rel="noopener noreferrer">{client.Email}</a></p>
-            <p>Phone: <a href={`tel: ${client.Phone}`}>{client.Phone}</a></p>
-            <p>Address: <a href={`https://maps.google.com/?q=${client.MailingAddress.street}, ${client.MailingAddress.city}`} target="_blank" rel="noopener noreferrer">{client.MailingAddress.street}, {client.MailingAddress.city}</a></p>
-            <StyledClose onClick={e => setClient('')}>x</StyledClose>
+            <p>Hk Name: {hk.Name}</p>
+            <p>Email: <a href={`mailto:${hk.Email}`} target="_blank" rel="noopener noreferrer">{hk.Email}</a></p>
+            <p>Phone: <a href={`tel: ${hk.Phone}`}>{hk.Phone}</a></p>
+            <p>Address: <a href={`https://maps.google.com/?q=${hk.MailingAddress.street}, ${hk.MailingAddress.city}`} target="_blank" rel="noopener noreferrer">{hk.MailingAddress.street}, {hk.MailingAddress.city}</a></p>
+            <StyledClose onClick={e => setHk('')}>x</StyledClose>
           </StyledDetails>
         </>
       )
@@ -83,4 +82,4 @@ const ClientSearch = ({setUser}) => {
   return renderInput()
 }
 
-export default ClientSearch;
+export default HKSearch;

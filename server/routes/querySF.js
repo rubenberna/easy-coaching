@@ -3,7 +3,7 @@ const router = express.Router()
 const session = require('express-session');
 
 
-router.post('/get_client', async (req, res) => {
+router.post('/get_user', async (req, res) => {
   const org = session.org
   const {id} = req.body
   const q = `SELECT Id, Name, Email, Phone, MailingAddress, External_Id__c FROM Contact WHERE External_Id__c = '${id}'`;
