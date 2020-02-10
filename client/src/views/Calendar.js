@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -7,6 +8,16 @@ import interactionPlugin from "@fullcalendar/interaction"
 import { getTasks, updateTask } from '../modules/dbQueries'
 
 import Dialog from '../components/modal/Modal'
+
+const EventDetail = ({ event, el }) => {
+  console.log(event);
+  const content = <div style={{textTransform: 'capitalize'}}>
+    {event.extendedProps.reason}
+    <div>{event.extendedProps.hk}</div>
+  </div>;
+  ReactDOM.render(content, el);
+  return el;
+}
 
 class Calendar extends Component {
   state = {
@@ -30,7 +41,11 @@ class Calendar extends Component {
         assignee: t.assignee,
         reqDate: t.reqDate,
         textColor: '#FFF',
-        backgroundColor: t.calendarColor
+        backgroundColor: t.type.toLocaleLowerCase() === 'starter' ? '#ffd600' : t.calendarColor,
+        hk: t.houseKeeper.Name,
+        reason: t.type,
+        startEditable: t.type.toLocaleLowerCase() === 'starter' ? false : true,
+        durationEditable: t.type.toLocaleLowerCase() === 'starter' ? false : true
       }
     ))
     return events
@@ -96,6 +111,7 @@ class Calendar extends Component {
             eventClick={this.handleEventClick}
             eventDrop={this.handleDrop}
             eventResize={this.handleResize}
+            eventRender={EventDetail}
           />
         </div>
         {currEvent &&
