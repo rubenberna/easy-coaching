@@ -32,7 +32,7 @@ class TaskDropdown extends Component {
           <option value="schadegeval">
             Schadegeval
           </option>
-          <option value="schadegeval">
+          <option value="starter">
             Starter
           </option>
         </Select>
