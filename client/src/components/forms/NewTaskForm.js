@@ -9,6 +9,7 @@ import {
 } from '@material-ui/pickers'
 import _ from 'lodash'
 import { addTask } from '../../modules/dbQueries'
+import { createTaskSF } from '../../modules/sfQueries'
 import TaskDropdown from '../dropdowns/TaskDropdown'
 import AssigneeDropdown from '../dropdowns/AssigneeDropdown'
 import ClientSearch from '../inputs/ClientSearch'
@@ -73,6 +74,7 @@ class NewTaskForm extends Component {
     task.office = client.Account.Name
 
     const res = await addTask(task)
+    createTaskSF(task)
     console.log(res);
     await this.props.getTasks()
     this.setState({ ready: true  })

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import firebase from 'firebase'
 import firebaseConfig from '../config/firebaseConfig'
+import { reassignTaskSF, changeTaskStatusSF } from './sfQueries'
 firebase.initializeApp(firebaseConfig)
 
 export const getCoaches = async () => {
@@ -40,6 +41,7 @@ export const findTasksPerCoach = async (name) => {
 }
 
 export const changeTaskStatus = async (task) => {
+  changeTaskStatusSF(task)
   let res = await axios.post('/api/firebase/changeTaskStatus', {
     task
   })
@@ -47,6 +49,7 @@ export const changeTaskStatus = async (task) => {
 }
 
 export const assignTask = async (task) => {
+  reassignTaskSF(task)
   let res = await axios.post('/api/firebase/assignTask', {
     task
   })
@@ -79,8 +82,6 @@ export const editCoach = async (coach) => {
   let res = await axios.post('/api/firebase/editCoach', coach )
   return res.data
 }
-
-
 
 const uploadPhoto = async photo => {
   const storageRef = firebase.storage().ref('photos');

@@ -36,4 +36,47 @@ const getAccountName = async recordID => {
   return account
 }
 
+router.post('/created_task', async (req, res) => {
+  const org = session.org
+  const { task } = req.body
+  await org.sobject('Contact').update({
+    Id: task.client.Id,
+    Coaching_scheduled__c: true,
+    Coaching_date__c: task.start,
+    Coaching_state__c: task.status,
+    Coaching_reason__c: task.type,
+    Coach__c: task.assignee
+  }, (err, ret) => {
+    if (err || !ret.success) console.log("error: ", err);
+    else console.log("success: ", ret.id);
+  })
+  res.status(200).send('Updated')
+})
+
+router.post('/reassign', async (req, res) => {
+  const org = session.org
+  const { task } = req.body
+  await org.sobject('Contact').update({
+    Id: task.client.Id,
+    Coach__c: task.assignee
+  }, (err, ret) => {
+    if (err || !ret.success) console.log("error: ", err);
+    else console.log("success: ", ret.id);
+  })
+  res.status(200).send('Updated')
+})
+
+router.post('/change_status', async (req, res) => {
+  const org = session.org
+  const { task } = req.body
+  await org.sobject('Contact').update({
+    Id: task.client.Id,
+    Coaching_state__c: task.status
+  }, (err, ret) => {
+    if (err || !ret.success) console.log("error: ", err);
+    else console.log("success: ", ret.id);
+  })
+  res.status(200).send('Updated')
+})
+
 module.exports = router
