@@ -41,11 +41,19 @@ const ClientSearch = ({setUser}) => {
   useEffect(() => setUser('client', client), [client, setUser])
 
   const searchClient = async () => {
-    setLoading(true)
-    const res = await getUser(clientID)
-    if (typeof res === 'string') setError(res)
-    if (typeof res === 'object') setClient(res)
-    setLoading(false)
+    if (!clientID) setError('Please enter an id first')
+    else {
+      setLoading(true)
+      const res = await getUser(clientID)
+      if (typeof res === 'string') setError(res)
+      if (typeof res === 'object') setClient(res)
+      setLoading(false)
+    }
+  }
+
+  const closeDetails = () => {
+    setClient('')
+    setClientID('')
   }
 
   const renderInput = () => {
@@ -56,7 +64,7 @@ const ClientSearch = ({setUser}) => {
             icon={<Icon>account_circle</Icon>}
             label="Client id"
             type="number"
-            onChange={e => setClientID(e.target.value)}
+            onChange={e => setClientID(e.target.value.replace(/\s/g, ""))}
           />
           <Preloader active={loading} size='small' color='yellow'/>
           <Button onClick={searchClient}>Go</Button>
@@ -73,8 +81,8 @@ const ClientSearch = ({setUser}) => {
             <p>Email: <a href={`mailto:${client.Email}`} target="_blank" rel="noopener noreferrer">{client.Email}</a></p>
             <p>Phone: <a href={`tel: ${client.Phone}`}>{client.Phone}</a></p>
             <p>Address: <a href={`https://maps.google.com/?q=${client.MailingAddress.street}, ${client.MailingAddress.city}`} target="_blank" rel="noopener noreferrer">{client.MailingAddress.street}, {client.MailingAddress.city}</a></p>
-            <p>Office: {client.Account.Name}</p>
-            <StyledClose onClick={e => setClient('')}>x</StyledClose>
+            <p>Office: <a href={`https://maps.google.com/?q=${client.Account.BillingAddress.street}, ${client.Account.BillingAddress.city}`} target="_blank" rel="noopener noreferrer">{client.Account.Name}</a></p>
+            <StyledClose onClick={closeDetails}>x</StyledClose>
           </StyledDetails>
         </>
       )

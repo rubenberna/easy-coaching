@@ -41,11 +41,19 @@ const HKSearch = ({setUser}) => {
   useEffect(() => setUser('houseKeeper', hk), [hk, setUser])
 
   const searchHk = async () => {
-    setLoading(true)
-    const res = await getUser(hkID)
-    if (typeof res === 'string') setError(res)
-    if (typeof res === 'object') setHk(res)
-    setLoading(false)
+    if (!hkID) setError('Please enter an id first')
+    else {
+      setLoading(true)
+      const res = await getUser(hkID)
+      if (typeof res === 'string') setError(res)
+      if (typeof res === 'object') setHk(res)
+      setLoading(false)
+    }
+  }
+
+  const closeDetails = () => {
+    setHk()('')
+    setHkID('')
   }
 
   const renderInput = () => {
@@ -55,7 +63,7 @@ const HKSearch = ({setUser}) => {
           <TextInput
             icon={<Icon>account_circle</Icon>}
             label="HouseKeeper id"
-            onChange={e => setHkID(e.target.value)}
+            onChange={e => setHkID(e.target.value.replace(/\s/g, ""))}
           />
           <Preloader active={loading} size='small' color='yellow'/>
           <Button onClick={searchHk}>Go</Button>
@@ -72,7 +80,7 @@ const HKSearch = ({setUser}) => {
             <p>Email: <a href={`mailto:${hk.Email}`} target="_blank" rel="noopener noreferrer">{hk.Email}</a></p>
             <p>Phone: <a href={`tel: ${hk.Phone}`}>{hk.Phone}</a></p>
             <p>Address: <a href={`https://maps.google.com/?q=${hk.MailingAddress.street}, ${hk.MailingAddress.city}`} target="_blank" rel="noopener noreferrer">{hk.MailingAddress.street}, {hk.MailingAddress.city}</a></p>
-            <StyledClose onClick={e => setHk('')}>x</StyledClose>
+            <StyledClose onClick={closeDetails}>x</StyledClose>
           </StyledDetails>
         </>
       )
