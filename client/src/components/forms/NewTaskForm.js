@@ -64,9 +64,13 @@ class NewTaskForm extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault()
+    const { assignee, client, houseKeeper } = this.state
     const task = _.omit(this.state, ['redirect', 'ready', 'date'])
-    const coach = this.props.coaches.find(coach => coach.name === this.state.assignee)
+    const coach = this.props.coaches.find(coach => coach.name === assignee)
     task.coach = coach
+    task.clientName = client.Name
+    task.houseKeeperName = houseKeeper.Name
+    task.office = client.Account.Name
 
     const res = await addTask(task)
     console.log(res);
