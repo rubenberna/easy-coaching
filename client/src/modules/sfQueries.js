@@ -19,3 +19,9 @@ export const changeTaskStatusSF = async task => {
   const res = await axios.post('/api/querySF/change_status', {task})
   return res.data
 }
+
+export const getAllAccounts = async () => {
+  const accounts = await axios.get('/api/querySF/all_accounts')
+  const uniqAccounts = [...new Set(accounts.data)].sort()
+  return uniqAccounts
+}

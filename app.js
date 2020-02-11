@@ -27,11 +27,13 @@ const firebase = require('./server/routes/queryDB');
 const poke = require('./server/routes/poke');
 const sendMsg = require('./server/routes/sendMsg');
 const querySF = require('./server/routes/querySF');
+const queryDelighted = require('./server/routes/delighted');
 
 app.use('/api/firebase', firebase)
 app.use('/api/poke', poke)
 app.use('/api/sendMsg', sendMsg)
 app.use('/api/querySF', querySF)
+app.use('/api/delighted', queryDelighted)
 
 if(process.env.NODE_ENV ===  'production') {
   app.use(express.static('client/build'))

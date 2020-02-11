@@ -20,6 +20,13 @@ const LoadableCalendar = Loadable({
   }
 });
 
+const LoadableNPS = Loadable({
+  loader: () => import("../views/NPS"),
+  loading() {
+    return <BounceLoader sizeUnit={"px"} size={150} color={"#00796b"} />;
+  }
+});
+
 class App extends Component {
   state = {
     coaches: [],
@@ -87,6 +94,11 @@ class App extends Component {
               path="/admin"
               exact
               render={props => <Admin {...props} coaches={coaches} getCoaches={this.getCoachesCall}/>}
+            />
+            <Route
+              path="/nps"
+              exact
+              render={props => <LoadableNPS />}
             />
             <Route
               path="/calendar"

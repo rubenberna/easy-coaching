@@ -18,7 +18,7 @@ class Galery extends Component {
   render() {
     return(
       <div className='gallery'>
-        <h3>Meet our team</h3>
+        <h2>Meet our team</h2>
         <div className='gallery-images'>
           { this.renderGallery() }
         </div>

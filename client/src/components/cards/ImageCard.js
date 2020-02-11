@@ -16,7 +16,7 @@ const ImageCard = (props) => {
         className={ classes }
         onClick={ e => props.history.push(`/profile/${coach.name}`) }>
         <img alt={ coach.name } src={ coach.photo } />
-        <span>{ coach.name }</span>
+        <h6>{ coach.name }</h6>
       </div>
     </>
   )

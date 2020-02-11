@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const session = require('express-session');
 
-
 router.post('/get_user', async (req, res) => {
   const org = session.org
   const {id} = req.body
@@ -79,4 +78,15 @@ router.post('/change_status', async (req, res) => {
   res.status(200).send('Updated')
 })
 
+router.get('/all_accounts', async (req, res) => {
+  const org = session.org
+  const q = `SELECT Id, Name FROM Account`;
+  try {
+    await org.query(q, function (err, result) {
+      if(!err && result.records) res.status(200).send(result.records)
+    })
+  } catch (e) {
+    res.status(400).send(e)
+  }
+})
 module.exports = router
