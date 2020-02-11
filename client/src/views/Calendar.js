@@ -10,7 +10,6 @@ import { getTasks, updateTask } from '../modules/dbQueries'
 import Dialog from '../components/modal/Modal'
 
 const EventDetail = ({ event, el }) => {
-  console.log(event);
   const content = <div style={{textTransform: 'capitalize'}}>
     {event.extendedProps.reason}
     <div>{event.extendedProps.hk}</div>
@@ -41,7 +40,7 @@ class Calendar extends Component {
         assignee: t.assignee,
         reqDate: t.reqDate,
         textColor: '#FFF',
-        backgroundColor: t.type.toLocaleLowerCase() === 'starter' ? '#ffd600' : t.calendarColor,
+        backgroundColor: t.type.toLocaleLowerCase() === 'starter' ? '#ffd600' : t.coach.calendarColor,
         hk: t.houseKeeper.Name,
         reason: t.type,
         startEditable: t.type.toLocaleLowerCase() === 'starter' ? false : true,

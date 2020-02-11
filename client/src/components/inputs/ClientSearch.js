@@ -73,6 +73,7 @@ const ClientSearch = ({setUser}) => {
             <p>Email: <a href={`mailto:${client.Email}`} target="_blank" rel="noopener noreferrer">{client.Email}</a></p>
             <p>Phone: <a href={`tel: ${client.Phone}`}>{client.Phone}</a></p>
             <p>Address: <a href={`https://maps.google.com/?q=${client.MailingAddress.street}, ${client.MailingAddress.city}`} target="_blank" rel="noopener noreferrer">{client.MailingAddress.street}, {client.MailingAddress.city}</a></p>
+            <p>Office: {client.Account.Name}</p>
             <StyledClose onClick={e => setClient('')}>x</StyledClose>
           </StyledDetails>
         </>
