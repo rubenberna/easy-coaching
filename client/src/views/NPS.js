@@ -29,10 +29,10 @@ const Nps = () => {
       return (
         <tr key={i}>
           <td>{i}</td>
-          <td>{acc.Name}</td>
-          <td>{acc.Name}</td>
-          <td>{acc.Name}</td>
-          <td>{acc.Name}</td>
+          <td>{acc}</td>
+          <td>{acc}</td>
+          <td>{acc}</td>
+          <td>{acc}</td>
         </tr>
       )
     })

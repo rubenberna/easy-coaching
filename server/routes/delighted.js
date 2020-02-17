@@ -13,8 +13,9 @@ router.get('/', async (req, res) => {
     list = [...list, ...data]
     pages -= 1
   }
-  console.log('done');
-  res.status(200).send(list)
+
+  const shortList = list.map(({ score, person_properties}) => ({score, person_properties}))
+  res.status(200).send(shortList)
 })
 
 module.exports = router
