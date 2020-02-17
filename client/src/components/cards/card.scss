@@ -13,7 +13,7 @@ $medium-and-down: "only screen and (max-width : #{$medium-screen})" !default;
   img {
     width: 170px;
     object-fit: cover;
-    border-radius: 50%;
+    border-radius: 5%;
     height: 167px;
     margin: 15px 0;
     @media #{$medium-and-down}  {

@@ -35,7 +35,6 @@ input[type=number] {
 .home {
   display: flex;
   justify-content: space-between;
-  margin: 35px 120px;
   @media #{$medium-and-down}  {
     flex-direction: column-reverse;
     align-items: center;
@@ -45,11 +44,22 @@ input[type=number] {
 // Home-galery
 .gallery {
   display: flex;
-  width: 40%;
   justify-content: center;
   flex-direction: column;
-  h4 {
-    margin-left: 40px;
+  .gallery-inner {
+    background: #009688;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    border-radius: 5px;
+    color: #FFF;
+    text-align: center;
+    h4 {
+      margin-left: 40px;
+    }
+
   }
 
   @media #{$medium-and-down}  {
@@ -58,8 +68,13 @@ input[type=number] {
   }
 
   .gallery-images {
+    margin-top: 7px;
+    background: #FFF;
+    border-radius: 5px;
+    padding: 8px;
+    color: black;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-columns: auto;
     grid-row-gap: 15px;
     grid-column-gap: 15px;
   }

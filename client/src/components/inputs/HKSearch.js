@@ -8,6 +8,12 @@ import { getUser } from '../../modules/sfQueries'
 const StyledInput = styled.div`
   display: flex;
   align-items: center;
+  @media (max-width: 992px) {
+    width: 220px;
+    margin-left: -37px;
+    flex-direction: column;
+    height: 105px;
+  }
 `
 
 const StyledDetails = styled.div`
