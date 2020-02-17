@@ -10,9 +10,10 @@ import { getTasks, updateTask } from '../modules/dbQueries'
 import Dialog from '../components/modal/Modal'
 
 const EventDetail = ({ event, el }) => {
-  const content = <div style={{textTransform: 'capitalize'}}>
-    {event.extendedProps.reason}
-    <div>{event.extendedProps.hk}</div>
+  const content = <div>
+    <p>Client: {event.extendedProps.client}</p>
+    <p>Sollicitant: {event.extendedProps.hk}</p>
+    <p>Office: {event.extendedProps.office}</p>
   </div>;
   ReactDOM.render(content, el);
   return el;
@@ -41,7 +42,14 @@ class Calendar extends Component {
         reqDate: t.reqDate,
         textColor: '#FFF',
         backgroundColor: t.type.toLocaleLowerCase() === 'starter' ? '#ffd600' : t.coach.calendarColor,
+        client: t.client.Name,
+        clientEmail: t.client.Email,
+        clientPhone: t.client.Phone,
+        clientAddress: `${t.client.MailingAddress.street}, ${t.client.MailingAddress.city}`,
         hk: t.houseKeeper.Name,
+        hkEmail: t.houseKeeper.Email,
+        hkPhone: t.houseKeeper.Phone,
+        office: t.office,
         reason: t.type,
         startEditable: t.type.toLocaleLowerCase() === 'starter' ? false : true,
         durationEditable: t.type.toLocaleLowerCase() === 'starter' ? false : true

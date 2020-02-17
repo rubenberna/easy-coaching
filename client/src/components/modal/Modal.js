@@ -22,6 +22,7 @@ const modalFooter = {
 }
 
 const Dialog = ({modalOpen, currEvent, closeModal }) => {
+  console.log(currEvent);
   return(
     <>
       <Modal
@@ -31,7 +32,9 @@ const Dialog = ({modalOpen, currEvent, closeModal }) => {
         <Modal.Header closeButton>
           <Modal.Title>{currEvent.title}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>{currEvent.extendedProps.description}</Modal.Body>
+        <Modal.Body>
+          {currEvent.extendedProps.description}
+        </Modal.Body>
         <Modal.Footer>
           <div style={modalFooter}>
             <div>

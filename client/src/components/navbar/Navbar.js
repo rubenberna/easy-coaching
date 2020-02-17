@@ -36,9 +36,6 @@ class Nav extends Component {
       <Navbar brand={<Link to='/'><img src={logo} alt="Logo" className="logo"/><span>Coaching</span></Link>} alignLinks="right">
         { this.renderDevPhoto() }
         { this.renderAdminLink() }
-        <Link to='/nps'>
-          NPS
-        </Link>
         <Link to='/calendar'>
           Calendar
         </Link>
