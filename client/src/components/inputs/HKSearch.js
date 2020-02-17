@@ -12,7 +12,7 @@ const StyledInput = styled.div`
     width: 220px;
     margin-left: -37px;
     flex-direction: column;
-    height: 105px;
+    height: 135px;
   }
 `
 
