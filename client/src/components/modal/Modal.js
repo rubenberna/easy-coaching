@@ -30,7 +30,7 @@ const detailsInfo = {
 }
 
 const Dialog = ({modalOpen, currEvent, closeModal }) => {
-  console.log(currEvent);
+
   return(
     <>
       <Modal

@@ -6,8 +6,8 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction"
 
 import { getTasks, updateTask } from '../modules/dbQueries'
-
 import Dialog from '../components/modal/Modal'
+import CoachFilter from '../components/buttons/CoachFilter'
 
 const EventDetail = ({ event, el }) => {
   const content = <div>
@@ -23,7 +23,8 @@ class Calendar extends Component {
   state = {
     tasks: [],
     currEvent: null,
-    modalOpen: false
+    modalOpen: false,
+    selectedCoach: ''
   }
 
   async componentDidMount() {
@@ -31,9 +32,16 @@ class Calendar extends Component {
     this.setState({ tasks  })
   }
 
+  filterCoach = (coach) => this.setState({ selectedCoach: coach })
+
   calendarComponentRef = React.createRef()
   tasksList = () => {
-    const events = this.state.tasks.map(t => (
+    const { tasks, selectedCoach } = this.state
+    let list = []
+    if (selectedCoach) {
+      list = tasks.filter(t => t.assignee === selectedCoach )
+    } else list = tasks
+    const events = list.map(t => (
       { start: t.start,
         end: t.end,
         title: t.title,
@@ -93,7 +101,7 @@ class Calendar extends Component {
   render() {
     const { modalOpen, currEvent } = this.state
     return(
-      <div className='calendar'>
+      <div className='calendar container'>
         <div className='calendar-app'>
           <FullCalendar
             defaultView='timeGridWeek'
@@ -121,6 +129,7 @@ class Calendar extends Component {
             eventRender={EventDetail}
           />
         </div>
+        <CoachFilter coaches={this.props.coaches} filterCoach={this.filterCoach}/>
         {currEvent &&
           <Dialog
             modalOpen={modalOpen}
