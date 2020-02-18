@@ -14,6 +14,7 @@ import TaskDropdown from '../dropdowns/TaskDropdown'
 import AssigneeDropdown from '../dropdowns/AssigneeDropdown'
 import ClientSearch from '../inputs/ClientSearch'
 import HKSearch from '../inputs/HKSearch'
+import PriorityDropdown from '../dropdowns/PriorityDropdown'
 
 import './form.scss'
 
@@ -130,6 +131,7 @@ class NewTaskForm extends Component {
         <AssigneeDropdown
           coaches={this.props.coaches}
           setSelection={this.handleSelectType}/>
+        <PriorityDropdown setSelection={this.handleSelectType}/>
         <ClientSearch setUser={this.setUser}/>
         <HKSearch setUser={this.setUser}/>
         <div className='task-form-date'>

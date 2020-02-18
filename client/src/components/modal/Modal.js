@@ -44,6 +44,7 @@ const Dialog = ({modalOpen, currEvent, closeModal }) => {
           {currEvent.extendedProps.description}
           <br/>
           <h6>Office: { currEvent.extendedProps.office}</h6>
+          <h6>Priority: { currEvent.extendedProps.priority.toUpperCase()}</h6>
           <br />
           <div style={detailsDiv}>
             <h6>Client details</h6>

@@ -14,6 +14,7 @@ const EventDetail = ({ event, el }) => {
     <p>Client: {event.extendedProps.client}</p>
     <p>Sollicitant: {event.extendedProps.hk}</p>
     <p>Office: {event.extendedProps.office}</p>
+    <p>Priority: {event.extendedProps.priority}</p>
   </div>;
   ReactDOM.render(content, el);
   return el;
@@ -59,6 +60,7 @@ class Calendar extends Component {
         hkPhone: t.houseKeeper.Phone,
         office: t.office,
         reason: t.type,
+        priority: t.priority,
         startEditable: t.type.toLocaleLowerCase() === 'starter' ? false : true,
         durationEditable: t.type.toLocaleLowerCase() === 'starter' ? false : true
       }

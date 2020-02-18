@@ -8,7 +8,7 @@ import './table.scss'
 import Loader from '../loader/Loader'
 import { pokeDev } from '../../modules/poke'
 import FilterStatus from '../dropdowns/FilterStatusDropdown'
-import FilterAssigneeDropdown from '../dropdowns/FilterAssigneeDropdown'
+import PriorityDropdown from '../dropdowns/PriorityDropdown'
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -16,7 +16,7 @@ const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 const initialState = {
   status: '',
-  assignee: '',
+  priority: '',
   hideCompleted: true
 }
 
@@ -25,8 +25,8 @@ class TableTasks extends Component {
   state = initialState
 
   renderTable = () => {
-    const { coaches, list } = this.props;
-    const { assignee, status, hideCompleted } = this.state
+    const { list } = this.props;
+    const { status, priority, hideCompleted } = this.state
     if (!list) return <Loader/>
     else {
       return(
@@ -38,14 +38,15 @@ class TableTasks extends Component {
                 <th data-field="dev">Assigned to</th>
                 <th data-field="status">Status</th>
                 <th data-field="date">Requested</th>
+                <th data-field="priority">Priority</th>
               </tr>
             </thead>
             { this.renderTaskBody() }
           </Table>
           <div className='table-board-filters'>
             <h6>FILTERS</h6>
-            <FilterStatus setFilter={this.setFilter} status={status}/>
-            <FilterAssigneeDropdown setFilter={this.setFilter} assignee={assignee} coaches={coaches}/>
+            <FilterStatus setFilter={this.setFilter} status={status} />
+            <PriorityDropdown setSelection={this.setFilter} priority={priority} namedClass={"filter-dropdown"}/>
             <Button className='table-hide-completed'  flat onClick={e => this.setState({ hideCompleted: !this.state.hideCompleted })}>{ hideCompleted ? 'Show completed' : 'Hide completed'}</Button>
             <Button className='table-clear-filter' onClick={e => this.clearFilters()}>Clear</Button>
             { this.renderExcel() }
@@ -70,6 +71,7 @@ class TableTasks extends Component {
           <ExcelColumn label="Client" value="clientName" />
           <ExcelColumn label="HouseKeeper" value="houseKeeperName" />
           <ExcelColumn label="Office" value="office" />
+          <ExcelColumn label="Priority" value="priority" />
         </ExcelSheet>
       </ExcelFile>
     )
@@ -104,14 +106,14 @@ class TableTasks extends Component {
   renderTaskBody = () => {
     let taskList = []
     const { list } = this.props
-    const { status, assignee, hideCompleted } = this.state
+    const { status, priority, hideCompleted } = this.state
 
-   if (status && assignee) taskList = list.filter(task => task.status === status && task.assignee === assignee)
-   else if (status && !assignee) taskList = list.filter(task => task.status === status)
-   else if (!status && assignee) taskList = list.filter(task => task.assignee === assignee)
-   else if (hideCompleted) taskList = list.filter(task => task.status !== 'completed')
-   else if (!hideCompleted) taskList = list.filter(task => task.status === 'completed')
-   else taskList = list
+    if (status && priority) taskList = list.filter(task => task.status === status && task.priority === priority)
+    else if (status && !priority) taskList = list.filter(task => task.status === status)
+    else if (!status && priority) taskList = list.filter(task => task.priority === priority)
+    else if (hideCompleted) taskList = list.filter(task => task.status !== 'completed')
+    else if (!hideCompleted) taskList = list.filter(task => task.status === 'completed')
+    else taskList = list
 
     return taskList.map((task, index) => {
       return (
@@ -128,6 +130,9 @@ class TableTasks extends Component {
             </td>
             <td onClick={ e => this.viewTaskDetails(task) }>
               { moment(task.reqDate).format("MMM Do")  || '' }
+            </td>
+            <td style={{ textTransform: 'capitalize' }} onClick={ e => this.viewTaskDetails(task) }>
+              { task.priority }
             </td>
             <td>
               { this.renderIcon(index, task) }
