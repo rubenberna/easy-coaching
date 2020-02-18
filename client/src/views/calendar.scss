@@ -11,6 +11,7 @@ $medium-and-down: "only screen and (max-width : #{$medium-screen})" !default;
   align-items: center;
   @media #{$medium-and-down}  {
     margin: 50px 10px;
+    flex-direction: column;
   }
   .calendar-app {
     margin: 0 auto;

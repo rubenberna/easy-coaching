@@ -5,6 +5,10 @@ import styled from 'styled-components'
 const ButtonsList = styled.div`
   display: flex;
   flex-direction: column;
+  @media (max-width: 992px) {
+    margin-top: 30px;
+    align-self: baseline;
+  }
 `
 
 const Header = styled.h4`
