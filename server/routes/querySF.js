@@ -5,7 +5,7 @@ const session = require('express-session');
 router.post('/get_user', async (req, res) => {
   const org = session.org
   const {id} = req.body
-  const q = `SELECT Id, AccountId, Name, Email, Phone, MailingAddress, External_Id__c FROM Contact WHERE External_Id__c = '${id}'`;
+  const q = `SELECT Id, AccountId, Name, Email, Phone, MailingAddress, External_Id__c, Coaching_interventions__c FROM Contact WHERE External_Id__c = '${id}'`;
   try {
     await org.query(q, async function(err, result) {
       if(!err && result.records[0]) {
@@ -44,7 +44,8 @@ router.post('/created_task', async (req, res) => {
     Coaching_date__c: task.start,
     Coaching_state__c: task.status,
     Coaching_reason__c: task.type,
-    Coach__c: task.assignee
+    Coach__c: task.assignee,
+    Coaching_interventions__c: !task.client.Coaching_interventions__c ? 1 : task.client.Coaching_interventions__c + 1
   }, (err, ret) => {
     if (err || !ret.success) console.log("error: ", err);
     else console.log("success: ", ret.id);
