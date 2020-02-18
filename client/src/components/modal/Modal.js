@@ -21,6 +21,14 @@ const modalFooter = {
   justifyContent: 'space-between'
 }
 
+const detailsDiv = {
+  marginTop: '15px'
+}
+
+const detailsInfo = {
+  fontWeight: 100
+}
+
 const Dialog = ({modalOpen, currEvent, closeModal }) => {
   console.log(currEvent);
   return(
@@ -34,6 +42,20 @@ const Dialog = ({modalOpen, currEvent, closeModal }) => {
         </Modal.Header>
         <Modal.Body>
           {currEvent.extendedProps.description}
+          <br/>
+          <div style={detailsDiv}>
+            <h6>Client details</h6>
+            <h6 style={detailsInfo}>Name: {currEvent.extendedProps.client}</h6>
+            <h6 style={detailsInfo}>Phone: <a href={`tel: ${currEvent.extendedProps.clientPhone}`}>{currEvent.extendedProps.clientPhone}</a></h6>
+            <h6 style={detailsInfo}>Email: <a href={`mailto:${currEvent.extendedProps.clientEmail}`} target="_blank" rel="noopener noreferrer">{currEvent.extendedProps.clientEmail}</a></h6>
+            <h6 style={detailsInfo}>Address: <a href={`https://maps.google.com/?q=${currEvent.extendedProps.clientAddress}`} target="_blank" rel="noopener noreferrer">{currEvent.extendedProps.clientAddress}</a></h6>
+          </div>
+          <div style={detailsDiv}>
+            <h6>Housekeeper details</h6>
+            <h6 style={detailsInfo}>Name: {currEvent.extendedProps.hk}</h6>
+            <h6 style={detailsInfo}>Phone: <a href={`tel: ${currEvent.extendedProps.hkPhone}`}>{currEvent.extendedProps.hkPhone}</a></h6>
+            <h6 style={detailsInfo}>Email: <a href={`mailto:${currEvent.extendedProps.hkEmail}`} target="_blank" rel="noopener noreferrer">{currEvent.extendedProps.hkEmail}</a></h6>
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <div style={modalFooter}>
