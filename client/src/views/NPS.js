@@ -1,6 +1,6 @@
 import React, {useState, useEffect } from 'react'
 import { Table } from 'react-bootstrap';
-import { getDelightedData } from '../modules/delightedQueries'
+import { getDelightedData, getDelightedTrend } from '../modules/delightedQueries'
 import { getAllAccounts } from '../modules/sfQueries'
 
 const Nps = () => {
@@ -9,7 +9,8 @@ const Nps = () => {
 
   useEffect(() => {
     async function getData() {
-      const nps = await getDelightedData()
+      const nps = await getDelightedTrend()
+      console.log(nps);
       setNPSData(nps)
     }
     getData()
@@ -24,7 +25,6 @@ const Nps = () => {
   }, [])
 
   const renderTableBody = () => {
-    getPromoters()
     return accountsList.map((acc, i) => {
       return (
         <tr key={i}>
@@ -38,12 +38,12 @@ const Nps = () => {
     })
   }
 
-  const getPromoters = async accountName => {
-    if (npsData) {
-      let promoters = await npsData.filter(item => item.score >= 8 && item.person_properties.kantoor === 'Middelkerke')
-      console.log(promoters.length);
-    }
-  }
+  // const getPromoters = async accountName => {
+  //   if (npsData) {
+  //     let promoters = await npsData.filter(item => item.score >= 8 && item.person_properties.kantoor === 'Middelkerke')
+  //     console.log(promoters.length);
+  //   }
+  // }
 
   return(
     <div className='container'>
