@@ -43,6 +43,8 @@ const Dialog = ({modalOpen, currEvent, closeModal }) => {
         <Modal.Body>
           {currEvent.extendedProps.description}
           <br/>
+          <h6>Office: { currEvent.extendedProps.office}</h6>
+          <br />
           <div style={detailsDiv}>
             <h6>Client details</h6>
             <h6 style={detailsInfo}>Name: {currEvent.extendedProps.client}</h6>
