@@ -13,20 +13,20 @@ class AdminPanel extends Component {
   }
 
   renderNotStarted = coach => {
-    const { activeTasks } = this.props
-    const count = activeTasks.filter(t => (t.assignee === coach.name && t.status === 'not started'))
+    const { allTasks } = this.props
+    const count = allTasks.filter(t => (t.assignee === coach.name && t.status === 'not started'))
     return count.length
   }
 
   renderPlanned = coach => {
-    const { activeTasks } = this.props
-    const count = activeTasks.filter(t => (t.assignee === coach.name && t.status === 'planned'))
+    const { allTasks } = this.props
+    const count = allTasks.filter(t => (t.assignee === coach.name && t.status === 'planned'))
     return count.length
   }
 
   renderFeedbackCall = coach => {
-    const { activeTasks } = this.props
-    const count = activeTasks.filter(t => (t.assignee === coach.name && t.status === 'feedback call'))
+    const { allTasks } = this.props
+    const count = allTasks.filter(t => (t.assignee === coach.name && t.status === 'feedback call'))
     return count.length
   }
 

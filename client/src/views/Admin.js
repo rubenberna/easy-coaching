@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { getActiveTasks, getTasks } from '../modules/dbQueries'
+import { getTasks } from '../modules/dbQueries'
 import AdminPanel from '../components/panel/AdminPanel'
 import NewCoachForm from '../components/forms/NewCoach'
 import { AddProfileBtn, AdminBtn } from '../components/buttons/FloatingButtons'
@@ -8,19 +8,17 @@ import { AddProfileBtn, AdminBtn } from '../components/buttons/FloatingButtons'
 export default class Admin extends Component {
   state = {
     view: 'edit',
-    activeTasks: [],
     allTasks: []
   }
 
   async componentDidMount() {
-    const active = await getActiveTasks()
     const all = await getTasks()
-    this.setState({ activeTasks: active, allTasks: all })
+    this.setState({ allTasks: all })
   }
 
   renderViews = () => {
-    const {view, activeTasks, allTasks} = this.state
-    if(view === 'edit') return <AdminPanel coaches={this.props.coaches} activeTasks={activeTasks} allTasks={allTasks} getCoaches={this.props.getCoaches}/>
+    const {view, allTasks} = this.state
+    if(view === 'edit') return <AdminPanel coaches={this.props.coaches} allTasks={allTasks} getCoaches={this.props.getCoaches}/>
     else return <NewCoachForm getCoaches={this.props.getCoaches}/>
   }
 
