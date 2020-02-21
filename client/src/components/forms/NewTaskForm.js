@@ -116,9 +116,13 @@ class NewTaskForm extends Component {
     this.setState({ ready: true  })
   }
   setUser = (type, data) => {
+    const { atLeastOne } = this.state
     let obj = {}
     obj[type] = data
-    this.setState({ ...obj })
+    this.setState({
+      ...obj,
+      atLeastOne: false
+    })
   }
 
   render() {
@@ -132,7 +136,9 @@ class NewTaskForm extends Component {
       assignee,
       type,
       priority,
-      atLeastOne
+      atLeastOne,
+      client,
+      houseKeeper
      } = this.state
     if (ready ) { return <Redirect to='/ongoing' /> }
 
@@ -176,7 +182,7 @@ class NewTaskForm extends Component {
             setSelection={this.handleSelectType}/>
           { priority === 'error' && <StyledIcon>error</StyledIcon>}
         </StyledInput>
-        { atLeastOne &&
+        { atLeastOne && (!client || !houseKeeper) &&
           <StyledWargingWrapper>
             <StyledIcon>error</StyledIcon>
             <StyledWarning>Please choose at least a <strong>Client</strong> or <strong>HouseKeeper</strong></StyledWarning>
