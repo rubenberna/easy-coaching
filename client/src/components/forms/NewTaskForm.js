@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { TextInput, Textarea, Toast, Button } from 'react-materialize'
 import DateFnsUtils from '@date-io/date-fns';
+import moment from 'moment'
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
@@ -46,22 +47,16 @@ class NewTaskForm extends Component {
     this.setState({ ...action })
   }
 
-  handleStartTime = e => {
+  handleStartTime = async e => {
     const hours = e.getHours()
     const mins = e.getMinutes()
     const start = this.state.date
     start.setHours(hours)
     start.setMinutes(mins)
-    this.setState({ start })
-  }
+    await this.setState({ start })
+    const endTime = moment(this.state.start).add(90, 'minutes')
+    this.setState({ end: endTime._d })
 
-  handleEndTime = e => {
-    const hours = e.getHours()
-    const mins = e.getMinutes()
-    const end = new Date(this.state.date.getTime())
-    end.setHours(hours)
-    end.setMinutes(mins)
-    this.setState({ end })
   }
 
   handleSubmit = async (e) => {
@@ -117,8 +112,7 @@ class NewTaskForm extends Component {
     const {
       ready,
       start,
-      date,
-      end
+      date
      } = this.state
     if (ready ) { return <Redirect to='/ongoing' /> }
 
@@ -159,16 +153,6 @@ class NewTaskForm extends Component {
               'aria-label': 'change time',
               }}
             />
-            <KeyboardTimePicker
-              margin="normal"
-              label="End Time"
-              ampm={false}
-              value={end}
-              onChange={e => this.handleEndTime(e)}
-              KeyboardButtonProps={{
-                'aria-label': 'change time',
-                }}
-              />
           </MuiPickersUtilsProvider>
         </div>
         {this.renderButton()}
