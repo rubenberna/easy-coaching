@@ -11,7 +11,6 @@ class TaskDropdown extends Component {
 
   render () {
     let {type} = this.state
-    console.log(this.props.error)
     return(
       <>
         <Select

@@ -105,18 +105,17 @@ class NewTaskForm extends Component {
     const task = _.omit(this.state, ['redirect', 'ready', 'date'])
     const coach = this.props.coaches.find(coach => coach.name === assignee)
     task.coach = coach
-    task.clientName = client.Name
-    task.houseKeeperName = houseKeeper.Name
-    task.office = client.Account.Name
+    task.clientName = client ? client.Name : 'none'
+    task.houseKeeperName = houseKeeper ?  houseKeeper.Name : 'none'
+    task.office = client ? client.Account.Name : 'none'
 
     const res = await addTask(task)
-    createTaskSF(task)
+    if (client) createTaskSF(task)
     console.log(res);
     await this.props.getTasks()
     this.setState({ ready: true  })
   }
   setUser = (type, data) => {
-    const { atLeastOne } = this.state
     let obj = {}
     obj[type] = data
     this.setState({
@@ -166,9 +165,7 @@ class NewTaskForm extends Component {
           { description === 'error' && <StyledIcon>error</StyledIcon>}
         </StyledInput>
         <StyledInput>
-          <TaskDropdown
-            error={type === 'error' ? true : false}
-            setSelection={ this.handleSelectType }/>
+          <TaskDropdown setSelection={ this.handleSelectType }/>
           { type === 'error' && <StyledIcon>error</StyledIcon>}
         </StyledInput>
         <StyledInput>
@@ -178,8 +175,7 @@ class NewTaskForm extends Component {
           { assignee === 'error' && <StyledIcon>error</StyledIcon>}
         </StyledInput>
         <StyledInput>
-          <PriorityDropdown
-            setSelection={this.handleSelectType}/>
+          <PriorityDropdown setSelection={this.handleSelectType}/>
           { priority === 'error' && <StyledIcon>error</StyledIcon>}
         </StyledInput>
         { atLeastOne && (!client || !houseKeeper) &&

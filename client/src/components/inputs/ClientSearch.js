@@ -67,7 +67,7 @@ const ClientSearch = ({setUser}) => {
       return (
         <StyledInput>
           <TextInput
-            icon={<Icon>account_circle</Icon>}
+            icon={<Icon>person_outline</Icon>}
             label="Client id"
             type="number"
             onChange={e => setClientID(e.target.value.replace(/\s/g, ""))}

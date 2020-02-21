@@ -5,7 +5,7 @@ const session = require('express-session');
 router.post('/get_user', async (req, res) => {
   const org = session.org
   const {id} = req.body
-  const q = `SELECT Id, AccountId, Name, Email, Phone, MailingAddress, External_Id__c, Coaching_interventions__c FROM Contact WHERE External_Id__c = '${id}'`;
+  const q = `SELECT Id, AccountId, Name, Email, Account.Name, Phone, MailingAddress, External_Id__c, Coaching_interventions__c FROM Contact WHERE External_Id__c = '${id}'`;
   try {
     await org.query(q, async function(err, result) {
       if(!err && result.records[0]) {
