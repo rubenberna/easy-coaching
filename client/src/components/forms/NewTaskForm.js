@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
-import { TextInput, Textarea, Toast, Button } from 'react-materialize'
+import { TextInput, Textarea, Button } from 'react-materialize'
+import { Alert } from 'react-bootstrap';
 import DateFnsUtils from '@date-io/date-fns';
 import moment from 'moment'
 import {
@@ -9,6 +10,7 @@ import {
   KeyboardDatePicker
 } from '@material-ui/pickers'
 import _ from 'lodash'
+
 import { addTask } from '../../modules/dbQueries'
 import { createTaskSF } from '../../modules/sfQueries'
 import TaskDropdown from '../dropdowns/TaskDropdown'
@@ -33,7 +35,8 @@ class NewTaskForm extends Component {
     status: 'not started',
     reqDate: new Date(),
     ready: false,
-    redirect: false
+    redirect: false,
+    alertMsg: false,
   }
 
   handleChange = (name, e) => {
@@ -61,19 +64,27 @@ class NewTaskForm extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault()
-    const { assignee, client, houseKeeper } = this.state
-    const task = _.omit(this.state, ['redirect', 'ready', 'date'])
-    const coach = this.props.coaches.find(coach => coach.name === assignee)
-    task.coach = coach
-    task.clientName = client.Name
-    task.houseKeeperName = houseKeeper.Name
-    task.office = client.Account.Name
+    let validationObj = _.omit(this.state, ['redirect', 'ready', 'date', 'client', 'houseKeeper'])
+    let array = Object.values(validationObj)
+    if ((this.state.client || this.state.houseKeeper) && array.every(value => value !== null)) {
+      alert('Ready to go')
+    } else this.setState({ alertMsg: true })
 
-    const res = await addTask(task)
-    createTaskSF(task)
-    console.log(res);
-    await this.props.getTasks()
-    this.setState({ ready: true  })
+    // let incomplete = array.some(value => {return value === null})
+    //
+    // const { assignee, client, houseKeeper } = this.state
+    // const task = _.omit(this.state, ['redirect', 'ready', 'date'])
+    // const coach = this.props.coaches.find(coach => coach.name === assignee)
+    // task.coach = coach
+    // task.clientName = client.Name
+    // task.houseKeeperName = houseKeeper.Name
+    // task.office = client.Account.Name
+    //
+    // const res = await addTask(task)
+    // createTaskSF(task)
+    // console.log(res);
+    // await this.props.getTasks()
+    // this.setState({ ready: true  })
   }
 
   setUser = (type, data) => {
@@ -82,44 +93,20 @@ class NewTaskForm extends Component {
     this.setState({ ...obj })
   }
 
-  renderButton = () => {
-    // Validate if there are null values
-    let array = Object.values(this.state)
-    let incomplete = array.some(value => {return value === null})
-
-    // Alert if there are null values
-    if (incomplete) {
-      return (
-        <Toast
-          waves="light"
-          style={{marginRight: '5px'}}
-          options={{html: 'New task incomplete!'}}>
-          Submit
-        </Toast>
-      )
-      // Submit form otherwise
-    } else return (
-      <Button
-        waves="light"
-        style={{marginRight: '5px', background: '#009688', color: '#FFF'}}
-        onClick={ this.handleSubmit }>
-        Submit
-      </Button>
-    )
-  }
-
   render() {
     const {
       ready,
       start,
-      date
+      date,
+      alertMsg
      } = this.state
     if (ready ) { return <Redirect to='/ongoing' /> }
 
     return(
       <div className='task-form'>
+        { alertMsg && <Alert variant='danger' onClose={() => this.setState({ alertMsg: false })} dismissible>Some fields are missing</Alert> }
         <h4>New task</h4>
-        <TextInput  label='Title' onChange={e => this.handleChange('title', e)}/>
+        <TextInput label='Title' onChange={e => this.handleChange('title', e)}/>
         <Textarea label='Extra info'onChange={e => this.handleChange('description', e)} />
         <TaskDropdown setSelection={ this.handleSelectType }/>
         <AssigneeDropdown
@@ -155,7 +142,12 @@ class NewTaskForm extends Component {
             />
           </MuiPickersUtilsProvider>
         </div>
-        {this.renderButton()}
+        <Button
+          waves="light"
+          style={{marginRight: '5px', background: '#009688', color: '#FFF'}}
+          onClick={ this.handleSubmit }>
+          Submit
+        </Button>
       </div>
     )
   }

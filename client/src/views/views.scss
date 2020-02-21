@@ -35,6 +35,7 @@ input[type=number] {
 .home {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 40px;
   @media #{$medium-and-down}  {
     flex-direction: column-reverse;
     align-items: center;
