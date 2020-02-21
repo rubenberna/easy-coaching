@@ -38,6 +38,11 @@ const StyledClose = styled.span`
 }
 `
 
+const StyledPrefix = styled.span`
+  background: #e0e0e0;
+  padding: 5px 10px;
+`
+
 const HKSearch = ({setUser}) => {
   const [hk, setHk] = useState('')
   const [hkID, setHkID] = useState('')
@@ -66,10 +71,10 @@ const HKSearch = ({setUser}) => {
     if(!hk && !error) {
       return (
         <StyledInput>
+          <StyledPrefix>EMP</StyledPrefix>
           <TextInput
-            icon={<Icon>account_circle</Icon>}
             label="HouseKeeper id"
-            onChange={e => setHkID(e.target.value.replace(/\s/g, ""))}
+            onChange={e => setHkID(`EMP${e.target.value.replace(/\s/g, "")}`)}
           />
           <Preloader active={loading} size='small' color='yellow'/>
           <Button onClick={searchHk}>Go</Button>
