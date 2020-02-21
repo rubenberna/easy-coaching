@@ -5,37 +5,32 @@ const taskCreated = (task) => {
 
   const clientDetails = () => {
     if (task.client) return (
-      `
-      <p>Client details:</p>
+      `<p>Client details:</p>
       <hr />
       <p><span><b>Name:</b></span> ${task.client.Name}</p>
       <p><span><b>Email:</b></span> <a href="mailto:${task.client.Email}" target="_blank">${task.client.Email}</a></p>
       <p><span><b>Phone:</b></span> <a href="tel: ${task.client.Phone}">${task.client.Phone}</a></p>
       <p><span><b>Address:</b></span> <a href="https://maps.google.com/?q=${task.client.MailingAddress.street}, ${task.client.MailingAddress.city}" target="_blank">${task.client.MailingAddress.street}, ${task.client.MailingAddress.city}</a></p>
       <p><span><b>Office:</b></span> <a href="https://maps.google.com/?q=${task.client.Account.BillingAddress.street}, ${task.client.Account.BillingAddress.city}" target="_blank">${task.client.Account.Name}</a></p>
-      <br />
-      `
+      <br />`
     )
     else return `<p>*Coaching is only for the HouseKeeper.</p>`
   }
 
   const houseKeeperDetails = () => {
     if (task.houseKeeper) return (
-      `
-      <p>HouseKeeper details:</p>
+      `<p>HouseKeeper details:</p>
       <hr />
       <p><span><b>Name:</b></span> ${task.houseKeeper.Name}</p>
       <p><span><b>Email:</b></span> <a href="mailto:${task.houseKeeper.Email}" target="_blank">${task.houseKeeper.Email}</a></p>
-      <p><span><b>Phone:</b></span> <a href="tel: ${task.houseKeeper.Phone}">${task.houseKeeper.Phone}</a></p>
-      `
+      <p><span><b>Phone:</b></span> <a href="tel: ${task.houseKeeper.Phone}">${task.houseKeeper.Phone}</a></p>`
     )
     else return `<p>*Coaching is only for the client.</p>`
   }
 
-// to: `<${task.assigneeEmail}>`,
   const message = {
     from: '"Coaching team" <coaching@easylifedc.be>',
-    to: `<ruben@redcarrots.be>`,
+    to: `<${task.assigneeEmail}>`,
     subject: 'New task created',
     html: `<p>Hi,</p>
       <p>A new task has been created!</p>

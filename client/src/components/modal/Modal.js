@@ -72,7 +72,7 @@ const Dialog = ({modalOpen, currEvent, closeModal }) => {
           {currEvent.extendedProps.description}
           <br/>
           <h6>Office: { currEvent.extendedProps.office}</h6>
-          <h6>Priority: { currEvent.extendedProps.priority.toUpperCase()}</h6>
+          <h6>Priority: { currEvent.extendedProps.priority ? currEvent.extendedProps.priority.toUpperCase() : 'Low'}</h6>
           <br />
           { clientDetails() }
           { houseKeeperDetails() }
