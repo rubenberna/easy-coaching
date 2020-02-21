@@ -33,6 +33,16 @@ const StyledIcon = styled(Icon)`
   color: #5F9EA0;
 `
 
+const StyledWargingWrapper = styled.div`
+  display: flex;
+  margin-top: 10px;
+`
+const StyledWarning = styled.span`
+  color: #5F9EA0;
+  padding-left: 7px;
+  font-size: 13px;
+`
+
 class NewTaskForm extends Component {
   state = {
     title: null,
@@ -50,6 +60,7 @@ class NewTaskForm extends Component {
     ready: false,
     redirect: false,
     alertMsg: false,
+    atLeastOne: false
   }
 
   handleChange = (name, e) => {
@@ -79,32 +90,31 @@ class NewTaskForm extends Component {
     e.preventDefault()
     let validationObj = _.omit(this.state, ['redirect', 'ready', 'date', 'client', 'houseKeeper'])
     let stateValues = Object.values(validationObj)
-    if ((this.state.client || this.state.houseKeeper) && stateValues.every(value => value !== null)) {
-      alert('Ready to go')
-    } else {
+    if ((this.state.client || this.state.houseKeeper) && stateValues.every(value => value !== null)) this.createTask()
+    else {
       this.setState({ alertMsg: true })
       for(let key in validationObj) {
         if(validationObj[key] === null ) this.setState({ [`${key}`]: 'error' })
       }
+      if(!this.state.client && !this.state.houseKeeper) this.setState({ atLeastOne: true })
     }
-
-    // let incomplete = array.some(value => {return value === null})
-    //
-    // const { assignee, client, houseKeeper } = this.state
-    // const task = _.omit(this.state, ['redirect', 'ready', 'date'])
-    // const coach = this.props.coaches.find(coach => coach.name === assignee)
-    // task.coach = coach
-    // task.clientName = client.Name
-    // task.houseKeeperName = houseKeeper.Name
-    // task.office = client.Account.Name
-    //
-    // const res = await addTask(task)
-    // createTaskSF(task)
-    // console.log(res);
-    // await this.props.getTasks()
-    // this.setState({ ready: true  })
   }
 
+  createTask = async () => {
+    const { assignee, client, houseKeeper } = this.state
+    const task = _.omit(this.state, ['redirect', 'ready', 'date'])
+    const coach = this.props.coaches.find(coach => coach.name === assignee)
+    task.coach = coach
+    task.clientName = client.Name
+    task.houseKeeperName = houseKeeper.Name
+    task.office = client.Account.Name
+
+    const res = await addTask(task)
+    createTaskSF(task)
+    console.log(res);
+    await this.props.getTasks()
+    this.setState({ ready: true  })
+  }
   setUser = (type, data) => {
     let obj = {}
     obj[type] = data
@@ -121,7 +131,8 @@ class NewTaskForm extends Component {
       description,
       assignee,
       type,
-      priority
+      priority,
+      atLeastOne
      } = this.state
     if (ready ) { return <Redirect to='/ongoing' /> }
 
@@ -163,8 +174,14 @@ class NewTaskForm extends Component {
         <StyledInput>
           <PriorityDropdown
             setSelection={this.handleSelectType}/>
-          { assignee === 'error' && <StyledIcon>error</StyledIcon>}
+          { priority === 'error' && <StyledIcon>error</StyledIcon>}
         </StyledInput>
+        { atLeastOne &&
+          <StyledWargingWrapper>
+            <StyledIcon>error</StyledIcon>
+            <StyledWarning>Please choose at least a <strong>Client</strong> or <strong>HouseKeeper</strong></StyledWarning>
+          </StyledWargingWrapper>
+        }
         <ClientSearch setUser={this.setUser}/>
         <HKSearch setUser={this.setUser}/>
         <div className='task-form-date'>

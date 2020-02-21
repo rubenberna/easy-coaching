@@ -2,36 +2,41 @@ const moment = require('moment');
 const triggerEmail = require('../config/nodemailer');
 
 const taskCreated = (task) => {
-  const message = {
-    from: '"Coaching team" <coaching@easylifedc.be>',
-    to: `<${task.assigneeEmail}>`,
-    subject: 'New task created',
-    html: `<p>Hi,</p>
-      <p>A new task has been created!</p>
-      <p><span><b>Title:</b></span> ${task.title}</p>
-      <p><span><b>Reason:</b></span> ${task.type}</p>
-      <p><span><b>Description:</b></span> ${task.description}</p>
-      <p><span><b>Start:</b></span> ${moment(task.start).format('MMMM Do YYYY, h:mm a')}</p>
-      <p><span><b>End:</b></span> ${moment(task.end).format('MMMM Do YYYY, h:mm a')}</p>
-      <br />
-      <p>Client details:</p>
-      <hr />
-      <p><span><b>Name:</b></span> ${task.client.Name}</p>
-      <p><span><b>Email:</b></span> <a href="mailto:${task.client.Email}" target="_blank">${task.client.Email}</a></p>
-      <p><span><b>Phone:</b></span> <a href="tel: ${task.client.Phone}">${task.client.Phone}</a></p>
-      <p><span><b>Address:</b></span> <a href="https://maps.google.com/?q=${task.client.MailingAddress.street}, ${task.client.MailingAddress.city}" target="_blank">${task.client.MailingAddress.street}, ${task.client.MailingAddress.city}</a></p>
-      <p><span><b>Office:</b></span> <a href="https://maps.google.com/?q=${task.client.Account.BillingAddress.street}, ${task.client.Account.BillingAddress.city}" target="_blank">${task.client.Account.Name}</a></p>
-      <br />
-      <p>HouseKeeper details:</p>
-      <hr />
-      <p><span><b>Name:</b></span> ${task.houseKeeper.Name}</p>
-      <p><span><b>Email:</b></span> <a href="mailto:${task.houseKeeper.Email}" target="_blank">${task.houseKeeper.Email}</a></p>
-      <p><span><b>Phone:</b></span> <a href="tel: ${task.houseKeeper.Phone}">${task.houseKeeper.Phone}</a></p>
-      <p>Thanks!</p>
-      <p>Coaching team</p>
-    `
+  // console.log(task);
+  const clientDetails = () => {
+    if (task.client) console.log('client details');
+    if (task.houseKeeper) console.log('hk details')
   }
-  triggerEmail(message)
+  // const message = {
+  //   from: '"Coaching team" <coaching@easylifedc.be>',
+  //   to: `<${task.assigneeEmail}>`,
+  //   subject: 'New task created',
+  //   html: `<p>Hi,</p>
+  //     <p>A new task has been created!</p>
+  //     <p><span><b>Title:</b></span> ${task.title}</p>
+  //     <p><span><b>Reason:</b></span> ${task.type}</p>
+  //     <p><span><b>Description:</b></span> ${task.description}</p>
+  //     <p><span><b>Start:</b></span> ${moment(task.start).format('MMMM Do YYYY, h:mm a')}</p>
+  //     <p><span><b>End:</b></span> ${moment(task.end).format('MMMM Do YYYY, h:mm a')}</p>
+  //     <br />
+  //     <p>Client details:</p>
+  //     <hr />
+  //     <p><span><b>Name:</b></span> ${task.client.Name}</p>
+  //     <p><span><b>Email:</b></span> <a href="mailto:${task.client.Email}" target="_blank">${task.client.Email}</a></p>
+  //     <p><span><b>Phone:</b></span> <a href="tel: ${task.client.Phone}">${task.client.Phone}</a></p>
+  //     <p><span><b>Address:</b></span> <a href="https://maps.google.com/?q=${task.client.MailingAddress.street}, ${task.client.MailingAddress.city}" target="_blank">${task.client.MailingAddress.street}, ${task.client.MailingAddress.city}</a></p>
+  //     <p><span><b>Office:</b></span> <a href="https://maps.google.com/?q=${task.client.Account.BillingAddress.street}, ${task.client.Account.BillingAddress.city}" target="_blank">${task.client.Account.Name}</a></p>
+  //     <br />
+  //     <p>HouseKeeper details:</p>
+  //     <hr />
+  //     <p><span><b>Name:</b></span> ${task.houseKeeper.Name}</p>
+  //     <p><span><b>Email:</b></span> <a href="mailto:${task.houseKeeper.Email}" target="_blank">${task.houseKeeper.Email}</a></p>
+  //     <p><span><b>Phone:</b></span> <a href="tel: ${task.houseKeeper.Phone}">${task.houseKeeper.Phone}</a></p>
+  //     <p>Thanks!</p>
+  //     <p>Coaching team</p>
+  //   `
+  // }
+  // triggerEmail(message)
 }
 
 const taskAssigned = (task) => {
