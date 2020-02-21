@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
-import { TextInput, Textarea, Button } from 'react-materialize'
+import styled from 'styled-components'
+import { TextInput, Textarea, Button, Icon } from 'react-materialize'
 import { Alert } from 'react-bootstrap';
 import DateFnsUtils from '@date-io/date-fns';
 import moment from 'moment'
@@ -21,12 +22,24 @@ import PriorityDropdown from '../dropdowns/PriorityDropdown'
 
 import './form.scss'
 
+const StyledInput = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: flex-end;
+`
+
+const StyledIcon = styled(Icon)`
+  color: #5F9EA0;
+`
+
 class NewTaskForm extends Component {
   state = {
     title: null,
     description: null,
     assignee: null,
     type: null,
+    priority: null,
     date: null,
     start: null,
     end: null,
@@ -65,10 +78,15 @@ class NewTaskForm extends Component {
   handleSubmit = async (e) => {
     e.preventDefault()
     let validationObj = _.omit(this.state, ['redirect', 'ready', 'date', 'client', 'houseKeeper'])
-    let array = Object.values(validationObj)
-    if ((this.state.client || this.state.houseKeeper) && array.every(value => value !== null)) {
+    let stateValues = Object.values(validationObj)
+    if ((this.state.client || this.state.houseKeeper) && stateValues.every(value => value !== null)) {
       alert('Ready to go')
-    } else this.setState({ alertMsg: true })
+    } else {
+      this.setState({ alertMsg: true })
+      for(let key in validationObj) {
+        if(validationObj[key] === null ) this.setState({ [`${key}`]: 'error' })
+      }
+    }
 
     // let incomplete = array.some(value => {return value === null})
     //
@@ -98,21 +116,55 @@ class NewTaskForm extends Component {
       ready,
       start,
       date,
-      alertMsg
+      alertMsg,
+      title,
+      description,
+      assignee,
+      type,
+      priority
      } = this.state
     if (ready ) { return <Redirect to='/ongoing' /> }
 
     return(
       <div className='task-form'>
-        { alertMsg && <Alert variant='danger' onClose={() => this.setState({ alertMsg: false })} dismissible>Some fields are missing</Alert> }
+        { alertMsg &&
+          <Alert
+            variant='danger'
+            onClose={() => this.setState({ alertMsg: false })}
+            dismissible>
+            Some fields are missing
+          </Alert>
+        }
         <h4>New task</h4>
-        <TextInput label='Title' onChange={e => this.handleChange('title', e)}/>
-        <Textarea label='Extra info'onChange={e => this.handleChange('description', e)} />
-        <TaskDropdown setSelection={ this.handleSelectType }/>
-        <AssigneeDropdown
-          coaches={this.props.coaches}
-          setSelection={this.handleSelectType}/>
-        <PriorityDropdown setSelection={this.handleSelectType}/>
+        <StyledInput>
+          <TextInput
+            label='Title'
+            onChange={e => this.handleChange('title', e)}/>
+          { title === 'error' && <StyledIcon>error</StyledIcon>}
+        </StyledInput>
+        <StyledInput>
+          <Textarea
+            label='Extra info'
+            onChange={e => this.handleChange('description', e)} />
+          { description === 'error' && <StyledIcon>error</StyledIcon>}
+        </StyledInput>
+        <StyledInput>
+          <TaskDropdown
+            error={type === 'error' ? true : false}
+            setSelection={ this.handleSelectType }/>
+          { type === 'error' && <StyledIcon>error</StyledIcon>}
+        </StyledInput>
+        <StyledInput>
+          <AssigneeDropdown
+            coaches={this.props.coaches}
+            setSelection={this.handleSelectType}/>
+          { assignee === 'error' && <StyledIcon>error</StyledIcon>}
+        </StyledInput>
+        <StyledInput>
+          <PriorityDropdown
+            setSelection={this.handleSelectType}/>
+          { assignee === 'error' && <StyledIcon>error</StyledIcon>}
+        </StyledInput>
         <ClientSearch setUser={this.setUser}/>
         <HKSearch setUser={this.setUser}/>
         <div className='task-form-date'>

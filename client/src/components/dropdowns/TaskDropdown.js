@@ -11,9 +11,13 @@ class TaskDropdown extends Component {
 
   render () {
     let {type} = this.state
+    console.log(this.props.error)
     return(
       <>
-        <Select value={type} onChange={this.actionHandler} >
+        <Select
+          value={type}
+          onChange={this.actionHandler}
+          >
           <option value="" disabled defaultValue>
             Reason
           </option>
