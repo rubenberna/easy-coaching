@@ -31,6 +31,34 @@ const detailsInfo = {
 
 const Dialog = ({modalOpen, currEvent, closeModal }) => {
 
+  const clientDetails = () => {
+    if(currEvent.extendedProps.client !== 'none') return (
+      <div style={detailsDiv}>
+        <h6>Client details</h6>
+        <h6 style={detailsInfo}>Name: {currEvent.extendedProps.client}</h6>
+        <h6 style={detailsInfo}>Phone: <a href={`tel: ${currEvent.extendedProps.clientPhone}`}>{currEvent.extendedProps.clientPhone}</a></h6>
+        <h6 style={detailsInfo}>Email: <a href={`mailto:${currEvent.extendedProps.clientEmail}`} target="_blank" rel="noopener noreferrer">{currEvent.extendedProps.clientEmail}</a></h6>
+        <h6 style={detailsInfo}>Address: <a href={`https://maps.google.com/?q=${currEvent.extendedProps.clientAddress}`} target="_blank" rel="noopener noreferrer">{currEvent.extendedProps.clientAddress}</a></h6>
+      </div>
+    )
+  }
+
+  const houseKeeperDetails = () => {
+    if(currEvent.extendedProps.hk !== 'none') return (
+      <div style={detailsDiv}>
+        <h6>Housekeeper details</h6>
+        <h6 style={detailsInfo}>Name: {currEvent.extendedProps.hk}</h6>
+        <h6 style={detailsInfo}>Phone: <a href={`tel: ${currEvent.extendedProps.hkPhone}`}>{currEvent.extendedProps.hkPhone}</a></h6>
+        <h6 style={detailsInfo}>Email: <a href={`mailto:${currEvent.extendedProps.hkEmail}`} target="_blank" rel="noopener noreferrer">{currEvent.extendedProps.hkEmail}</a></h6>
+      </div>
+    )
+  }
+
+  const lackOfDetails = () => {
+    if(currEvent.extendedProps.hk === 'none') return <span>*Client coaching only</span>
+    if(currEvent.extendedProps.client === 'none') return <span>*HouseKeeper coaching only</span>
+  }
+
   return(
     <>
       <Modal
@@ -46,19 +74,10 @@ const Dialog = ({modalOpen, currEvent, closeModal }) => {
           <h6>Office: { currEvent.extendedProps.office}</h6>
           <h6>Priority: { currEvent.extendedProps.priority.toUpperCase()}</h6>
           <br />
-          <div style={detailsDiv}>
-            <h6>Client details</h6>
-            <h6 style={detailsInfo}>Name: {currEvent.extendedProps.client}</h6>
-            <h6 style={detailsInfo}>Phone: <a href={`tel: ${currEvent.extendedProps.clientPhone}`}>{currEvent.extendedProps.clientPhone}</a></h6>
-            <h6 style={detailsInfo}>Email: <a href={`mailto:${currEvent.extendedProps.clientEmail}`} target="_blank" rel="noopener noreferrer">{currEvent.extendedProps.clientEmail}</a></h6>
-            <h6 style={detailsInfo}>Address: <a href={`https://maps.google.com/?q=${currEvent.extendedProps.clientAddress}`} target="_blank" rel="noopener noreferrer">{currEvent.extendedProps.clientAddress}</a></h6>
-          </div>
-          <div style={detailsDiv}>
-            <h6>Housekeeper details</h6>
-            <h6 style={detailsInfo}>Name: {currEvent.extendedProps.hk}</h6>
-            <h6 style={detailsInfo}>Phone: <a href={`tel: ${currEvent.extendedProps.hkPhone}`}>{currEvent.extendedProps.hkPhone}</a></h6>
-            <h6 style={detailsInfo}>Email: <a href={`mailto:${currEvent.extendedProps.hkEmail}`} target="_blank" rel="noopener noreferrer">{currEvent.extendedProps.hkEmail}</a></h6>
-          </div>
+          { clientDetails() }
+          { houseKeeperDetails() }
+          <br />
+          { lackOfDetails() }
         </Modal.Body>
         <Modal.Footer>
           <div style={modalFooter}>

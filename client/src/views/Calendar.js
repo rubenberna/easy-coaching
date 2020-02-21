@@ -12,7 +12,7 @@ import CoachFilter from '../components/buttons/CoachFilter'
 const EventDetail = ({ event, el }) => {
   const content = <div>
     <p>Client: {event.extendedProps.client}</p>
-    <p>Sollicitant: {event.extendedProps.hk}</p>
+    <p>HouseKeeper: {event.extendedProps.hk}</p>
     <p>Office: {event.extendedProps.office}</p>
     <p>Priority: {event.extendedProps.priority}</p>
   </div>;
@@ -51,11 +51,11 @@ class Calendar extends Component {
         reqDate: t.reqDate,
         textColor: '#FFF',
         backgroundColor: t.type.toLocaleLowerCase() === 'starter' ? '#ffd600' : t.coach.calendarColor,
-        client: t.client.Name,
+        client: t.client ? t.client.Name : 'none',
         clientEmail: t.client.Email,
         clientPhone: t.client.Phone,
-        clientAddress: `${t.client.MailingAddress.street}, ${t.client.MailingAddress.city}`,
-        hk: t.houseKeeper.Name,
+        clientAddress: t.client ? `${t.client.MailingAddress.street}, ${t.client.MailingAddress.city}` : '',
+        hk: t.houseKeeper ? t.houseKeeper.Name : 'none',
         hkEmail: t.houseKeeper.Email,
         hkPhone: t.houseKeeper.Phone,
         office: t.office,
