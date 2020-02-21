@@ -41,7 +41,7 @@ export const findTasksPerCoach = async (name) => {
 }
 
 export const changeTaskStatus = async (task) => {
-  changeTaskStatusSF(task)
+  if (task.client) changeTaskStatusSF(task)
   let res = await axios.post('/api/firebase/changeTaskStatus', {
     task
   })
@@ -49,7 +49,7 @@ export const changeTaskStatus = async (task) => {
 }
 
 export const assignTask = async (task) => {
-  reassignTaskSF(task)
+  if (task.client) reassignTaskSF(task)
   let res = await axios.post('/api/firebase/assignTask', {
     task
   })
