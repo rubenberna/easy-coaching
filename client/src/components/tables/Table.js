@@ -37,8 +37,9 @@ class TableTasks extends Component {
                 <th data-field="title">Title</th>
                 <th data-field="dev">Assigned to</th>
                 <th data-field="status">Status</th>
-                <th data-field="date">Requested</th>
+                <th data-field="date">Scheduled</th>
                 <th data-field="priority">Priority</th>
+                <th data-field="date">Requested</th>
               </tr>
             </thead>
             { this.renderTaskBody() }
@@ -129,10 +130,13 @@ class TableTasks extends Component {
               { task.status }
             </td>
             <td onClick={ e => this.viewTaskDetails(task) }>
-              { moment(task.reqDate).format("MMM Do")  || '' }
+              { moment(task.start).format("MMM Do,  h:mm a")  || '' }
             </td>
             <td style={{ textTransform: 'capitalize' }} onClick={ e => this.viewTaskDetails(task) }>
               { task.priority }
+            </td>
+            <td onClick={ e => this.viewTaskDetails(task) }>
+            { moment(task.reqDate).format("MMM Do")  || '' }
             </td>
             <td>
               { this.renderIcon(index, task) }
