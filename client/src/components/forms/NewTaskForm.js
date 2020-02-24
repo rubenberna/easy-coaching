@@ -110,7 +110,6 @@ class NewTaskForm extends Component {
     task.office = client ? client.Account.Name : 'none'
 
     const res = await addTask(task)
-    if (client) createTaskSF(task)
     console.log(res);
     await this.props.getTasks()
     this.setState({ ready: true  })

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import firebase from 'firebase'
 import firebaseConfig from '../config/firebaseConfig'
-import { reassignTaskSF, changeTaskStatusSF } from './sfQueries'
+import { reassignTaskSF, changeTaskStatusSF, createTaskSF } from './sfQueries'
 firebase.initializeApp(firebaseConfig)
 
 export const getCoaches = async () => {
@@ -20,6 +20,7 @@ export const getActiveTasks = async () => {
 }
 
 export const addTask = async (task) => {
+  if (task.client) createTaskSF(task)
   let res = await axios.post('/api/firebase/tasks', {
     task
   })

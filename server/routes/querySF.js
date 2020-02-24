@@ -41,10 +41,11 @@ router.post('/created_task', async (req, res) => {
   await org.sobject('Contact').update({
     Id: task.client.Id,
     Coaching_scheduled__c: true,
-    Coaching_date__c: task.start,
+    Coaching_schedule__c: task.start,
     Coaching_state__c: task.status,
     Coaching_reason__c: task.type,
     Coach__c: task.assignee,
+    Coaching_request_date__c: task.reqDate,
     Coaching_interventions__c: !task.client.Coaching_interventions__c ? 1 : task.client.Coaching_interventions__c + 1
   }, (err, ret) => {
     if (err || !ret.success) console.log("error: ", err);

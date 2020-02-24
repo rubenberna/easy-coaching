@@ -105,7 +105,7 @@ router.post('/updateTask', async (req, res) => {
   const { task } = req.body
   const snapshot = await firebase.tasks.where('title', '==', task.title).where('reqDate', '==', task.reqDate).get()
   const [ recordId ] = snapshot.docs.map(doc => doc.id)
-   let taskRef = firebase.tasks.doc(recordId)
+  let taskRef = firebase.tasks.doc(recordId)
   taskRef.update({ start: task.start, end: task.end })
   res.status(201).send('success')
 })
