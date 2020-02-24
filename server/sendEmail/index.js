@@ -28,10 +28,9 @@ const taskCreated = (task) => {
     else return `<p>*Coaching is only for the client.</p>`
   }
 
-  // to: `<${task.assigneeEmail}>`,
   const message = {
     from: '"Coaching team" <coaching@easylifedc.be>',
-    to: `<ruben@redcarrots.be>`,
+    to: `<${task.assigneeEmail}>`,
     subject: 'New task created',
     html: `<p>Hi,</p>
       <p>A new task has been created!</p>
