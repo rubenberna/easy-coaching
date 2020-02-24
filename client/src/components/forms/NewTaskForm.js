@@ -60,7 +60,8 @@ class NewTaskForm extends Component {
     ready: false,
     redirect: false,
     alertMsg: false,
-    atLeastOne: false
+    atLeastOne: false,
+    timeDisabled: true
   }
 
   handleChange = (name, e) => {
@@ -83,7 +84,6 @@ class NewTaskForm extends Component {
     await this.setState({ start })
     const endTime = moment(this.state.start).add(90, 'minutes')
     this.setState({ end: endTime._d })
-
   }
 
   handleSubmit = async (e) => {
@@ -136,7 +136,8 @@ class NewTaskForm extends Component {
       priority,
       atLeastOne,
       client,
-      houseKeeper
+      houseKeeper,
+      timeDisabled
      } = this.state
     if (ready ) { return <Redirect to='/ongoing' /> }
 
@@ -205,6 +206,7 @@ class NewTaskForm extends Component {
               label="Start Time"
               ampm={false}
               value={start}
+              disabled={!date ? true : false}
               onChange={e => this.handleStartTime(e) }
               KeyboardButtonProps={{
               'aria-label': 'change time',
