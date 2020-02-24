@@ -49,7 +49,7 @@ class NewTaskForm extends Component {
     description: null,
     assignee: null,
     type: null,
-    priority: null,
+    priority: 'low',
     date: null,
     start: null,
     end: null,
