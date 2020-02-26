@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Select } from 'react-materialize'
 
-class TaskDropdown extends Component {
+class ReasonDropdown extends Component {
   state = { type: ''}
 
   actionHandler = (e) => {
@@ -47,4 +47,4 @@ class TaskDropdown extends Component {
   }
 }
 
-export default TaskDropdown;
+export default ReasonDropdown;

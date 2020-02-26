@@ -16,7 +16,7 @@ class OngoingProjects extends Component {
 
   render() {
     return(
-      <div className='container ongoing-projects'>
+      <div className='ongoing-projects'>
         <h2>Ongoing Projects</h2>
         <TableTasks list={this.state.tasks} coaches={this.props.coaches} />
       </div>

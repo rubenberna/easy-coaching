@@ -13,8 +13,7 @@ import {
 import _ from 'lodash'
 
 import { addTask } from '../../modules/dbQueries'
-import { createTaskSF } from '../../modules/sfQueries'
-import TaskDropdown from '../dropdowns/TaskDropdown'
+import ReasonDropdown from '../dropdowns/ReasonDropdown'
 import AssigneeDropdown from '../dropdowns/AssigneeDropdown'
 import ClientSearch from '../inputs/ClientSearch'
 import HKSearch from '../inputs/HKSearch'
@@ -60,8 +59,7 @@ class NewTaskForm extends Component {
     ready: false,
     redirect: false,
     alertMsg: false,
-    atLeastOne: false,
-    timeDisabled: true
+    atLeastOne: false
   }
 
   handleChange = (name, e) => {
@@ -136,8 +134,7 @@ class NewTaskForm extends Component {
       priority,
       atLeastOne,
       client,
-      houseKeeper,
-      timeDisabled
+      houseKeeper
      } = this.state
     if (ready ) { return <Redirect to='/ongoing' /> }
 
@@ -165,7 +162,7 @@ class NewTaskForm extends Component {
           { description === 'error' && <StyledIcon>error</StyledIcon>}
         </StyledInput>
         <StyledInput>
-          <TaskDropdown setSelection={ this.handleSelectType }/>
+          <ReasonDropdown setSelection={ this.handleSelectType }/>
           { type === 'error' && <StyledIcon>error</StyledIcon>}
         </StyledInput>
         <StyledInput>
