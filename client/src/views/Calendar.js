@@ -25,7 +25,8 @@ class Calendar extends Component {
     tasks: [],
     currEvent: null,
     modalOpen: false,
-    selectedCoach: ''
+    selectedCoach: '',
+    alertMsg: false
   }
 
   async componentDidMount() {
@@ -36,6 +37,14 @@ class Calendar extends Component {
   filterCoach = (coach) => this.setState({ selectedCoach: coach })
 
   calendarComponentRef = React.createRef()
+
+  editableEvent = (task) => {
+    const { user } = this.props
+    if (!user) return false
+    else if (task.type.toLocaleLowerCase() === 'starter' && !user.admin) return false
+    else if (user.admin) return true
+  }
+
   tasksList = () => {
     const { tasks, selectedCoach } = this.state
     let list = []
@@ -61,8 +70,8 @@ class Calendar extends Component {
         office: t.office,
         reason: t.type,
         priority: t.priority,
-        startEditable: t.type.toLocaleLowerCase() === 'starter' ? false : true,
-        durationEditable: t.type.toLocaleLowerCase() === 'starter' ? false : true
+        startEditable: this.editableEvent(t),
+        durationEditable: this.editableEvent(t),
       }
     ))
     return events
@@ -101,7 +110,7 @@ class Calendar extends Component {
   }
 
   render() {
-    const { modalOpen, currEvent } = this.state
+    const { modalOpen, currEvent, alertMsg } = this.state
     return(
       <div className='calendar container'>
         <div className='calendar-app'>

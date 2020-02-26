@@ -103,7 +103,7 @@ class App extends Component {
             <Route
               path="/calendar"
               exact
-              render={props => <LoadableCalendar {...props} coaches={coaches} tasks={tasks}/>}
+              render={props => <LoadableCalendar {...props} coaches={coaches} user={user} tasks={tasks}/>}
             />
           </>
         </BrowserRouter>

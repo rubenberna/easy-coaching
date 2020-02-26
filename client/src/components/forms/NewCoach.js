@@ -15,6 +15,7 @@ class NewCoach extends Component {
     role: null,
     started: null,
     calendarColor: '#fff',
+    admin: false,
     tooBig: false
   }
 
