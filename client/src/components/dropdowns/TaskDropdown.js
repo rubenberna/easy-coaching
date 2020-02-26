@@ -38,6 +38,9 @@ class TaskDropdown extends Component {
           <option value="starter">
             Starter
           </option>
+          <option value="op initiatief van coach">
+            Op initiatief van coach
+          </option>
         </Select>
       </>
     )

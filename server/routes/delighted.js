@@ -21,17 +21,19 @@ router.get('/', async (req, res) => {
 
 router.get('/trend', async (req, res) => {
   const unixTime = moment().subtract(1,'months').unix()
-  const data = await delighted.surveyResponse.all({ since: unixTime, trend: 109603})
+  const data = await delighted.surveyResponse.all({ since: unixTime, trend: 109603, per_page: 100})
   // const { data } = await axios.get('https://api.delighted.com/v1/survey_responses.json', {
   //   auth: {
   //     username: process.env.DELIGHTED_KEY,
   //     password: ''
   //   },
-  //   since: unixTime,
-  //   per_page: 100,
-  //   trend: 109603
+  //   params: {
+  //     since: unixTime,
+  //     per_page: 100,
+  //     trend: 109603
+  //   }
   // })
-  console.log(data);
+  console.log(data.length);
   res.status(200).send(data)
 })
 
