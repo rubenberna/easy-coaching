@@ -66,6 +66,7 @@ class TaskView extends Component {
                 viewCoachProfile={this.viewCoachProfile}
                 userLoggedIn={userLoggedIn}
                 changeStatus={this.changeStatus}
+                user={this.props.user}
               />
             </Tab>
             <Tab title="Contacts">

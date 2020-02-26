@@ -32,6 +32,9 @@ class Name extends Component {
           <option value="completed">
             Completed
           </option>
+          <option value="cancelled">
+            Cancelled
+          </option>
         </Select>
       </div>
     )

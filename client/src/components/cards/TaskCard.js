@@ -5,8 +5,8 @@ import ChangeStatus from '../dropdowns/ChangeStatusDropdown'
 class TaskCard extends Component {
 
   renderChangeStatus = () => {
-    const { userLoggedIn, task, changeStatus } = this.props
-    if (userLoggedIn && userLoggedIn.name === task.assignee) return <ChangeStatus task={task} changeStatus={changeStatus}/>
+    const { userLoggedIn, task, changeStatus, user } = this.props
+    if ((userLoggedIn && userLoggedIn.name === task.assignee) || user.admin) return <ChangeStatus task={task} changeStatus={changeStatus}/>
   }
 
   render() {
