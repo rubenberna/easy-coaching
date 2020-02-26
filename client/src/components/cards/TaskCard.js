@@ -9,6 +9,13 @@ class TaskCard extends Component {
     if ((userLoggedIn && userLoggedIn.name === task.assignee) || user.admin) return <ChangeStatus task={task} changeStatus={changeStatus}/>
   }
 
+  renderCancellationReason = () => {
+    const { task } = this.props
+    if(this.props.task.cxlReason) return (
+      <h6><span className='task-spec'>Cancellation reason: </span><span>{task.cxlReason}</span></h6>
+    )
+  }
+
   render() {
     const { task } = this.props
     return(
@@ -33,7 +40,8 @@ class TaskCard extends Component {
           }
           <h6><span className='task-spec'>Reason: </span><span style={{ textTransform: 'capitalize'}}>{task.type}</span></h6>
           <h6><span className='task-spec'>Status: </span><span className={task.status}>{task.status}</span></h6>
-          {this.renderChangeStatus()}
+          { this.renderCancellationReason() }
+          { this.renderChangeStatus() }
         </div>
       </div>
     )

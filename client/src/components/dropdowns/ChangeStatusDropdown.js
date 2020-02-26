@@ -16,25 +16,28 @@ class ChangeStatusDropdown extends Component {
     cxlReason: ''
   }
 
-  actionHandler = (e) => {
-    this.setState({ status: e.target.value })
+  actionHandler = async (e) => {
+    await this.setState({ status: e.target.value })
+    if (this.state.status === 'cancelled') this.setState({ showCxlReason: true })
+    else this.submitChange()
+  }
+
+  submitChange = () => {
     const { task, changeStatus } = this.props
-    task.status = e.target.value
-    task.cxlReason = this.state.cxlReason
-    if (task.status === 'cancelled') this.setState({ showCxlReason: true })
-    else this.submitChange(task)
+    const { status, cxlReason } = this.state
+    task.status = status
+    task.cxlReason = cxlReason
+    changeStatus(task)
   }
 
   renderCxlReasonInput = () => {
     return (
       <StyledTextArea>
         <Textarea label="Please enter a cancellation reason" onChange={e => this.setState({ cxlReason: e.target.value })}/>
-        <Button>Submit</Button>
+        <Button onClick={this.submitChange}>Submit</Button>
       </StyledTextArea>
     )
   }
-
-  submitChange = task => this.props.changeStatus(task)
 
   render() {
     let { status, showCxlReason } = this.state

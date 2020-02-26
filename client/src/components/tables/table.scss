@@ -26,6 +26,10 @@ table {
   color: #43a047;
 }
 
+.cancelled {
+  color: #b71c1c;
+}
+
 .table-completed {
   margin-top: 50px;
   @media #{$medium-and-down}  {

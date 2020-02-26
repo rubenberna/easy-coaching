@@ -25,8 +25,7 @@ class Calendar extends Component {
     tasks: [],
     currEvent: null,
     modalOpen: false,
-    selectedCoach: '',
-    alertMsg: false
+    selectedCoach: ''
   }
 
   async componentDidMount() {
@@ -110,7 +109,7 @@ class Calendar extends Component {
   }
 
   render() {
-    const { modalOpen, currEvent, alertMsg } = this.state
+    const { modalOpen, currEvent } = this.state
     return(
       <div className='calendar container'>
         <div className='calendar-app'>
