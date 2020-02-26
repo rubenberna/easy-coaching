@@ -70,6 +70,11 @@ const taskAssigned = (task) => {
 }
 
 const taskChanged = (task) => {
+  const renderCancellationReason = () => {
+    if(task.cxlReason) return (
+      `<p><span><b>Cancellation reason:</b></span> ${task.cxlReason}</p>`
+    )
+  }
 
   const message = {
     from: '"Coaching team" <coaching@easylifedc.be>',
@@ -82,6 +87,7 @@ const taskChanged = (task) => {
       <p><span><b>Type:</b></span> ${task.type}</p>
       <p><span><b>Description:</b></span> ${task.description}</p>
       <p><span><b>New status:</b></span> ${task.status}</p>
+      ${renderCancellationReason()}
       <p>Thanks!</p>
       <p>Coaching team</p>
     `

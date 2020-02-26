@@ -73,6 +73,7 @@ class TableTasks extends Component {
           <ExcelColumn label="HouseKeeper" value="houseKeeperName" />
           <ExcelColumn label="Office" value="office" />
           <ExcelColumn label="Priority" value="priority" />
+          <ExcelColumn label="Cancellation reason" value="cxlReason" />
         </ExcelSheet>
       </ExcelFile>
     )
