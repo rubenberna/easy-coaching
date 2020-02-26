@@ -31,7 +31,7 @@ const taskCreated = (task) => {
   // to: `<${task.assigneeEmail}>`,
   const message = {
     from: '"Coaching team" <coaching@easylifedc.be>',
-    to: `<ruben@redcarrots.be>`,
+    to: `<${task.assigneeEmail}>`,
     subject: 'New task created',
     html: `<p>Hi,</p>
       <p>A new task has been created!</p>
@@ -73,7 +73,7 @@ const taskChanged = (task) => {
 
   const message = {
     from: '"Coaching team" <coaching@easylifedc.be>',
-    to: '"Sara Troisfontaine" <Sara.troisfontaine@easylifedc.be>',
+    to: '"Sara Troisfontaine" <ruben@redcarrots.be>',
     subject: 'Task updated',
     html: `<p>Hi,</p>
       <p>${task.assignee} has changed the task status!</p>

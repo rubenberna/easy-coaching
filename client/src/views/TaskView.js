@@ -11,7 +11,7 @@ import ContactsCard from '../components/cards/ContactsCard'
 
 class TaskView extends Component {
   state = {
-    logs: []
+    logs: [],
   }
 
   renderAssignSelection = () => {

@@ -1,19 +1,43 @@
 import React, { Component } from 'react'
-import { Select } from 'react-materialize'
+import { Select, Textarea, Button } from 'react-materialize'
+import styled from 'styled-components'
 
-class Name extends Component {
-  state = { status: ''}
+const StyledTextArea = styled.div`
+  width: 510px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+
+class ChangeStatusDropdown extends Component {
+  state = {
+    status: '',
+    showCxlReason: false,
+    cxlReason: ''
+  }
 
   actionHandler = (e) => {
     this.setState({ status: e.target.value })
     const { task, changeStatus } = this.props
     task.status = e.target.value
-    changeStatus(task)
+    task.cxlReason = this.state.cxlReason
+    if (task.status === 'cancelled') this.setState({ showCxlReason: true })
+    else this.submitChange(task)
   }
 
+  renderCxlReasonInput = () => {
+    return (
+      <StyledTextArea>
+        <Textarea label="Please enter a cancellation reason" onChange={e => this.setState({ cxlReason: e.target.value })}/>
+        <Button>Submit</Button>
+      </StyledTextArea>
+    )
+  }
+
+  submitChange = task => this.props.changeStatus(task)
+
   render() {
-    let {status} = this.state
-    // console.log(this.props);
+    let { status, showCxlReason } = this.state
     return(
       <div className='change-status-dropdown'>
         <Select value={status} onChange={this.actionHandler} >
@@ -36,9 +60,12 @@ class Name extends Component {
             Cancelled
           </option>
         </Select>
+        {
+          showCxlReason && this.renderCxlReasonInput()
+        }
       </div>
     )
   }
 }
 
-export default Name;
+export default ChangeStatusDropdown;

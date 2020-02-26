@@ -72,7 +72,8 @@ router.post('/change_status', async (req, res) => {
   const { task } = req.body
   await org.sobject('Contact').update({
     Id: task.client.Id,
-    Coaching_state__c: task.status
+    Coaching_state__c: task.status,
+    Coaching_cxl_reason__c: task.cxlReason
   }, (err, ret) => {
     if (err || !ret.success) console.log("error: ", err);
     else console.log("success: ", ret.id);
