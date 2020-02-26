@@ -78,7 +78,7 @@ const taskChanged = (task) => {
 
   const message = {
     from: '"Coaching team" <coaching@easylifedc.be>',
-    to: '"Sara Troisfontaine" <ruben@redcarrots.be>',
+    to: '"Sara Troisfontaine" <Sara.troisfontaine@easylifedc.be>',
     subject: 'Task updated',
     html: `<p>Hi,</p>
       <p>${task.assignee} has changed the task status!</p>

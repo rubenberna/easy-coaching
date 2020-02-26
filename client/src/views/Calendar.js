@@ -46,10 +46,10 @@ class Calendar extends Component {
 
   tasksList = () => {
     const { tasks, selectedCoach } = this.state
-    let list = []
+    let list = tasks.filter(t => t.status !== 'cancelled')
     if (selectedCoach) {
-      list = tasks.filter(t => t.assignee === selectedCoach )
-    } else list = tasks
+      list = list.filter(t => t.assignee === selectedCoach )
+    }
     const events = list.map(t => (
       { start: t.start,
         end: t.end,
