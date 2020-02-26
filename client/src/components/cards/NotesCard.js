@@ -53,7 +53,7 @@ const NotesCard = ({ task, userLoggedIn }) => {
   }
 
   const renderNotes = () => {
-    if (notesList.length) return (
+    if (notesList) return (
       <ul className='collection'>
         {notesList.map( (note, i) => {
           return (
@@ -62,6 +62,7 @@ const NotesCard = ({ task, userLoggedIn }) => {
         })}
       </ul>
     )
+    else return <p>Leave your first note</p> 
   }
 
   return(
