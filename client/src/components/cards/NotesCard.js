@@ -62,7 +62,7 @@ const NotesCard = ({ task, userLoggedIn }) => {
         })}
       </ul>
     )
-    else return <p>Leave your first note</p> 
+    else return <p>Leave your first note</p>
   }
 
   return(
