@@ -83,7 +83,7 @@ class App extends Component {
             />
             <Route
               path="/task/:title"
-              render={props => <TaskView {...props} userLoggedIn={user} coaches={coaches} user={user}/>}
+              render={props => <TaskView {...props} userLoggedIn={user} coaches={coaches} />}
             />
             <Route
               path="/login"

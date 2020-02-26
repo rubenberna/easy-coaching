@@ -2,6 +2,13 @@ const express = require('express')
 const router = express.Router()
 const firebase = require ('../config/firebaseInit')
 const sendEmail = require('../sendEmail')
+const admin = require("firebase-admin");
+const serviceAccount = require('../../firebase-admin.json');
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://coaching-cb8ef.firebaseio.com"
+});
 
 // Get all coaches
 router.get('/coaches', async (req, res) => {
@@ -67,7 +74,7 @@ router.post('/findTasksPerCoach', async (req, res) => {
   res.status(201).send(records)
 })
 
-// Mark a task as completed
+// Change task status
 router.post('/changeTaskStatus', async (req, res) => {
   const { task } = req.body
   const snapshot = await firebase.tasks.where('title', '==', task.title).where('reqDate', '==', task.reqDate).get()
@@ -111,6 +118,21 @@ router.post('/updateTask', async (req, res) => {
   let taskRef = firebase.tasks.doc(recordId)
   taskRef.update({ start: task.start, end: task.end })
   res.status(201).send('success')
+})
+
+router.post('/addNote', async (req, res) => {
+  const { task } = req.body
+  const taskRef = admin.firestore().collection('tasks').doc(task.id)
+  taskRef.update({
+    notes: admin.firestore.FieldValue.arrayUnion(task.note)
+  })
+  res.status(200).send('Note added')
+})
+
+router.post('/getNotes', async (req, res) => {
+  const { task } = req.body
+  const taskRef = firebase.tasks.doc(task.id).get()
+    .then(doc =>  res.status(200).send(doc.data()))
 })
 
 // Create Coach

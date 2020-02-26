@@ -1,6 +1,7 @@
 const firebase = require('firebase')
 const storage = require('firebase/storage')
 const firebaseConfig = require('./firebaseConfig')
+
 firebase.initializeApp(firebaseConfig)
 
 const db = firebase.firestore();

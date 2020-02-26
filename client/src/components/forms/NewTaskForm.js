@@ -100,7 +100,7 @@ class NewTaskForm extends Component {
 
   createTask = async () => {
     const { assignee, client, houseKeeper } = this.state
-    const task = _.omit(this.state, ['redirect', 'ready', 'date'])
+    const task = _.omit(this.state, ['redirect', 'ready', 'date', 'alertMsg', 'atLeastOne'])
     const coach = this.props.coaches.find(coach => coach.name === assignee)
     task.coach = coach
     task.clientName = client ? client.Name : 'none'

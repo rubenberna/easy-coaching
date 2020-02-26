@@ -69,6 +69,21 @@ export const updateTask = async (task) => {
   return res.data
 }
 
+export const addNote = async task => {
+  let res = await axios.post('/api/firebase/addNote', {
+    task
+  })
+  return res.data
+}
+
+export const getNotes = async task => {
+  let res = await axios.post('/api/firebase/getNotes', {
+    task
+  })
+  const { notes } = res.data
+  return notes
+}
+
 export const createNewCoach = async (coach) => {
   const photoURL = await uploadPhoto(coach.photo)
   coach.photo = photoURL

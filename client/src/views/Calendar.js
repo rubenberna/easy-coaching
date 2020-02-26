@@ -37,7 +37,7 @@ class Calendar extends Component {
 
   calendarComponentRef = React.createRef()
 
-  editableEvent = (task) => {
+  checkIfEventIsEditable = (task) => {
     const { user } = this.props
     if (!user) return false
     else if (task.type.toLocaleLowerCase() === 'starter' && !user.admin) return false
@@ -69,8 +69,8 @@ class Calendar extends Component {
         office: t.office,
         reason: t.type,
         priority: t.priority,
-        startEditable: this.editableEvent(t),
-        durationEditable: this.editableEvent(t),
+        startEditable: this.checkIfEventIsEditable(t),
+        durationEditable: this.checkIfEventIsEditable(t),
       }
     ))
     return events

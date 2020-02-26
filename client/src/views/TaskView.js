@@ -8,6 +8,7 @@ import { sendMsg } from '../modules/sendMsg'
 import TaskCard from '../components/cards/TaskCard'
 import Logs from '../components/tables/Logs'
 import ContactsCard from '../components/cards/ContactsCard'
+import NotesCard from '../components/cards/NotesCard'
 
 class TaskView extends Component {
   state = {
@@ -66,7 +67,6 @@ class TaskView extends Component {
                 viewCoachProfile={this.viewCoachProfile}
                 userLoggedIn={userLoggedIn}
                 changeStatus={this.changeStatus}
-                user={this.props.user}
               />
             </Tab>
             <Tab title="Contacts">
@@ -79,6 +79,12 @@ class TaskView extends Component {
                 sendMessage={ this.sendMessage }
                 task={ task }
                 fetchLogs={this.fetchLogs}
+              />
+            </Tab>
+            <Tab title="Notes">
+              <NotesCard
+                task={task}
+                userLoggedIn={userLoggedIn}
               />
             </Tab>
             <Tab title="Logs">
