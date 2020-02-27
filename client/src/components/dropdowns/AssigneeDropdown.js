@@ -1,17 +1,26 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Select } from 'react-materialize'
 
+export default function AssigneeDropdown ({ coaches, setSelection, requester }) {
+  const [ assignee, setAssignee ] = useState(undefined)
+  const [ disabled, setDisabled ] = useState(false)
 
-class AssigneeDropdown extends Component {
-  state = { assignee: ''}
+  useEffect(() => {
+    const findAssignee = () => {
+      let requesterIsACoach = coaches.some( coach => coach.email.toLocaleLowerCase() === requester.toLocaleLowerCase())
+      if(requesterIsACoach === false) {
+        setDisabled(true)
+        setAssignee('Sara Troisfontaine')
+      } else {
+        setDisabled(false)
+        setAssignee(undefined)
+      }
+    }
+    findAssignee()
+  }, [requester, assignee, coaches])
 
-  actionHandler = (e) => {
-    this.setState({ assignee: e.target.value })
-    this.props.setSelection({ assignee: e.target.value })
-  }
 
-  listCoaches = () => {
-    const { coaches } = this.props
+  const listCoaches = () => {
     return coaches.map((coach, i) => {
       return <option key={i} value={coach.name}>
         {coach.name}
@@ -19,20 +28,22 @@ class AssigneeDropdown extends Component {
     })
   }
 
-  render () {
-    let {assignee} = this.state
-
-    return(
-      <>
-        <Select value={assignee} onChange={this.actionHandler} >
-          <option disabled value="" defaultValue>
-            Assignee
-          </option>
-          {this.listCoaches()}
-        </Select>
-      </>
-    )
+  const handleSelect = e => {
+    setAssignee(e.target.value)
+    setSelection({ assignee: e.target.value })
   }
-}
 
-export default AssigneeDropdown;
+  const renderSelection = () => {
+    if(requester) return (
+      <Select value={assignee} onChange={handleSelect} disabled={disabled}>
+        <option disabled value="" defaultValue>
+          Assignee
+        </option>
+        {listCoaches()}
+      </Select>
+    )
+    else return ''
+  }
+
+  return renderSelection()
+}

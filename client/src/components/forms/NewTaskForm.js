@@ -18,6 +18,7 @@ import AssigneeDropdown from '../dropdowns/AssigneeDropdown'
 import ClientSearch from '../inputs/ClientSearch'
 import HKSearch from '../inputs/HKSearch'
 import PriorityDropdown from '../dropdowns/PriorityDropdown'
+import RequesterInput from '../inputs/RequesterInput'
 
 import './form.scss'
 
@@ -44,18 +45,19 @@ const StyledWarning = styled.span`
 
 class NewTaskForm extends Component {
   state = {
-    title: null,
-    description: null,
-    assignee: null,
-    type: null,
+    title: undefined,
+    description: undefined,
+    assignee: undefined,
+    type: undefined,
     priority: 'low',
-    date: null,
-    start: null,
-    end: null,
-    client: null,
-    houseKeeper: null,
+    date: undefined,
+    start: undefined,
+    end: undefined,
+    client: undefined,
+    houseKeeper: undefined,
     status: 'not started',
     reqDate: new Date(),
+    requester: undefined,
     ready: false,
     redirect: false,
     alertMsg: false,
@@ -88,11 +90,11 @@ class NewTaskForm extends Component {
     e.preventDefault()
     let validationObj = _.omit(this.state, ['redirect', 'ready', 'date', 'client', 'houseKeeper'])
     let stateValues = Object.values(validationObj)
-    if ((this.state.client || this.state.houseKeeper) && stateValues.every(value => value !== null)) this.createTask()
+    if ((this.state.client || this.state.houseKeeper) && stateValues.every(value => value !== undefined)) this.createTask()
     else {
       this.setState({ alertMsg: true })
       for(let key in validationObj) {
-        if(validationObj[key] === null ) this.setState({ [`${key}`]: 'error' })
+        if(validationObj[key] === undefined ) this.setState({ [`${key}`]: 'error' })
       }
       if(!this.state.client && !this.state.houseKeeper) this.setState({ atLeastOne: true })
     }
@@ -134,7 +136,8 @@ class NewTaskForm extends Component {
       priority,
       atLeastOne,
       client,
-      houseKeeper
+      houseKeeper,
+      requester
      } = this.state
     if (ready ) { return <Redirect to='/ongoing' /> }
 
@@ -162,14 +165,23 @@ class NewTaskForm extends Component {
           { description === 'error' && <StyledIcon>error</StyledIcon>}
         </StyledInput>
         <StyledInput>
-          <ReasonDropdown setSelection={ this.handleSelectType }/>
-          { type === 'error' && <StyledIcon>error</StyledIcon>}
+          <RequesterInput
+            coaches={this.props.coaches}
+            requester={requester}
+            handleSelect={this.handleSelectType}/>
+          { requester === 'error' && <StyledIcon>error</StyledIcon>}
         </StyledInput>
         <StyledInput>
           <AssigneeDropdown
             coaches={this.props.coaches}
-            setSelection={this.handleSelectType}/>
+            setSelection={this.handleSelectType}
+            requester={requester}
+            />
           { assignee === 'error' && <StyledIcon>error</StyledIcon>}
+        </StyledInput>
+        <StyledInput>
+          <ReasonDropdown setSelection={ this.handleSelectType }/>
+          { type === 'error' && <StyledIcon>error</StyledIcon>}
         </StyledInput>
         <StyledInput>
           <PriorityDropdown setSelection={this.handleSelectType}/>
