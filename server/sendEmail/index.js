@@ -32,6 +32,7 @@ const taskCreated = (task) => {
   const message = {
     from: '"Coaching team" <coaching@easylifedc.be>',
     to: `<${task.assigneeEmail}>`,
+    cc: `<${task.requester}>`,
     subject: 'New task created',
     html: `<p>Hi,</p>
       <p>A new task has been created!</p>
@@ -74,11 +75,18 @@ const taskChanged = (task) => {
     if(task.cxlReason) return (
       `<p><span><b>Cancellation reason:</b></span> ${task.cxlReason}</p>`
     )
+    else return ''
+  }
+
+  const checkIfSaraIsRequester = () => {
+    if(task.requester.toLocaleLowerCase() === 'Sara.troisfontaine@easylifedc.be'.toLocaleLowerCase()) return ''
+    else return `<${task.requester}>`
   }
 
   const message = {
     from: '"Coaching team" <coaching@easylifedc.be>',
     to: '"Sara Troisfontaine" <Sara.troisfontaine@easylifedc.be>',
+    cc: `${checkIfSaraIsRequester()}`,
     subject: 'Task updated',
     html: `<p>Hi,</p>
       <p>${task.assignee} has changed the task status!</p>
