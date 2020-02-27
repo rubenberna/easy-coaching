@@ -5,7 +5,7 @@ import { Alert } from 'react-bootstrap';
 
 import { getUser } from '../../modules/sfQueries'
 
-const StyledInput = styled.div`
+const StyledInputFrame = styled.div`
   display: flex;
   align-items: center;
   @media (max-width: 992px) {
@@ -14,6 +14,12 @@ const StyledInput = styled.div`
     flex-direction: column;
     height: 135px;
   }
+`
+
+const StyledInput = styled.div`
+  display: flex;
+  align-items: center;
+
 `
 
 const StyledDetails = styled.div`
@@ -44,7 +50,7 @@ const StyledPrefix = styled.span`
 `
 
 const HKSearch = ({setUser}) => {
-  const [hk, setHk] = useState('')
+  const [hk, setHk] = useState(undefined)
   const [hkID, setHkID] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -70,15 +76,17 @@ const HKSearch = ({setUser}) => {
   const renderInput = () => {
     if(!hk && !error) {
       return (
-        <StyledInput>
-          <StyledPrefix>EMP</StyledPrefix>
-          <TextInput
-            label="HouseKeeper id"
-            onChange={e => setHkID(`EMP${e.target.value.replace(/\s/g, "")}`)}
-          />
+        <StyledInputFrame>
+          <StyledInput>
+            <StyledPrefix>EMP</StyledPrefix>
+            <TextInput
+              label="HouseKeeper id"
+              onChange={e => setHkID(`EMP${e.target.value.replace(/\s/g, "")}`)}
+            />
+          </StyledInput>
           <Preloader active={loading} size='small' color='yellow'/>
           <Button onClick={searchHk}>Go</Button>
-        </StyledInput>
+        </StyledInputFrame>
       )
     } else if (error) {
       return <Alert variant='warning' onClose={() => setError('')} dismissible>{error}</Alert>

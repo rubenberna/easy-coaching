@@ -88,13 +88,14 @@ class NewTaskForm extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault()
-    let validationObj = _.omit(this.state, ['redirect', 'ready', 'date', 'client', 'houseKeeper'])
+    let validationObj = _.omit(this.state, ['redirect', 'ready', 'date', 'client', 'houseKeeper', 'alertMsg', 'atLeastOne'])
     let stateValues = Object.values(validationObj)
-    if ((this.state.client || this.state.houseKeeper) && stateValues.every(value => value !== undefined)) this.createTask()
+
+    if ((this.state.client || this.state.houseKeeper) && stateValues.every(value => typeof value === 'string' || typeof value === 'object' || value !== 'error')) this.createTask()
     else {
       this.setState({ alertMsg: true })
       for(let key in validationObj) {
-        if(validationObj[key] === undefined ) this.setState({ [`${key}`]: 'error' })
+        if(validationObj[key] === undefined || validationObj[key] === '') this.setState({ [`${key}`]: 'error' })
       }
       if(!this.state.client && !this.state.houseKeeper) this.setState({ atLeastOne: true })
     }

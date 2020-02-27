@@ -6,15 +6,15 @@ export default function AssigneeDropdown ({ coaches, setSelection, requester }) 
   const [ disabled, setDisabled ] = useState(false)
 
   useEffect(() => {
+    let variant = requester || ''
     const findAssignee = () => {
-      let requesterIsACoach = coaches.some( coach => coach.email.toLowerCase() === requester.toLowerCase())
+      let requesterIsACoach = coaches.some( coach => coach.email.toLowerCase() === variant.toLowerCase())
       if(requesterIsACoach === false) {
         setDisabled(true)
         setAssignee('Sara Troisfontaine')
         setSelection({ assignee: 'Sara Troisfontaine'})
       } else {
         setDisabled(false)
-        setAssignee(undefined)
         setSelection({ assignee })
       }
     }
@@ -32,7 +32,6 @@ export default function AssigneeDropdown ({ coaches, setSelection, requester }) 
 
   const handleSelect = e => {
     setAssignee(e.target.value)
-    setSelection({ assignee: e.target.value })
   }
 
   const renderSelection = () => {

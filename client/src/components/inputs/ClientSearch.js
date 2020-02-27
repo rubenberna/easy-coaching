@@ -39,7 +39,7 @@ const StyledClose = styled.span`
 `
 
 const ClientSearch = ({setUser}) => {
-  const [client, setClient] = useState('')
+  const [client, setClient] = useState(undefined)
   const [clientID, setClientID] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)

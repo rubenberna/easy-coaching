@@ -10,6 +10,14 @@ const StyledOR = styled.span`
   font-weight: 300;
 `
 
+const StyledRadioGroup = styled.div`
+  padding-left: 13px;
+  display: grid;
+  grid-auto-columns: auto;
+  grid-row-gap: 5px;
+  grid-column-gap: 5px;
+`
+
 const RequesterInput = ({ coaches, handleSelect, requester }) => {
 
   const [ theRequester, setTheRequester ] = useState('')
@@ -25,17 +33,19 @@ const RequesterInput = ({ coaches, handleSelect, requester }) => {
     <StyledFrame>
       <TextInput
         value={theRequester}
-        label='Requester'
+        label='New requester'
         type='email'
         placeholder='me@easylifedc.be'
         onChange={handleChange}/>
-      <StyledOR>OR</StyledOR>
-      <RadioGroup
-        value={theRequester}
-        withGap
-        onChange={handleChange}
-        options={coachesList}
-      />
+      <StyledRadioGroup>
+        <StyledOR>OR</StyledOR>
+        <RadioGroup
+          value={theRequester}
+          withGap
+          onChange={handleChange}
+          options={coachesList}
+        />
+      </StyledRadioGroup>
     </StyledFrame>
   )
 }
