@@ -75,7 +75,7 @@ class TaskView extends Component {
             <Tab title="Message">
               <AddMessage
                 from={ userLoggedIn ? userLoggedIn.email : task.requester }
-                sendTo={ !userLoggedIn ? task.assigneeEmail : task.requester}
+                sendTo={ !userLoggedIn ? task.assigneeEmail : (task.requester === userLoggedIn.email ? task.assigneeEmail : task.requester)}
                 sendMessage={ this.sendMessage }
                 task={ task }
                 fetchLogs={this.fetchLogs}

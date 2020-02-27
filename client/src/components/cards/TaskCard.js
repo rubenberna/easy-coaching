@@ -6,7 +6,9 @@ class TaskCard extends Component {
 
   renderChangeStatus = () => {
     const { userLoggedIn, task, changeStatus } = this.props
-    if ((userLoggedIn && userLoggedIn.name === task.assignee) || userLoggedIn.admin) return <ChangeStatus task={task} changeStatus={changeStatus}/>
+    if (userLoggedIn) {
+      if (userLoggedIn.name === task.assignee || userLoggedIn.admin) return <ChangeStatus task={task} changeStatus={changeStatus}/>
+    }
   }
 
   renderCancellationReason = () => {

@@ -79,7 +79,7 @@ const taskChanged = (task) => {
   }
 
   const checkIfSaraIsRequester = () => {
-    if(task.requester.toLocaleLowerCase() === 'Sara.troisfontaine@easylifedc.be'.toLocaleLowerCase()) return ''
+    if(task.requester.toLowerCase() === 'Sara.troisfontaine@easylifedc.be'.toLowerCase()) return ''
     else return `<${task.requester}>`
   }
 

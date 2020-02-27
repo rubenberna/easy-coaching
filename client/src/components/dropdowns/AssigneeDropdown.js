@@ -7,7 +7,7 @@ export default function AssigneeDropdown ({ coaches, setSelection, requester }) 
 
   useEffect(() => {
     const findAssignee = () => {
-      let requesterIsACoach = coaches.some( coach => coach.email.toLocaleLowerCase() === requester.toLocaleLowerCase())
+      let requesterIsACoach = coaches.some( coach => coach.email.toLowerCase() === requester.toLowerCase())
       if(requesterIsACoach === false) {
         setDisabled(true)
         setAssignee('Sara Troisfontaine')
