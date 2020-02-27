@@ -101,6 +101,11 @@ $medium-and-down: "only screen and (max-width : #{$medium-screen})" !default;
           color: gray;
         }
       }
+      .btn {
+        padding: 0 12px;
+        font-weight: 100;
+        font-size: 13px;
+      }
     }
     .file-too-big {
       font-size: 12px;

@@ -63,7 +63,7 @@ class AddMessage extends Component {
         <div className='add-message-send'>
           <div className='add-message-send-with-error'>
             <div className='add-message-send-file'>
-              <TextInput type='file' key={ inputKey } onChange={e => this.handleFileUpload(e) } />
+              <TextInput type='file' key={ inputKey } label='upload' onChange={e => this.handleFileUpload(e) } />
               { this.renderClearFileBtn() }
             </div>
             { this.renderFileIsTooBig() }
