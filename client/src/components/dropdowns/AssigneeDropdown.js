@@ -11,13 +11,15 @@ export default function AssigneeDropdown ({ coaches, setSelection, requester }) 
       if(requesterIsACoach === false) {
         setDisabled(true)
         setAssignee('Sara Troisfontaine')
+        setSelection({ assignee: 'Sara Troisfontaine'})
       } else {
         setDisabled(false)
         setAssignee(undefined)
+        setSelection({ assignee })
       }
     }
     findAssignee()
-  }, [requester, assignee, coaches])
+  }, [requester, assignee, coaches, setSelection])
 
 
   const listCoaches = () => {

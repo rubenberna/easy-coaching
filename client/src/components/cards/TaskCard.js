@@ -26,6 +26,9 @@ class TaskCard extends Component {
           <h6><span className='task-spec'>Assigned to: </span>
             { task.assignee }
           </h6>
+          <h6><span className='task-spec'>Requested by: </span>
+            { task.requester ?  task.requester : 'Sara.troisfontaine@easylifedc.be' }
+          </h6>
           <h6><span className='task-spec'>Priority: </span>
             { task.priority }
           </h6>

@@ -65,6 +65,7 @@ class TableTasks extends Component {
           <ExcelColumn label="Title" value="title" />
           <ExcelColumn label="Reason" value="type" />
           <ExcelColumn label="Assignee" value="assignee" />
+          <ExcelColumn label="Requester" value="requester" />
           <ExcelColumn label="Status" value="status" />
           <ExcelColumn label="Requested" value="reqDate" />
           <ExcelColumn label="Start" value="start" />
