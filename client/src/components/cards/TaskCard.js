@@ -20,7 +20,6 @@ class TaskCard extends Component {
 
   render() {
     const { task } = this.props
-    console.log(task.requester);
     return(
       <div>
         <h4>{task.title}</h4>

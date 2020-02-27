@@ -2,13 +2,6 @@ const express = require('express')
 const router = express.Router()
 const firebase = require ('../config/firebaseInit')
 const sendEmail = require('../sendEmail')
-const admin = require("firebase-admin");
-const serviceAccount = require('../../firebase-admin.json');
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://coaching-cb8ef.firebaseio.com"
-});
 
 // Get all coaches
 router.get('/coaches', async (req, res) => {
@@ -122,9 +115,9 @@ router.post('/updateTask', async (req, res) => {
 
 router.post('/addNote', async (req, res) => {
   const { task } = req.body
-  const taskRef = admin.firestore().collection('tasks').doc(task.id)
+  const taskRef = firebase.admin.firestore().collection('tasks').doc(task.id)
   taskRef.update({
-    notes: admin.firestore.FieldValue.arrayUnion(task.note)
+    notes: firebase.admin.firestore.FieldValue.arrayUnion(task.note)
   })
   res.status(200).send('Note added')
 })
