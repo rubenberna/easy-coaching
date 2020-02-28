@@ -30,6 +30,18 @@ table {
   color: #b71c1c;
 }
 
+.low {
+  color: #607d8b;
+}
+
+.moderate {
+  color: #ef6c00;
+}
+
+.urgent {
+  color: #d32f2f;
+}
+
 .table-completed {
   margin-top: 50px;
   @media #{$medium-and-down}  {

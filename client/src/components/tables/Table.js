@@ -134,7 +134,7 @@ class TableTasks extends Component {
             <td onClick={ e => this.viewTaskDetails(task) }>
               { moment(task.start).format("MMM Do,  h:mm a")  || '' }
             </td>
-            <td style={{ textTransform: 'capitalize' }} onClick={ e => this.viewTaskDetails(task) }>
+            <td className={task.priority} onClick={ e => this.viewTaskDetails(task) }>
               { task.priority }
             </td>
             <td onClick={ e => this.viewTaskDetails(task) }>
