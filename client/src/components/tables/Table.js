@@ -48,8 +48,8 @@ class TableTasks extends Component {
             <h6>FILTERS</h6>
             <FilterStatus setFilter={this.setFilter} status={status} />
             <PriorityDropdown setSelection={this.setFilter} priority={priority} namedClass={"filter-dropdown"}/>
-            <Button className='table-hide-completed'  flat onClick={e => this.setState({ hideCompleted: !this.state.hideCompleted })}>{ hideCompleted ? 'Show completed' : 'Hide completed'}</Button>
-            <Button className='table-clear-filter' onClick={e => this.clearFilters()}>Clear</Button>
+            <Button className='table-hide-completed'  flat onClick={e => this.setState({ hideCompleted: !this.state.hideCompleted })}>{ hideCompleted ? 'Show completed / clx' : 'Hide completed / clx'}</Button>
+            <Button className='table-clear-filter' onClick={e => this.clearFilters()}>Clear filters</Button>
             { this.renderExcel() }
           </div>
         </div>
@@ -114,8 +114,8 @@ class TableTasks extends Component {
     if (status && priority) taskList = list.filter(task => task.status === status && task.priority === priority)
     else if (status && !priority) taskList = list.filter(task => task.status === status)
     else if (!status && priority) taskList = list.filter(task => task.priority === priority)
-    else if (hideCompleted) taskList = list.filter(task => task.status !== 'completed')
-    else if (!hideCompleted) taskList = list.filter(task => task.status === 'completed')
+    else if (hideCompleted) taskList = list.filter(task => task.status !== 'completed' && task.status !== 'cancelled')
+    else if (!hideCompleted) taskList = list.filter(task => task.status === 'completed' || task.status === 'cancelled')
     else taskList = list
 
     return taskList.map((task, index) => {
