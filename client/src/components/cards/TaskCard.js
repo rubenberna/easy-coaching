@@ -33,7 +33,7 @@ class TaskCard extends Component {
           </div>
 
             <div className='task-details shorter'>
-            <h6><span className='task-spec'>Priority: </span><span className={task.priority}>{task.priority}</span></h6>
+            <h6><span className='task-spec'>Priority: </span><span style={{ textTransform: 'capitalize'}} className={task.priority}>{task.priority}</span></h6>
             <h6><span className='task-spec'>Date requested: </span>{moment(task.reqDate).format("MMM Do")}</h6>
               <h6><span className='task-spec'>Start: </span>{moment(task.start).format('Do MMMM, h:mm a')}</h6>
               <h6><span className='task-spec'>End: </span>{moment(task.end).format('Do MMMM, h:mm a')}</h6>
