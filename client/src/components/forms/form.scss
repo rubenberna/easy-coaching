@@ -13,7 +13,7 @@ $medium-and-down: "only screen and (max-width : #{$medium-screen})" !default;
   @media #{$medium-and-down}  {
     width: 285px;
     min-width: 0;
-    margin-top: 20px
+    margin-top: 45px
   }
 
   textarea {

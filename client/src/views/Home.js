@@ -19,7 +19,7 @@ export default function Home({ coaches, getTasks }){
   const [ error, setError ] = useState(false)
 
   return(
-    <div className='home container'>
+    <div className='home'>
       <Gallery coaches={coaches} />
       <NewTaskForm coaches={coaches} getTasks={getTasks} setError={setError}/>
       {

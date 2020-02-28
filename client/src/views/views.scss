@@ -33,8 +33,9 @@ input[type=number] {
 
 // Homepage
 .home {
+  margin: 0 100px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   margin-bottom: 40px;
   // position: relative;
   @media #{$medium-and-down}  {
@@ -49,6 +50,7 @@ input[type=number] {
   justify-content: center;
   flex-direction: column;
   .gallery-inner {
+    width: 580px;
     background: #009688;
     display: flex;
     flex-direction: column;
@@ -61,7 +63,9 @@ input[type=number] {
     h4 {
       margin-left: 40px;
     }
-
+    @media #{$medium-and-down}  {
+      width: 270px;
+    }
   }
 
   @media #{$medium-and-down}  {
@@ -70,15 +74,22 @@ input[type=number] {
   }
 
   .gallery-images {
+    width: 460px;
     margin-top: 7px;
     background: #FFF;
     border-radius: 5px;
     padding: 15px;
     color: black;
     display: grid;
-    grid-auto-columns: auto;
+    grid-template-columns: repeat(2, 1fr);
     grid-row-gap: 15px;
     grid-column-gap: 15px;
+
+    @media #{$medium-and-down}  {
+      grid-template-columns: 1fr;
+      width: 210px;
+      grid-row-gap: 5px;
+    }
   }
 }
 
