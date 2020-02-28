@@ -69,7 +69,7 @@ const Dialog = ({modalOpen, currEvent, closeModal }) => {
           <Modal.Title>{currEvent.title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {currEvent.extendedProps.description}
+          {currEvent.extendedProps.description === 'error' ? '' : currEvent.extendedProps.description}
           <br/>
           <h6>Office: { currEvent.extendedProps.office}</h6>
           <h6>Priority: { currEvent.extendedProps.priority ? currEvent.extendedProps.priority.toUpperCase() : 'Low'}</h6>
