@@ -22,7 +22,7 @@ class DetailsCard extends Component {
         <h6><span className='details-card-spec'>Calendar color: </span>
           <span style={{...calendarColorFrame, ...{backgroundColor: coach.calendarColor}}}>he</span>
         </h6>
-        <h6><span className='details-card-spec'>Ongoing Projects:</span></h6>
+        <h6><span className='details-card-spec'>Ongoing Visits:</span></h6>
         <TaskChip taskList={tasks}/>
       </div>
     )
