@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Fjalla+One&display=swap');
+
 $medium-screen: 992px !default;
 $medium-and-down: "only screen and (max-width : #{$medium-screen})" !default;
 
@@ -9,7 +10,7 @@ nav {
       color: #00796b;
     }
     .brand-logo {
-      font-family: 'Shadows Into Light', cursive;
+      font-family: 'Fjalla One', ;
     }
     .logo {
       width: 54px;
