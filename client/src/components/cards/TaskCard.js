@@ -28,13 +28,9 @@ class TaskCard extends Component {
 
           <div className='task-details'>
             <h6><span className='task-spec'>Description: </span>{task.description === 'error' ? 'none' : task.description}</h6>
-            <h6><span className='task-spec'>Assigned to: </span>
-              { task.assignee }
-            </h6>
-            <h6><span className='task-spec'>Requested by: </span>
-              { task.requester }
-            </h6>
-            </div>
+            <h6><span className='task-spec'>Requested by: </span>{ task.requester }</h6>
+            <h6><span className='task-spec'>Assigned to: </span>{ task.assignee }</h6>
+          </div>
 
             <div className='task-details shorter'>
             <h6><span className='task-spec'>Priority: </span><span className={task.priority}>{task.priority}</span></h6>
