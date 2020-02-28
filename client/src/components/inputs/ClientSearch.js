@@ -88,6 +88,7 @@ const ClientSearch = ({setUser}) => {
             <p>Phone: <a href={`tel: ${client.Phone}`}>{client.Phone}</a></p>
             <p>Address: <a href={`https://maps.google.com/?q=${client.MailingAddress.street}, ${client.MailingAddress.city}`} target="_blank" rel="noopener noreferrer">{client.MailingAddress.street}, {client.MailingAddress.city}</a></p>
             <p>Office: <a href={`https://maps.google.com/?q=${client.Account.BillingAddress.street}, ${client.Account.BillingAddress.city}`} target="_blank" rel="noopener noreferrer">{client.Account.Name}</a></p>
+            <p>Frequentie: {client.Frequentie__c}</p>
             <p># Interventions: {!client.Coaching_interventions__c ? 0 : client.Coaching_interventions__c}</p>
             <StyledClose onClick={closeDetails}>x</StyledClose>
           </StyledDetails>

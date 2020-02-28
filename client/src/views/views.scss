@@ -36,6 +36,7 @@ input[type=number] {
   display: flex;
   justify-content: space-between;
   margin-bottom: 40px;
+  // position: relative;
   @media #{$medium-and-down}  {
     flex-direction: column-reverse;
     align-items: center;
@@ -116,11 +117,22 @@ input[type=number] {
     min-height: 320px;
     padding: 20px;
   }
-  .task-spec {
-    font-weight: 600;
-  }
-  a {
-    font-weight: 300;
+
+  .task-card {
+    display: flex;
+    justify-content: space-between;
+    .task-details {
+      width: 60%;
+      .task-spec {
+        font-weight: 600;
+      }
+    }
+    .shorter {
+      width: 35%
+    }
+    a {
+      font-weight: 300;
+    }
   }
 
   .tabs {

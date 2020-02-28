@@ -19,6 +19,7 @@ import ClientSearch from '../inputs/ClientSearch'
 import HKSearch from '../inputs/HKSearch'
 import PriorityDropdown from '../dropdowns/PriorityDropdown'
 import RequesterInput from '../inputs/RequesterInput'
+import WorkingHoursInput from '../inputs/WorkingHoursInput'
 
 import './form.scss'
 
@@ -55,6 +56,8 @@ class NewTaskForm extends Component {
     end: undefined,
     client: undefined,
     houseKeeper: undefined,
+    hkFrom: undefined,
+    hkUntil: undefined,
     status: 'not started',
     reqDate: new Date(),
     requester: undefined,
@@ -94,6 +97,7 @@ class NewTaskForm extends Component {
     if ((this.state.client || this.state.houseKeeper) && stateValues.every(value => typeof value === 'string' || typeof value === 'object' || value !== 'error')) this.createTask()
     else {
       this.setState({ alertMsg: true })
+      // this.props.setError(true)
       for(let key in validationObj) {
         if(validationObj[key] === undefined || validationObj[key] === '') this.setState({ [`${key}`]: 'error' })
       }
@@ -196,6 +200,14 @@ class NewTaskForm extends Component {
         }
         <ClientSearch setUser={this.setUser}/>
         <HKSearch setUser={this.setUser}/>
+        <StyledInput>
+          <WorkingHoursInput
+            requester={requester}
+            coaches={this.props.coaches}
+            handleSelect={this.handleSelectType}
+            houseKeeper={houseKeeper}
+            />
+        </StyledInput>
         <div className='task-form-date'>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker

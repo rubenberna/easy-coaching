@@ -99,6 +99,7 @@ const HKSearch = ({setUser}) => {
             <p>Email: <a href={`mailto:${hk.Email}`} target="_blank" rel="noopener noreferrer">{hk.Email}</a></p>
             <p>Phone: <a href={`tel: ${hk.Phone}`}>{hk.Phone}</a></p>
             <p>Address: <a href={`https://maps.google.com/?q=${hk.MailingAddress.street}, ${hk.MailingAddress.city}`} target="_blank" rel="noopener noreferrer">{hk.MailingAddress.street}, {hk.MailingAddress.city}</a></p>
+            <p>Frequentie: {hk.Frequentie__c}</p>
             <StyledClose onClick={closeDetails}>x</StyledClose>
           </StyledDetails>
         </>
