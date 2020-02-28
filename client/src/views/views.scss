@@ -132,16 +132,16 @@ input[type=number] {
     display: flex;
     justify-content: space-between;
     .task-details {
-      width: 60%;
-      .task-spec {
-        font-weight: 600;
-      }
+      width: 60%;  
     }
     .shorter {
       width: 35%
     }
     a {
       font-weight: 300;
+    }
+    .task-spec {
+      font-weight: 600 !important;
     }
   }
 

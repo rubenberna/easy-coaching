@@ -7,14 +7,19 @@ class TaskCard extends Component {
   renderChangeStatus = () => {
     const { userLoggedIn, task, changeStatus } = this.props
     if (userLoggedIn) {
-      if (userLoggedIn.name === task.assignee || userLoggedIn.admin) return <ChangeStatus task={task} changeStatus={changeStatus}/>
+      if (userLoggedIn.name === task.assignee || userLoggedIn.admin) return (
+        <ChangeStatus task={task} changeStatus={changeStatus}/>
+      )
     }
   }
 
   renderCancellationReason = () => {
     const { task } = this.props
     if(this.props.task.cxlReason) return (
-      <h6><span className='task-spec'>Cancellation reason: </span><span>{task.cxlReason}</span></h6>
+      <h6>
+        <span className='task-spec'>Cancellation reason: </span><
+        span>{task.cxlReason}</span>
+      </h6>
     )
   }
 
@@ -30,6 +35,7 @@ class TaskCard extends Component {
             <h6><span className='task-spec'>Description: </span>{task.description === 'error' ? 'none' : task.description}</h6>
             <h6><span className='task-spec'>Requested by: </span>{ task.requester }</h6>
             <h6><span className='task-spec'>Assigned to: </span>{ task.assignee }</h6>
+            { this.renderCancellationReason() }
           </div>
 
             <div className='task-details shorter'>
@@ -47,7 +53,6 @@ class TaskCard extends Component {
           </div>
 
         </div>
-        { this.renderCancellationReason() }
         { this.renderChangeStatus() }
       </div>
     )
