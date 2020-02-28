@@ -11,14 +11,12 @@ const ImageCard = (props) => {
   const classes = `img-frame ${greyScale} ${bigFrame}`
 
   return(
-    <>
-      <div
-        className={ classes }
-        onClick={ e => props.history.push(`/profile/${coach.name}`) }>
-        <img alt={ coach.name } src={ coach.photo } />
-        <h5>{ coach.name }</h5>
-      </div>
-    </>
+    <div
+      className={ classes }
+      onClick={ e => props.history.push(`/profile/${coach.name}`) }>
+      <img alt={ coach.name } src={ coach.photo } />
+      <h5>{ coach.name }</h5>
+    </div>
   )
 }
 

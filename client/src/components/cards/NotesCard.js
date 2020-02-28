@@ -26,7 +26,7 @@ const NotesCard = ({ task, userLoggedIn }) => {
       setNotesList(notes)
     }
     fetchNotes()
-  }, [task, notesList])
+  }, [task])
 
   const renderInput = () => {
     if(newNote) return <Textarea
@@ -45,11 +45,14 @@ const NotesCard = ({ task, userLoggedIn }) => {
   }
 
   const submitNote = async () => {
-    task.note = noteText
-    await addNote(task)
+    if (notesList) {
+      let list = [...notesList, noteText]
+      setNotesList(list)
+    }
+    else setNotesList([noteText])
     setNewNote(false)
-    const notes = await getNotes(task)
-    setNotesList(notes)
+    task.note = noteText
+    addNote(task)
   }
 
   const renderNotes = () => {
