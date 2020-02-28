@@ -17,7 +17,7 @@ class OngoingProjects extends Component {
   render() {
     return(
       <div className='ongoing-projects'>
-        <h2>Ongoing Projects</h2>
+        <h2>Ongoing Visits</h2>
         <TableTasks list={this.state.tasks} coaches={this.props.coaches} />
       </div>
     )

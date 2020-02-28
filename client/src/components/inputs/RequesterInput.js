@@ -6,6 +6,11 @@ const StyledFrame = styled.div`
 
 `
 
+const StyledCoachesList = styled.div`
+  display: flex;
+  margin-left: 13px;
+`
+
 const StyledOR = styled.span`
   font-weight: 300;
 `
@@ -13,7 +18,7 @@ const StyledOR = styled.span`
 const StyledRadioGroup = styled.div`
   padding-left: 13px;
   display: grid;
-  grid-auto-columns: auto;
+  grid-template-columns: repeat(4, 1fr);
   grid-row-gap: 5px;
   grid-column-gap: 5px;
 `
@@ -37,8 +42,9 @@ const RequesterInput = ({ coaches, handleSelect, requester }) => {
         type='email'
         placeholder='me@easylifedc.be'
         onChange={handleChange}/>
+      <StyledCoachesList>
+      <StyledOR>OR</StyledOR>
       <StyledRadioGroup>
-        <StyledOR>OR</StyledOR>
         <RadioGroup
           value={theRequester}
           withGap
@@ -46,6 +52,7 @@ const RequesterInput = ({ coaches, handleSelect, requester }) => {
           options={coachesList}
         />
       </StyledRadioGroup>
+      </StyledCoachesList>
     </StyledFrame>
   )
 }

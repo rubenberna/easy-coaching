@@ -19,7 +19,7 @@ class Galery extends Component {
     return(
       <div className='gallery'>
         <div className='gallery-inner'>
-          <h1>Meet our team</h1>
+          <h1>Meet our coaching team</h1>
           <div className='gallery-images'>
           { this.renderGallery() }
           </div>

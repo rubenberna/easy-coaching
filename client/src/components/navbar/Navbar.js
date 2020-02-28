@@ -40,7 +40,7 @@ class Nav extends Component {
           Calendar
         </Link>
         <Link to='/ongoing'>
-          Ongoing projects
+          Ongoing visits
         </Link>
         {this.renderOption()}
       </Navbar>
