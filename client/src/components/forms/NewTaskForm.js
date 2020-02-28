@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import styled from 'styled-components'
 import { TextInput, Textarea, Button, Icon } from 'react-materialize'
-import { Alert } from 'react-bootstrap';
 import DateFnsUtils from '@date-io/date-fns';
 import moment from 'moment'
 import {
@@ -63,7 +62,6 @@ class NewTaskForm extends Component {
     requester: undefined,
     ready: false,
     redirect: false,
-    alertMsg: false,
     atLeastOne: false
   }
 
@@ -91,13 +89,12 @@ class NewTaskForm extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault()
-    let validationObj = _.omit(this.state, ['redirect', 'ready', 'date', 'client', 'houseKeeper', 'alertMsg', 'atLeastOne'])
+    let validationObj = _.omit(this.state, ['redirect', 'ready', 'date', 'client', 'houseKeeper', 'atLeastOne'])
     let stateValues = Object.values(validationObj)
 
     if ((this.state.client || this.state.houseKeeper) && stateValues.every(value => typeof value === 'string' || typeof value === 'object' || value !== 'error')) this.createTask()
     else {
-      this.setState({ alertMsg: true })
-      // this.props.setError(true)
+      this.props.setError(true)
       for(let key in validationObj) {
         if(validationObj[key] === undefined || validationObj[key] === '') this.setState({ [`${key}`]: 'error' })
       }
@@ -107,7 +104,7 @@ class NewTaskForm extends Component {
 
   createTask = async () => {
     const { assignee, client, houseKeeper } = this.state
-    const task = _.omit(this.state, ['redirect', 'ready', 'date', 'alertMsg', 'atLeastOne'])
+    const task = _.omit(this.state, ['redirect', 'ready', 'date', 'atLeastOne'])
     const coach = this.props.coaches.find(coach => coach.name === assignee)
     task.coach = coach
     task.clientName = client ? client.Name : 'none'
@@ -133,7 +130,6 @@ class NewTaskForm extends Component {
       ready,
       start,
       date,
-      alertMsg,
       title,
       description,
       assignee,
@@ -148,14 +144,6 @@ class NewTaskForm extends Component {
 
     return(
       <div className='task-form'>
-        { alertMsg &&
-          <Alert
-            variant='danger'
-            onClose={() => this.setState({ alertMsg: false })}
-            dismissible>
-            Some fields are missing
-          </Alert>
-        }
         <h4>New task</h4>
         <StyledInput>
           <TextInput

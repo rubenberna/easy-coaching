@@ -8,11 +8,13 @@ import NewTaskForm from '../components/forms/NewTaskForm'
 
 
 const StyledAlert = styled(Alert)`
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
+  position: fixed;
+  right: 10px;
   height: 50px;
-  z-index: 999;
+  @media (max-width: 992px) {
+    top: 0;
+    right: auto;
+  }
 `
 
 export default function Home({ coaches, getTasks }){
@@ -25,7 +27,7 @@ export default function Home({ coaches, getTasks }){
       {
         error &&
         <StyledAlert
-        variant='warning'
+        variant='danger'
         onClose={() => setError(false)}
         dismissible>
         Some fields are missing
