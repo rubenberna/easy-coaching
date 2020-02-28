@@ -70,8 +70,8 @@ const WorkingHoursInput = ({ requester, coaches, handleSelect, houseKeeper }) =>
         <StyledInnerFrame>
           <StyledHeader>Please enter the House Keeper working hours</StyledHeader>
           <StyledInputGroup>
-            <StyledInput placeholder='09:00' {...from } />
-            <StyledInput placeholder='18:00' {...until}/>
+            <StyledInput placeholder='08:00' {...from } />
+            <StyledInput placeholder='17:00' {...until}/>
           </StyledInputGroup>
           <StyledNote>Office hours are 9am to 6pm</StyledNote>
         </StyledInnerFrame>
