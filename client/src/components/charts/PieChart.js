@@ -25,6 +25,7 @@ const Chart = ({tasks}) => {
     { title: 'Planned', value: getCount('planned'), color: '#63b7af'},
     { title: 'Feedback call', value: getCount('feedback call'), color: '#ee8572'},
     { title: 'Completed', value: getCount('completed'), color: '#347474'},
+    { title: 'Cancelled', value: getCount('cancelled'), color: '#b71c1c'},
   ]
 
   return(
@@ -58,10 +59,11 @@ const Chart = ({tasks}) => {
         <div>
           <p style={textStyle}><span style={{...legendFrame, ...{backgroundColor: '#35495e'}}}>he</span>Not started</p>
           <p style={textStyle}><span style={{...legendFrame, ...{backgroundColor: '#63b7af'}}}>he</span>Planned</p>
+          <p style={textStyle}><span style={{...legendFrame, ...{backgroundColor: '#ee8572'}}}>he</span>Feedback call</p>
         </div>
         <div>
-          <p style={textStyle}><span style={{...legendFrame, ...{backgroundColor: '#ee8572'}}}>he</span>Feedback call</p>
           <p style={textStyle}><span style={{...legendFrame, ...{backgroundColor: '#347474'}}}>he</span>Completed</p>
+          <p style={textStyle}><span style={{...legendFrame, ...{backgroundColor: '#b71c1c'}}}>he</span>Cancelled</p>
         </div>
       </div>
     </>

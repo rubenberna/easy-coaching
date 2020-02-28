@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import moment from 'moment'
 import ChangeStatus from '../dropdowns/ChangeStatusDropdown'
 
@@ -34,7 +35,11 @@ class TaskCard extends Component {
           <div className='task-details'>
             <h6><span className='task-spec'>Description: </span>{task.description === 'error' ? 'none' : task.description}</h6>
             <h6><span className='task-spec'>Requested by: </span>{ task.requester }</h6>
-            <h6><span className='task-spec'>Assigned to: </span>{ task.assignee }</h6>
+            <h6 style={{ cursor: 'pointer' }}
+              onClick={ e => this.props.history.push(`/profile/${task.assignee}`)}>
+              <span className='task-spec'>Assigned to: </span>
+              { task.assignee }
+            </h6>
             { this.renderCancellationReason() }
           </div>
 
@@ -59,4 +64,4 @@ class TaskCard extends Component {
   }
 }
 
-export default TaskCard;
+export default withRouter(TaskCard);
