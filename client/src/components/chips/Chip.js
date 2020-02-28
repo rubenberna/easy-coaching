@@ -13,9 +13,7 @@ const TaskChip = (props) => {
 
   const renderTasks = () => {
     const { taskList } = props
-    console.log(taskList);
-    
-    let incompleteTasks = taskList.filter(task => task.status !== 'complete')
+    let incompleteTasks = taskList.filter(task => task.status !== 'complete' && task.status !== 'cancelled')
     if(!incompleteTasks.length) return <h6>None for the moment...</h6>
     else return (
       incompleteTasks.map((task, i) => <Chip key={i} style={{ cursor: 'pointer' }} onClick={ e => viewTaskDetails(task) }>{task.title}</Chip>)

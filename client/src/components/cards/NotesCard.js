@@ -58,11 +58,7 @@ const NotesCard = ({ task, userLoggedIn }) => {
   const renderNotes = () => {
     if (notesList) return (
       <ul className='collection'>
-        {notesList.map( (note, i) => {
-          return (
-            <li className='collection-item' key={i}>{note}</li>
-          )
-        })}
+        {notesList.map( (note, i) => <li className='collection-item' key={i}>{note}</li>)}
       </ul>
     )
     else return <p>Leave your first note</p>
