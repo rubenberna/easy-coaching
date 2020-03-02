@@ -88,19 +88,28 @@ class NewTaskForm extends Component {
     this.setState({ end: endTime._d })
   }
 
-  handleSubmit = async (e) => {
+  handleSubmit = (e) => {
     e.preventDefault()
-    let validationObj = _.omit(this.state, ['redirect', 'ready', 'date', 'client', 'houseKeeper', 'atLeastOne'])
-    let stateValues = Object.values(validationObj)
+    let allGood = this.validation()
+    if (allGood) this.createTask()
+    else this.props.setError(true)
+  }
 
-    if ((this.state.client || this.state.houseKeeper) && stateValues.every(value => typeof value === 'string' || typeof value === 'object' || value !== 'error')) this.createTask()
-    else {
-      this.props.setError(true)
+  validation = () => {
+    let valid = false
+    let validationObj = _.omit(this.state, ['redirect', 'ready', 'date', 'client', 'houseKeeper', 'atLeastOne', 'reqDate', 'hkWorkingDays', 'hkFrom', 'hkUntil'])
+    let requiredValues = Object.values(validationObj)
+
+    if((this.state.client || this.state.houseKeeper) && requiredValues.every(value => (typeof value === 'string' || typeof value === 'object') && value !== 'error')) {
+      valid = true
+    } else {
+      valid = false
       for(let key in validationObj) {
         if(validationObj[key] === undefined || validationObj[key] === '') this.setState({ [`${key}`]: 'error' })
       }
       if(!this.state.client && !this.state.houseKeeper) this.setState({ atLeastOne: true })
     }
+    return valid
   }
 
   createTask = async () => {

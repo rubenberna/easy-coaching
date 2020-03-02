@@ -57,6 +57,13 @@ export const assignTask = async (task) => {
   return res.data
 }
 
+export const deleteTask = async (task) => {
+  let res = await axios.delete('/api/firebase/deleteTask', {
+    data: {task}
+  })
+  return res.data
+}
+
 export const fetchLogs = async (id) => {
   let res = await axios.post('/api/firebase/fetchLogs', {id})
   return res.data

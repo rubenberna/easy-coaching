@@ -46,7 +46,6 @@ const WorkingHoursInput = ({ requester, coaches, handleSelect, houseKeeper }) =>
   const until = useFormInput("")
   const [ requesterIsCoach, setRequesterIsCoach ] = useState(true)
 
-
   useEffect(() => {
     const checkIfRequesterIsCoach = () => {
       let variant = requester || ''

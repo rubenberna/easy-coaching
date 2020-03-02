@@ -113,6 +113,14 @@ router.post('/updateTask', async (req, res) => {
   res.status(201).send('success')
 })
 
+// Delete task
+router.delete('/deleteTask', async (req, res) => {
+  const { task } = req.body
+  const taskRef = firebase.tasks.doc(task.id).delete()
+  res.status(201).json('deleted')
+})
+
+// Add Note to task
 router.post('/addNote', async (req, res) => {
   const { task } = req.body
   const taskRef = firebase.admin.firestore().collection('tasks').doc(task.id)

@@ -6,7 +6,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction"
 
 import { getTasks, updateTask } from '../modules/dbQueries'
-import Dialog from '../components/modal/Modal'
+import CalendarModal from '../components/modal/CalendarModal'
 import CoachFilter from '../components/buttons/CoachFilter'
 
 const EventDetail = ({ event, el }) => {
@@ -141,7 +141,7 @@ class Calendar extends Component {
         </div>
         <CoachFilter coaches={this.props.coaches} filterCoach={this.filterCoach}/>
         {currEvent &&
-          <Dialog
+          <CalendarModal
             modalOpen={modalOpen}
             currEvent={currEvent}
             closeModal={this.closeModal}/>

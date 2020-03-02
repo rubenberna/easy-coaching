@@ -21,6 +21,13 @@ const WeekdaysCheckbox = ({ handleSelect }) => {
     handleSelect({ hkWorkingDays: weekdays })
   }, [weekdays, handleSelect])
 
+  useEffect(() => {
+    function call() {
+      console.log('hello')
+    }
+    call()
+  }, [])
+
   const handleChange = (e) => {
     let day = e.target.value
     let newList = weekdays.map(d => {

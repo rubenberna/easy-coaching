@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import moment from 'moment'
+
+import { deleteTask } from '../../modules/dbQueries'
 import ChangeStatus from '../dropdowns/ChangeStatusDropdown'
+import DeleteModal from '../modal/DeleteModal'
 
 class TaskCard extends Component {
 
@@ -23,6 +26,22 @@ class TaskCard extends Component {
       </h6>
     )
   }
+
+  handleDelete = async () => {
+    const { task, history } = this.props
+    await deleteTask(task)
+    history.push('/ongoing')
+  }
+
+  renderDelete = () => {
+    const { userLoggedIn } = this.props
+    if(userLoggedIn) {
+      if (userLoggedIn.admin) return (
+        <DeleteModal handleDelete={this.handleDelete}/>
+      )
+    }
+  }
+
 
   render() {
     const { task } = this.props
@@ -55,6 +74,7 @@ class TaskCard extends Component {
             }
             <h6><span className='task-spec'>Reason: </span><span style={{ textTransform: 'capitalize'}}>{task.type}</span></h6>
             <h6><span className='task-spec'>Status: </span><span className={task.status}>{task.status}</span></h6>
+            { this.renderDelete() }
           </div>
 
         </div>
