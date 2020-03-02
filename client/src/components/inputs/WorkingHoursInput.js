@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { TextInput } from 'react-materialize'
 
+import { useFormInput } from '../../modules/hooks'
+import WeekdaysCheckbox from './WeekdaysCheckbox'
+
 const StyledFrame = styled.div`
   background: #f5f5f5;
   border-radius: 25px;
@@ -73,8 +76,9 @@ const WorkingHoursInput = ({ requester, coaches, handleSelect, houseKeeper }) =>
             <StyledInput placeholder='08:00' {...from } />
             <StyledInput placeholder='17:00' {...until}/>
           </StyledInputGroup>
-          <StyledNote>Office hours are 9am to 6pm</StyledNote>
+          <StyledNote>Office hours are 8am to 5pm</StyledNote>
         </StyledInnerFrame>
+        <WeekdaysCheckbox />
       </StyledFrame>
     )
   }
@@ -83,16 +87,3 @@ const WorkingHoursInput = ({ requester, coaches, handleSelect, houseKeeper }) =>
 }
 
 export default WorkingHoursInput;
-
-function useFormInput(initialValue) {
-  const [ value, setValue ] = useState(initialValue)
-
-  function handleChange(e) {
-    setValue(e.target.value)
-  }
-
-  return {
-    value,
-    onChange: handleChange
-  }
-}
