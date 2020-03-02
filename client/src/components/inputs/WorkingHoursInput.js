@@ -78,7 +78,7 @@ const WorkingHoursInput = ({ requester, coaches, handleSelect, houseKeeper }) =>
           </StyledInputGroup>
           <StyledNote>Office hours are 8am to 5pm</StyledNote>
         </StyledInnerFrame>
-        <WeekdaysCheckbox />
+        <WeekdaysCheckbox handleSelect={handleSelect} />
       </StyledFrame>
     )
   }

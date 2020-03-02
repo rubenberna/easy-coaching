@@ -57,6 +57,7 @@ class NewTaskForm extends Component {
     houseKeeper: undefined,
     hkFrom: undefined,
     hkUntil: undefined,
+    hkWorkingDays: [],
     status: 'not started',
     reqDate: new Date(),
     requester: undefined,

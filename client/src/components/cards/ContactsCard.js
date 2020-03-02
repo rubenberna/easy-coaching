@@ -32,6 +32,7 @@ const ContactsCard = ({task}) => {
         <h6><span className='task-spec'>From: </span>{task.hkFrom}</h6>
         <h6><span className='task-spec'>Until: </span>{task.hkUntil}</h6>
         <h6><span className='task-spec'>Frequentie: </span>{task.houseKeeper.Frequentie__c}</h6>
+        <h6><span className='task-spec'>Working days: </span>{ hkWorkingDays() }</h6>
       </div>
     )
   }
@@ -39,6 +40,14 @@ const ContactsCard = ({task}) => {
   const lackOfDetails = () => {
     if (!task.houseKeeper) return <h6>*Client coaching only</h6>
     if (!task.client) return <h6>*HouseKeeper coaching only</h6>
+  }
+
+  const hkWorkingDays = () => {
+    if(task.hkWorkingDays) {
+      let workingDays = task.hkWorkingDays.filter(d => d.value === true)
+      return workingDays.map((day, i) =>
+      <span key={i}> {day.name.substring(0, 2).toUpperCase()} </span>)
+    } else return 'n/a'
   }
 
   return(

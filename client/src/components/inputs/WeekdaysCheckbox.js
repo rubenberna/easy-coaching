@@ -1,4 +1,4 @@
-import React,  {useState} from 'react'
+import React,  {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import { Checkbox } from 'react-materialize'
 
@@ -8,7 +8,7 @@ const StyledCheckboxGroup = styled.div`
   padding: 0 35px;
 `
 
-const WeekdaysCheckbox = () => {
+const WeekdaysCheckbox = ({ handleSelect }) => {
   let [weekdays, setWeekdays] = useState([
     { name: 'maandag', value: false },
     { name: 'dinsdag', value: false },
@@ -16,6 +16,10 @@ const WeekdaysCheckbox = () => {
     { name: 'donderdag', value: false },
     { name: 'vrijdag', value: false }
   ])
+
+  useEffect(() => {
+    handleSelect({ hkWorkingDays: weekdays })
+  }, [weekdays, handleSelect])
 
   const handleChange = (e) => {
     let day = e.target.value
