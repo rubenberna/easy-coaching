@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { withRouter } from 'react-router-dom'
-import { Table, Icon, Button } from "react-materialize"
+import { Table, Icon, Button, Pagination } from "react-materialize"
 import moment from 'moment'
 import ReactExport from "react-export-excel";
 
@@ -8,16 +8,18 @@ import './table.scss'
 import Loader from '../loader/Loader'
 import { pokeDev } from '../../modules/poke'
 import FilterStatus from '../dropdowns/FilterStatusDropdown'
-import PriorityDropdown from '../dropdowns/PriorityDropdown'
+import FilterAssigneeDropdown from '../dropdowns/FilterAssigneeDropdown'
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 const initialState = {
-  status: '',
-  priority: '',
-  hideCompleted: true
+  status: undefined,
+  assignee: undefined,
+  hideCompleted: true,
+  activePage: 1,
+  max: 3
 }
 
 class TableTasks extends Component {
@@ -25,33 +27,44 @@ class TableTasks extends Component {
   state = initialState
 
   renderTable = () => {
-    const { list } = this.props;
-    const { status, priority, hideCompleted } = this.state
+    const { list, coaches } = this.props;
+    const { status, hideCompleted, assignee, activePage, max } = this.state
     if (!list) return <Loader/>
     else {
       return(
-        <div className='table-board'>
-          <Table className='highlight'>
-            <thead>
-              <tr>
-                <th data-field="title">Title</th>
-                <th data-field="dev">Assigned to</th>
-                <th data-field="status">Status</th>
-                <th data-field="date">Scheduled</th>
-                <th data-field="priority">Priority</th>
-                <th data-field="date">Requested</th>
-              </tr>
-            </thead>
-            { this.renderTaskBody() }
-          </Table>
-          <div className='table-board-filters'>
-            <h6>FILTERS</h6>
-            <FilterStatus setFilter={this.setFilter} status={status} />
-            <PriorityDropdown setSelection={this.setFilter} priority={priority} namedClass={"filter-dropdown"}/>
-            <Button className='table-hide-completed'  flat onClick={e => this.setState({ hideCompleted: !this.state.hideCompleted })}>{ hideCompleted ? 'Show completed / clx' : 'Hide completed / clx'}</Button>
-            <Button className='table-clear-filter' onClick={e => this.clearFilters()}>Clear filters</Button>
-            { this.renderExcel() }
+        <div>
+          <div className='table-board'>
+            <Table className='highlight'>
+              <thead>
+                <tr>
+                  <th data-field="title">Title</th>
+                  <th data-field="dev">Assigned to</th>
+                  <th data-field="status">Status</th>
+                  <th data-field="date">Scheduled</th>
+                  <th data-field="priority">Priority</th>
+                  <th data-field="date">Requested</th>
+                </tr>
+              </thead>
+              { this.renderTaskBody() }
+            </Table>
+            <div className='table-board-filters'>
+              <h6>FILTERS</h6>
+              <FilterStatus setFilter={this.setFilter} status={status} />
+              <FilterAssigneeDropdown setFilter={this.setFilter} coaches={coaches} assignee={assignee}/>
+              <Button className='table-hide-completed'  flat onClick={e => this.setState({ hideCompleted: !this.state.hideCompleted })}>{ hideCompleted ? 'Show completed / clx' : 'Hide completed / clx'}</Button>
+              <Button className='table-clear-filter' onClick={e => this.clearFilters()}>Clear filters</Button>
+              { this.renderExcel() }
+            </div>
           </div>
+          <br/>
+          <Pagination
+            activePage={activePage}
+            items={Math.floor(list.length / 10)}
+            leftBtn={<Icon>chevron_left</Icon>}
+            maxButtons={Math.floor(list.length / 10)}
+            rightBtn={<Icon>chevron_right</Icon>}
+            onSelect={e => this.setState({ activePage: e })}
+          />
         </div>
       )
     }
@@ -106,19 +119,28 @@ class TableTasks extends Component {
     else return <div onClick={e => this.poke(index, task)}><Icon className='intermitent'>notifications_active</Icon></div>
   }
 
-  renderTaskBody = () => {
-    let taskList = []
-    const { list } = this.props
-    const { status, priority, hideCompleted } = this.state
+  setMaxPaginationItems = length => {
+    this.setState({ max: Math.floor(length / 10) })
+  }
 
-    if (status && priority) taskList = list.filter(task => task.status === status && task.priority === priority)
-    else if (status && !priority) taskList = list.filter(task => task.status === status)
-    else if (!status && priority) taskList = list.filter(task => task.priority === priority)
+  renderTaskBody = () => {
+    const { list } = this.props
+    let taskList = []
+
+    const { status, assignee, hideCompleted, activePage } = this.state
+
+    if (status && assignee) taskList = list.filter(task => task.status === status && task.assignee === assignee)
+    else if (status && !assignee) taskList = list.filter(task => task.status === status)
+    else if (!status && assignee) taskList = list.filter(task => task.assignee === assignee)
     else if (hideCompleted) taskList = list.filter(task => task.status !== 'completed' && task.status !== 'cancelled')
     else if (!hideCompleted) taskList = list.filter(task => task.status === 'completed' || task.status === 'cancelled')
     else taskList = list
 
-    return taskList.map((task, index) => {
+    // this.setMaxPaginationItems(taskList.length)
+    let start = (activePage - 1) * 10
+    let end = start + 10
+
+    return taskList.slice(start, end).map((task, index) => {
       return (
         <tbody key={index} style={{ cursor: 'pointer' }}>
           <tr className='table-row'>

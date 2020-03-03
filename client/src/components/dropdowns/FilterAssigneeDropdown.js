@@ -21,7 +21,7 @@ class StatusDropdown extends Component {
   render () {
     return(
       <div className="filter-dropdown">
-        <Select onChange={this.actionHandler}>
+        <Select onChange={this.actionHandler} value={this.props.assignee}>
           <option disabled value="" defaultValue>
             Coaches Filter
           </option>
