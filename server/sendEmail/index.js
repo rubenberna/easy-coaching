@@ -18,13 +18,20 @@ const taskCreated = (task) => {
   }
 
   const houseKeeperDetails = () => {
-    if (task.houseKeeper) return (
+    if (task.houseKeeper) {
+      let workingDays = task.hkWorkingDays.filter(d => d.value === true)
+
+      return (
       `<p>HouseKeeper details:</p>
       <hr />
       <p><span><b>Name:</b></span> ${task.houseKeeper.Name}</p>
       <p><span><b>Email:</b></span> <a href="mailto:${task.houseKeeper.Email}" target="_blank">${task.houseKeeper.Email}</a></p>
-      <p><span><b>Phone:</b></span> <a href="tel: ${task.houseKeeper.Phone}">${task.houseKeeper.Phone}</a></p>`
-    )
+      <p><span><b>Phone:</b></span> <a href="tel: ${task.houseKeeper.Phone}">${task.houseKeeper.Phone}</a></p>
+      <p><span><b>From:</b></span> ${task.hkFrom}</p>
+      <p><span><b>Until:</b></span> ${task.hkUntil}</p>
+      <p><span><b>Days:</b></span> ${workingDays.map(day => `<span> ${day.name.toUpperCase()}</span>`)}</p>
+      `
+    )}
     else return `<p>*Coaching is only for the client.</p>`
   }
 
