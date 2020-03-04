@@ -12,7 +12,7 @@ class FilterAssigneeDropdown extends Component {
 
   actionHandler = (e) => {
     let status = e.target.value.toLowerCase()
-    this.props.setFilter({ status })
+    this.props.setFilter({ filteredStatus: status })
   }
 
   listStatus = () => {

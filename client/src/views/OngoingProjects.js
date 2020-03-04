@@ -6,7 +6,9 @@ import TableTasks from '../components/tables/Table'
 
 class OngoingProjects extends Component {
   state = {
-    tasks: []
+    tasks: [],
+    filteredAssignee: undefined,
+    filteredStatus: undefined
   }
 
   async componentDidMount() {
@@ -14,11 +16,26 @@ class OngoingProjects extends Component {
     this.setState({ tasks })
   }
 
+  changeTaskList = filters => {
+
+  }
+
+  setFilter = filter => {
+    console.log(filter);
+    this.setState({...filter})
+    this.changeTaskList()
+  }
+
   render() {
     return(
       <div className='ongoing-projects'>
         <h2>Ongoing Visits</h2>
-        <TableTasks list={this.state.tasks} coaches={this.props.coaches} />
+        <TableTasks
+          list={this.state.tasks}
+          coaches={this.props.coaches}
+          changeTaskList={this.changeTaskList}
+          setFilter={this.setFilter}
+          />
       </div>
     )
   }

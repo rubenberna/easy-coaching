@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { withRouter } from 'react-router-dom'
 import { Table, Icon, Button, Pagination } from "react-materialize"
 import moment from 'moment'
+import _ from 'lodash'
 import ReactExport from "react-export-excel";
 
 import './table.scss'
@@ -24,10 +25,16 @@ const initialState = {
 
 class TableTasks extends Component {
 
-  state = initialState
+  state = {
+    status: undefined,
+    assignee: undefined,
+    hideCompleted: true,
+    activePage: 1,
+    max: 3
+  }
 
   renderTable = () => {
-    const { list, coaches } = this.props;
+    const { list, coaches, setFilter } = this.props;
     const { status, hideCompleted, assignee, activePage, max } = this.state
     if (!list) return <Loader/>
     else {
@@ -49,8 +56,8 @@ class TableTasks extends Component {
             </Table>
             <div className='table-board-filters'>
               <h6>FILTERS</h6>
-              <FilterStatus setFilter={this.setFilter} status={status} />
-              <FilterAssigneeDropdown setFilter={this.setFilter} coaches={coaches} assignee={assignee}/>
+              <FilterStatus setFilter={setFilter} status={status} />
+              <FilterAssigneeDropdown setFilter={setFilter} coaches={coaches} assignee={assignee}/>
               <Button className='table-hide-completed'  flat onClick={e => this.setState({ hideCompleted: !this.state.hideCompleted })}>{ hideCompleted ? 'Show completed / clx' : 'Hide completed / clx'}</Button>
               <Button className='table-clear-filter' onClick={e => this.clearFilters()}>Clear filters</Button>
               { this.renderExcel() }
@@ -95,6 +102,8 @@ class TableTasks extends Component {
 
   setFilter = (filter) => {
     this.setState({...filter})
+    let filters = _.omit(this.state, ['hideCompleted', ''])
+    this.props.changeTaskList(this.state)
   }
 
   clearFilters = () => {
