@@ -5,7 +5,7 @@ class StatusDropdown extends Component {
 
   actionHandler = (e) => {
     let assignee = e.target.value
-    this.props.setFilter({ filteredAssignee: assignee })
+    this.props.setFilter({ assignee })
   }
 
   listAssignees = () => {

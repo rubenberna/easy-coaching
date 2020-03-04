@@ -6,13 +6,14 @@ const statusList = [
   { key: 2, name: 'Planned'},
   { key: 3, name: 'Feedback call'},
   { key: 4, name: 'Completed'},
+  { key: 5, name: 'Cancelled'},
 ]
 
 class FilterAssigneeDropdown extends Component {
 
   actionHandler = (e) => {
     let status = e.target.value.toLowerCase()
-    this.props.setFilter({ filteredStatus: status })
+    this.props.setFilter({ status })
   }
 
   listStatus = () => {
