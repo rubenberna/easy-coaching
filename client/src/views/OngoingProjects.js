@@ -17,10 +17,11 @@ class OngoingProjects extends Component {
 
   async componentDidMount() {
     const tasks = await getTasks()
+    let paginationItems = Math.floor(tasks.length / 10)
     this.setState({
       tasks,
       taskList: tasks,
-      maxItems: Math.floor(tasks.length / 10) > 0 ? Math.floor(tasks.length / 10) : 1
+      maxItems: paginationItems > 0 ? paginationItems : 1
     })
 
   }
@@ -38,9 +39,11 @@ class OngoingProjects extends Component {
         newList = newList.filter(t => t[filter] === filters[filter])
       }
     }
+
+    let paginationItems = Math.floor(newList.length / 10)
     this.setState({
       taskList: newList,
-      maxItems: Math.floor(newList.length / 10) > 0 ? Math.floor(newList.length / 10) : 1,
+      maxItems: paginationItems > 0 ? paginationItems : 1,
       activePage: 1
     })
   }
