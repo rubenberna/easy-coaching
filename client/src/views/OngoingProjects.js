@@ -20,7 +20,7 @@ class OngoingProjects extends Component {
     this.setState({
       tasks,
       taskList: tasks,
-      maxItems: Math.floor(tasks.length / 10)
+      maxItems: Math.floor(tasks.length / 10) > 0 ? Math.floor(tasks.length / 10) : 1
     })
 
   }
@@ -40,7 +40,7 @@ class OngoingProjects extends Component {
     }
     this.setState({
       taskList: newList,
-      maxItems: Math.floor(newList.length / 10),
+      maxItems: Math.floor(newList.length / 10) > 0 ? Math.floor(newList.length / 10) : 1,
       activePage: 1
     })
   }
