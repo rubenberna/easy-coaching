@@ -22,7 +22,7 @@ class OngoingProjects extends Component {
     let paginationItems = Math.floor(tasks.length / 10)
     this.setState({
       tasks,
-      taskList: onlyActive,
+      taskList: onlyActive.sort((a, b) => (a.start > b.start) ? 1 : -1),
       maxItems: paginationItems > 0 ? paginationItems : 1
     })
   }
@@ -44,7 +44,7 @@ class OngoingProjects extends Component {
 
     let paginationItems = Math.floor(newList.length / 10)
     this.setState({
-      taskList: newList,
+      taskList: newList.sort((a, b) => (a.start > b.start) ? 1 : -1),
       maxItems: paginationItems > 0 ? paginationItems : 1,
       activePage: 1
     })
