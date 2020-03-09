@@ -9,6 +9,7 @@ class OngoingProjects extends Component {
     tasks: [],
     assignee: undefined,
     status: undefined,
+    priority: undefined,
     taskList: [],
     maxItems: null,
     hideCompleted: true,
@@ -17,20 +18,22 @@ class OngoingProjects extends Component {
 
   async componentDidMount() {
     const tasks = await getTasks()
+    let onlyActive = tasks.filter(task => (task.status !== 'completed' && task.status !== 'cancelled'))
     let paginationItems = Math.floor(tasks.length / 10)
     this.setState({
       tasks,
-      taskList: tasks,
+      taskList: onlyActive,
       maxItems: paginationItems > 0 ? paginationItems : 1
     })
   }
 
   changeTaskList = () => {
-    const { tasks, status, assignee } = this.state
+    const { tasks, status, assignee, priority } = this.state
     let newList = tasks
     let filters = {
       status,
-      assignee
+      assignee,
+      priority
     }
 
     for (let filter in filters) {
@@ -65,7 +68,7 @@ class OngoingProjects extends Component {
     await this.setState({ hideCompleted: !this.state.hideCompleted })
     if (!this.state.hideCompleted) {
       newList = this.state.tasks.filter(task => (task.status === 'completed' || task.status === 'cancelled'))
-    } else newList = this.state.tasks
+    } else newList = this.state.tasks.filter(task => (task.status !== 'completed' && task.status !== 'cancelled'))
     this.setState({
       taskList: newList,
       activePage: 1
@@ -94,6 +97,7 @@ class OngoingProjects extends Component {
           hideCompleted={this.state.hideCompleted}
           activePage={this.state.activePage}
           setActivePage={this.setActivePage}
+          priority={this.state.priority}
         />
       </div>
     )

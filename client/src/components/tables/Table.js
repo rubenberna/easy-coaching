@@ -8,6 +8,7 @@ import './table.scss'
 import Loader from '../loader/Loader'
 import FilterStatus from '../dropdowns/FilterStatusDropdown'
 import FilterAssigneeDropdown from '../dropdowns/FilterAssigneeDropdown'
+import FilterPriority from '../dropdowns/FilterPriority'
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -24,6 +25,7 @@ class TableTasks extends Component {
       clearFilters,
       assignee,
       status,
+      priority,
       toggleCompleted,
       hideCompleted,
       activePage,
@@ -52,6 +54,7 @@ class TableTasks extends Component {
               <h6>FILTERS</h6>
               <FilterStatus setFilter={setFilter} status={status} />
               <FilterAssigneeDropdown setFilter={setFilter} coaches={coaches} assignee={assignee}/>
+              <FilterPriority setFilter={setFilter} priority={priority}/>
               <Button className='table-hide-completed'  flat onClick={toggleCompleted}>{ hideCompleted ? 'Show completed / clx' : 'Hide completed / clx'}</Button>
               <Button className='table-clear-filter' onClick={clearFilters}>Clear filters</Button>
               { this.renderExcel() }
