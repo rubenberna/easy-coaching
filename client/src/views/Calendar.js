@@ -58,7 +58,7 @@ class Calendar extends Component {
         assignee: t.assignee,
         reqDate: t.reqDate,
         textColor: '#FFF',
-        backgroundColor: t.type.toLocaleLowerCase() === 'starter' ? '#ffd600' : t.coach.calendarColor,
+        backgroundColor: t.type.toLocaleLowerCase() === 'starter' ? '#ffd600' : this.getCalendarColor(t),
         client: t.client ? t.client.Name : 'none',
         clientEmail: t.client ? t.client.Email : 'no client',
         clientPhone: t.client ? t.client.Phone : 'no client',
@@ -74,6 +74,11 @@ class Calendar extends Component {
       }
     ))
     return events
+  }
+
+  getCalendarColor = task => {
+    const coach = this.props.coaches.find( coach => coach.name === task.assignee)
+    return coach.calendarColor
   }
 
   handleDateClick = arg => {

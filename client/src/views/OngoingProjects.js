@@ -23,7 +23,6 @@ class OngoingProjects extends Component {
       taskList: tasks,
       maxItems: paginationItems > 0 ? paginationItems : 1
     })
-
   }
 
   changeTaskList = () => {
