@@ -214,7 +214,8 @@ class NewTaskForm extends Component {
               format="MM/dd/yyyy"
               margin="normal"
               id="date-picker-inline"
-              label="Start date"
+              className={date ? 'start-visible' : 'start-invisible'}
+              label="Selecteer een datum"
               value={date}
               onChange={e => this.setState({ date: e })}
               KeyboardButtonProps={{
@@ -223,9 +224,10 @@ class NewTaskForm extends Component {
             />
             <KeyboardTimePicker
               margin="normal"
-              label="Start Time"
+              label="Selecteer een uur"
               ampm={false}
               value={start}
+              className={start ? 'start-visible' : 'start-invisible'}
               disabled={!date ? true : false}
               onChange={e => this.handleStartTime(e) }
               KeyboardButtonProps={{
