@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import Loadable from "react-loadable"
 import { BounceLoader } from "react-spinners"
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -78,37 +78,47 @@ class App extends Component {
                 coaches={coaches}
                 getTasks={this.getTasks}
               />
-              <Route
+              <PrivateRoute
                 path="/ongoing"
-                render={props => <OngoingProjects {...props} coaches={coaches} />}
+                component={OngoingProjects}
+                coaches={coaches}
               />
-              <Route
+              <PrivateRoute
                 path="/profile/:name"
                 component={CoachProfile}
               />
-              <Route
+              <PrivateRoute
                 path="/task/:title"
-                render={props => <TaskView {...props} userLoggedIn={user} coaches={coaches} />}
+                component={TaskView}
+                userLoggedIn={user}
+                coaches={coaches}
               />
-              <Route
+              <PrivateRoute
                 path="/login"
                 exact
-                render={props => <Login {...props} coaches={coaches} setCoach={this.setCoach}/>}
+                component={Login}
+                coaches={coaches}
+                setCoach={this.setCoach}
               />
-              <Route
+              <PrivateRoute
                 path="/admin"
                 exact
-                render={props => <Admin {...props} coaches={coaches} getCoaches={this.getCoachesCall}/>}
+                component={Admin}
+                coaches={coaches}
+                getCoaches={this.getCoachesCall}
               />
-              <Route
+              <PrivateRoute
                 path="/nps"
                 exact
-                render={props => <LoadableNPS />}
+                component={LoadableNPS}
               />
-              <Route
+              <PrivateRoute
                 path="/calendar"
                 exact
-                render={props => <LoadableCalendar {...props} coaches={coaches} user={user} tasks={tasks}/>}
+                component={LoadableCalendar}
+                coaches={coaches}
+                user={user}
+                tasks={tasks}
               />
             </>
           </BrowserRouter>
