@@ -12,6 +12,8 @@ import CoachProfile from '../views/CoachProfile'
 import TaskView from '../views/TaskView'
 import Login from '../views/Login'
 import Admin from '../views/Admin'
+import { AuthProvider } from './auth/Auth'
+import PrivateRoute from './auth/PrivateRoute'
 
 const LoadableCalendar = Loadable({
   loader: () => import("../views/Calendar"),
@@ -65,48 +67,52 @@ class App extends Component {
     const { user, coaches, tasks } = this.state
     return (
       <>
-        <BrowserRouter>
-          <Nav user={user} logout={this.logoutUser}/>
-          <>
-            <Route
-              path="/"
-              exact
-              render={props => <Home {...props} coaches={coaches} getTasks={this.getTasksCall}/>}
-            />
-            <Route
-              path="/ongoing"
-              render={props => <OngoingProjects {...props} coaches={coaches} />}
-            />
-            <Route
-              path="/profile/:name"
-              component={CoachProfile}
-            />
-            <Route
-              path="/task/:title"
-              render={props => <TaskView {...props} userLoggedIn={user} coaches={coaches} />}
-            />
-            <Route
-              path="/login"
-              exact
-              render={props => <Login {...props} coaches={coaches} setCoach={this.setCoach}/>}
-            />
-            <Route
-              path="/admin"
-              exact
-              render={props => <Admin {...props} coaches={coaches} getCoaches={this.getCoachesCall}/>}
-            />
-            <Route
-              path="/nps"
-              exact
-              render={props => <LoadableNPS />}
-            />
-            <Route
-              path="/calendar"
-              exact
-              render={props => <LoadableCalendar {...props} coaches={coaches} user={user} tasks={tasks}/>}
-            />
-          </>
-        </BrowserRouter>
+        <AuthProvider>
+          <BrowserRouter>
+            <Nav user={user} logout={this.logoutUser}/>
+            <>
+              <PrivateRoute
+                path="/"
+                exact
+                component={Home}
+                coaches={coaches}
+                getTasks={this.getTasks}
+              />
+              <Route
+                path="/ongoing"
+                render={props => <OngoingProjects {...props} coaches={coaches} />}
+              />
+              <Route
+                path="/profile/:name"
+                component={CoachProfile}
+              />
+              <Route
+                path="/task/:title"
+                render={props => <TaskView {...props} userLoggedIn={user} coaches={coaches} />}
+              />
+              <Route
+                path="/login"
+                exact
+                render={props => <Login {...props} coaches={coaches} setCoach={this.setCoach}/>}
+              />
+              <Route
+                path="/admin"
+                exact
+                render={props => <Admin {...props} coaches={coaches} getCoaches={this.getCoachesCall}/>}
+              />
+              <Route
+                path="/nps"
+                exact
+                render={props => <LoadableNPS />}
+              />
+              <Route
+                path="/calendar"
+                exact
+                render={props => <LoadableCalendar {...props} coaches={coaches} user={user} tasks={tasks}/>}
+              />
+            </>
+          </BrowserRouter>
+        </AuthProvider>
       </>
     )
   }

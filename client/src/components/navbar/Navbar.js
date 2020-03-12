@@ -1,20 +1,24 @@
-import React, { Component } from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { Navbar, NavItem } from 'react-materialize'
+import { AuthContext } from '../auth/Auth'
+
 import logo from '../../assets/logo.svg'
+import firebaseApp from '../../config/firebaseConfig'
 
 import './navbar.scss'
 
-class Nav extends Component {
+const Nav = (props) => {
+  const { currentUser } = useContext(AuthContext)
 
-  renderOption = () => {
-    const { user } = this.props
-    if(!user) return <Link to='/login'>Login</Link>
-    else return <NavItem onClick={ this.props.logout }>Logout</NavItem>
+  const renderOption = () => {
+    const { user } = props
+    if(!currentUser) return <Link to='/login'>Login</Link>
+    else return <NavItem onClick={ () => {props.logout(); firebaseApp.auth().signOut() }}>Logout</NavItem>
   }
 
-  renderDevPhoto = () => {
-    const { user } = this.props
+  const renderDevPhoto = () => {
+    const { user } = props
     if(user) return (
       <Link className='navbar-photo' to={`/profile/${user.name}`}>
         <img alt={ user.name } src={ user.photo } />
@@ -22,8 +26,8 @@ class Nav extends Component {
     )
   }
 
-  renderAdminLink = () => {
-    const { user } = this.props
+  const renderAdminLink = () => {
+    const { user } = props
     if (user && user.admin) return (
       <Link to='/admin'>
         Admin
@@ -31,21 +35,22 @@ class Nav extends Component {
     )
   }
 
-  render() {
-    return(
-      <Navbar brand={<Link to='/'><img src={logo} alt="Logo" className="logo"/><span>Coaching</span></Link>} alignLinks="right">
-        { this.renderDevPhoto() }
-        { this.renderAdminLink() }
-        <Link to='/calendar'>
-          Calendar
-        </Link>
-        <Link to='/ongoing'>
-          Ongoing visits
-        </Link>
-        {this.renderOption()}
-      </Navbar>
-    )
-  }
+  return(
+    <Navbar brand={<Link to='/'><img src={logo} alt="Logo" className="logo"/><span>Coaching</span></Link>} alignLinks="right">
+      { renderDevPhoto() }
+      { renderAdminLink() }
+      <Link to='/calendar'>
+        Calendar
+      </Link>
+      <Link to='/ongoing'>
+        Ongoing visits
+      </Link>
+      {renderOption()}
+    </Navbar>
+  )
 }
 
 export default Nav;
+
+//Sara.troisfontaine@easylifedc.be
+//Sara3Fontaine

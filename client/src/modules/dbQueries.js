@@ -1,8 +1,6 @@
 import axios from 'axios';
-import firebase from 'firebase'
-import firebaseConfig from '../config/firebaseConfig'
+import firebaseApp from '../config/firebaseConfig'
 import { reassignTaskSF, changeTaskStatusSF, createTaskSF } from './sfQueries'
-firebase.initializeApp(firebaseConfig)
 
 export const getCoaches = async () => {
   let res = await axios.get('/api/firebase/coaches')
@@ -107,7 +105,7 @@ export const editCoach = async (coach) => {
 }
 
 const uploadPhoto = async photo => {
-  const storageRef = firebase.storage().ref('photos');
+  const storageRef = firebaseApp.storage().ref('photos');
   const imageRef = storageRef.child(photo.name)
   const upload = await imageRef.put(photo)
   const url = await upload.ref.getDownloadURL()
