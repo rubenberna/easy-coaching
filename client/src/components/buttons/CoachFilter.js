@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { RadioGroup } from 'react-materialize'
+import { AuthContext } from '../../auth/Auth'
 import styled from 'styled-components'
 
 const ButtonsList = styled.div`
@@ -15,8 +16,10 @@ const Header = styled.h4`
   margin-bottom: 15px;
 `
 
-const CoachFilter = ({coaches, filterCoach}) => {
+const CoachFilter = ({filterCoach}) => {
   const [coach, setCoach] = useState('')
+  const { coaches } = useContext(AuthContext)
+
   useEffect(() => {
     filterCoach(coach)
   }, [coach, filterCoach])

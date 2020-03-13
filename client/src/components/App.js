@@ -89,7 +89,6 @@ class App extends Component {
                 path="/task/:title"
                 component={TaskView}
                 userLoggedIn={user}
-                coaches={coaches}
               />
               <Route
                 path="/login"
@@ -113,8 +112,6 @@ class App extends Component {
                 path="/calendar"
                 exact
                 component={LoadableCalendar}
-                coaches={coaches}
-                user={user}
                 tasks={tasks}
               />
             </>

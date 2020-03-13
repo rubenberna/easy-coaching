@@ -4,7 +4,7 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction"
-
+import { AuthContext } from '../auth/Auth'
 import { getTasks, updateTask } from '../services/dbQueries'
 import CalendarModal from '../components/modal/CalendarModal'
 import CoachFilter from '../components/buttons/CoachFilter'
@@ -28,6 +28,8 @@ class Calendar extends Component {
     selectedCoach: ''
   }
 
+  static contextType = AuthContext
+
   async componentDidMount() {
     const tasks = await getTasks()
     this.setState({ tasks  })
@@ -38,10 +40,10 @@ class Calendar extends Component {
   calendarComponentRef = React.createRef()
 
   checkIfEventIsEditable = (task) => {
-    const { user } = this.props
-    if (!user) return false
-    else if (task.type.toLocaleLowerCase() === 'starter' && !user.admin) return false
-    else if (user.admin) return true
+    const { userProfile } = this.context
+    if (!userProfile) return false
+    else if (task.type.toLocaleLowerCase() === 'starter' && !userProfile.admin) return false
+    else if (userProfile.admin) return true
   }
 
   tasksList = () => {
@@ -77,7 +79,7 @@ class Calendar extends Component {
   }
 
   getCalendarColor = task => {
-    const coach = this.props.coaches.find( coach => coach.name === task.assignee)
+    const coach = this.context.coaches.find( coach => coach.name === task.assignee)
     return coach.calendarColor
   }
 
@@ -144,7 +146,7 @@ class Calendar extends Component {
             eventRender={EventDetail}
           />
         </div>
-        <CoachFilter coaches={this.props.coaches} filterCoach={this.filterCoach}/>
+        <CoachFilter filterCoach={this.filterCoach}/>
         {currEvent &&
           <CalendarModal
             modalOpen={modalOpen}

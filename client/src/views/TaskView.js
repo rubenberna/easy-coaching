@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { Tabs, Tab } from 'react-materialize'
+import { AuthContext } from '../auth/Auth'
 import RadioButtons from '../components/forms/RadioButtons'
 import AddMessage from '../components/forms/AddMessage'
 import { changeTaskStatus, assignTask, fetchLogs } from '../services/dbQueries'
@@ -15,10 +16,12 @@ class TaskView extends Component {
     logs: [],
   }
 
+  static contextType = AuthContext
+
   renderAssignSelection = () => {
-    const { userLoggedIn } = this.props
-    if (userLoggedIn && userLoggedIn.admin) return (
-      <RadioButtons assign={this.assignTask} coaches={this.props.coaches}/>
+    const { userProfile } = this.context
+    if (userProfile && userProfile.admin) return (
+      <RadioButtons assign={this.assignTask} />
     )
   }
 
@@ -33,8 +36,7 @@ class TaskView extends Component {
 
   assignTask = async (coachName) => {
     const { task } = this.props.location.state
-    const coach = this.props.coaches.find(coach => coach.name === coachName)
-    console.log(coach);
+    const coach = this.context.coaches.find(coach => coach.name === coachName)
     task.assignee = coach.name
     task.assigneeEmail = coach.email
     await assignTask(task)

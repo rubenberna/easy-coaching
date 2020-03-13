@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import { RadioGroup, Button } from 'react-materialize'
+import { AuthContext } from '../../auth/Auth'
 
 class RadioButtons extends Component {
   state = {
     assignee: null
   }
+
+  static contextType = AuthContext
 
   handleChange = (e) => {
     this.setState({ assignee: e.target.value })
@@ -15,21 +18,21 @@ class RadioButtons extends Component {
   }
 
   coachesList = () => {
-    let { coaches } = this.props
+    let { coaches } = this.context
     if(coaches) {
       let list = coaches.map(c => {
         let cObj = {}
         cObj['label'] = c.name
         cObj['value'] = c.name
         return cObj
-      })  
+      })
       return list
     }
   }
 
   render() {
     const { assignee } = this.state
-    
+
     return(
       <div className='radio-btn-form'>
         <RadioGroup
