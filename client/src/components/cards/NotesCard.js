@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Textarea, Button } from 'react-materialize'
 
-import { addNote, getNotes } from '../../modules/dbQueries'
+import { addNote, getNotes } from '../../services/dbQueries'
 
 const StyledNotesCard = styled.div`
   height: 100%;

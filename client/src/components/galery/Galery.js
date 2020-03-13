@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
+import React, { useContext } from 'react'
+import { AuthContext } from '../../auth/Auth'
 
 import ImageCard from '../cards/ImageCard'
 import Loader from '../loader/Loader'
 
-class Galery extends Component {
-
-  renderGallery = () => {
-    const {coaches} = this.props
+const Galery = () => {
+  const { coaches } = useContext(AuthContext)
+  const renderGallery = () => {
     if (!coaches.length) return <Loader/>
     else {
       return coaches.map(coach => {
@@ -15,18 +15,16 @@ class Galery extends Component {
     }
   }
 
-  render() {
     return(
       <div className='gallery'>
         <div className='gallery-inner'>
           <h1>Meet our coaching team</h1>
           <div className='gallery-images'>
-          { this.renderGallery() }
+          { renderGallery() }
           </div>
         </div>
       </div>
     )
-  }
 }
 
 export default Galery;

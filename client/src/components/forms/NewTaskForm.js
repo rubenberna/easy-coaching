@@ -11,7 +11,8 @@ import {
 } from '@material-ui/pickers'
 import _ from 'lodash'
 
-import { addTask } from '../../modules/dbQueries'
+import { AuthContext } from '../../auth/Auth'
+import { addTask } from '../../services/dbQueries'
 import ReasonDropdown from '../dropdowns/ReasonDropdown'
 import AssigneeDropdown from '../dropdowns/AssigneeDropdown'
 import ClientSearch from '../inputs/ClientSearch'
@@ -66,6 +67,8 @@ class NewTaskForm extends Component {
     atLeastOne: false
   }
 
+  static contextType = AuthContext
+
   handleChange = (name, e) => {
     let change = {}
     let inputValue = e.target.value
@@ -115,7 +118,7 @@ class NewTaskForm extends Component {
   createTask = async () => {
     const { assignee, client, houseKeeper } = this.state
     const task = _.omit(this.state, ['redirect', 'ready', 'date', 'atLeastOne'])
-    const coach = this.props.coaches.find(coach => coach.name === assignee)
+    const coach = this.context.coaches.find(coach => coach.name === assignee)
     task.coach = coach
     task.clientName = client ? client.Name : 'none'
     task.houseKeeperName = houseKeeper ?  houseKeeper.Name : 'none'
@@ -136,6 +139,7 @@ class NewTaskForm extends Component {
   }
 
   render() {
+    console.log(this.context);
     const {
       ready,
       start,
@@ -169,14 +173,12 @@ class NewTaskForm extends Component {
         </StyledInput>
         <StyledInput>
           <RequesterInput
-            coaches={this.props.coaches}
             requester={requester}
             handleSelect={this.handleSelectType}/>
           { requester === 'error' && <StyledIcon>error</StyledIcon>}
         </StyledInput>
         <StyledInput>
           <AssigneeDropdown
-            coaches={this.props.coaches}
             setSelection={this.handleSelectType}
             requester={requester}
             />
@@ -201,7 +203,6 @@ class NewTaskForm extends Component {
         <StyledInput>
           <WorkingHoursInput
             requester={requester}
-            coaches={this.props.coaches}
             handleSelect={this.handleSelectType}
             houseKeeper={houseKeeper}
             />

@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { AuthContext } from '../../auth/Auth'
 import { Select } from 'react-materialize'
 
-export default function AssigneeDropdown ({ coaches, setSelection, requester }) {
+export default function AssigneeDropdown ({ setSelection, requester }) {
   const [ assignee, setAssignee ] = useState(undefined)
   const [ disabled, setDisabled ] = useState(false)
+  const { coaches } = useContext(AuthContext)
 
   useEffect(() => {
     let variant = requester || ''

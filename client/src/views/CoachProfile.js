@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-import { findCoach, findTasksPerCoach } from '../modules/dbQueries'
+import { findCoach, findTasksPerCoach } from '../services/dbQueries'
 
 import ProfileCard from '../components/cards/ProfileCard'
 
@@ -12,6 +12,7 @@ class CoachProfile extends Component {
   }
 
   getCoachProfile = async () => {
+    console.log(this.props.match);
     const coach = this.props.match.params.name
     const [ profile ] = await findCoach(coach)
     this.setState({ profile: profile })

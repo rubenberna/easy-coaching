@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
 import { TextInput, Textarea, Button } from 'react-materialize'
 import { CirclePicker } from 'react-color'
-import { createNewCoach } from '../../modules/dbQueries'
+import { createNewCoach } from '../../services/dbQueries'
 
 class NewCoach extends Component {
   state = {

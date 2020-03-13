@@ -4,7 +4,7 @@ import _ from 'lodash'
 import { TextInput, Textarea, Button } from 'react-materialize'
 import { CirclePicker } from 'react-color'
 
-import { editCoach } from '../../modules/dbQueries'
+import { editCoach } from '../../services/dbQueries'
 
 class EditCoach extends Component {
 

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { Navbar, NavItem } from 'react-materialize'
-import { AuthContext } from '../auth/Auth'
+import { AuthContext } from '../../auth/Auth'
 
 import logo from '../../assets/logo.svg'
 import firebaseApp from '../../config/firebaseConfig'
@@ -9,26 +9,23 @@ import firebaseApp from '../../config/firebaseConfig'
 import './navbar.scss'
 
 const Nav = (props) => {
-  const { currentUser } = useContext(AuthContext)
+  const { userProfile, dispatch } = useContext(AuthContext)
 
   const renderOption = () => {
-    const { user } = props
-    if(!currentUser) return <Link to='/login'>Login</Link>
-    else return <NavItem onClick={ () => {props.logout(); firebaseApp.auth().signOut() }}>Logout</NavItem>
+    if(!userProfile) return <Link to='/login'>Login</Link>
+    else return <NavItem onClick={ () => { firebaseApp.auth().signOut(); dispatch({type: 'LOGOUT'}) }}>Logout</NavItem>
   }
 
   const renderDevPhoto = () => {
-    const { user } = props
-    if(user) return (
-      <Link className='navbar-photo' to={`/profile/${user.name}`}>
-        <img alt={ user.name } src={ user.photo } />
+    if(userProfile) return (
+      <Link className='navbar-photo' to={`/profile/${userProfile.name}`}>
+        <img alt={ userProfile.name } src={ userProfile.photo } />
       </Link>
     )
   }
 
   const renderAdminLink = () => {
-    const { user } = props
-    if (user && user.admin) return (
+    if (userProfile && userProfile.admin) return (
       <Link to='/admin'>
         Admin
       </Link>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-
 import './views.scss'
-import { getTasks } from '../modules/dbQueries'
+import { getTasks } from '../services/dbQueries'
 import TableTasks from '../components/tables/Table'
 
 class OngoingProjects extends Component {
@@ -86,7 +85,6 @@ class OngoingProjects extends Component {
         <TableTasks
           list={this.state.tasks}
           taskList={this.state.taskList}
-          coaches={this.props.coaches}
           changeTaskList={this.changeTaskList}
           setFilter={this.setFilter}
           maxItems={this.state.maxItems}

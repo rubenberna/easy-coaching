@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { TextInput, Icon, Button, Preloader } from 'react-materialize'
 import { Alert } from 'react-bootstrap';
 
-import { getUser } from '../../modules/sfQueries'
+import { getUser } from '../../services/sfQueries'
 
 const StyledInput = styled.div`
   display: flex;

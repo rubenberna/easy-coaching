@@ -5,7 +5,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction"
 
-import { getTasks, updateTask } from '../modules/dbQueries'
+import { getTasks, updateTask } from '../services/dbQueries'
 import CalendarModal from '../components/modal/CalendarModal'
 import CoachFilter from '../components/buttons/CoachFilter'
 

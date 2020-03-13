@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 import Loadable from "react-loadable"
 import { BounceLoader } from "react-spinners"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { getCoaches, getTasks } from '../modules/dbQueries'
+import { getCoaches, getTasks } from '../services/dbQueries'
 import Nav from '../components/navbar/Navbar'
 import Home from '../views/Home'
 import OngoingProjects from '../views/OngoingProjects'
@@ -12,8 +12,8 @@ import CoachProfile from '../views/CoachProfile'
 import TaskView from '../views/TaskView'
 import Login from '../views/Login'
 import Admin from '../views/Admin'
-import { AuthProvider } from './auth/Auth'
-import PrivateRoute from './auth/PrivateRoute'
+import { AuthProvider } from '../auth/Auth'
+import PrivateRoute from '../auth/PrivateRoute'
 
 const LoadableCalendar = Loadable({
   loader: () => import("../views/Calendar"),
@@ -69,19 +69,17 @@ class App extends Component {
       <>
         <AuthProvider>
           <BrowserRouter>
-            <Nav user={user} logout={this.logoutUser}/>
+            <Nav />
             <>
               <PrivateRoute
                 path="/"
                 exact
                 component={Home}
-                coaches={coaches}
-                getTasks={this.getTasks}
+                getTasks={this.getTasksCall}
               />
               <PrivateRoute
                 path="/ongoing"
                 component={OngoingProjects}
-                coaches={coaches}
               />
               <PrivateRoute
                 path="/profile/:name"
@@ -93,11 +91,10 @@ class App extends Component {
                 userLoggedIn={user}
                 coaches={coaches}
               />
-              <PrivateRoute
+              <Route
                 path="/login"
                 exact
                 component={Login}
-                coaches={coaches}
                 setCoach={this.setCoach}
               />
               <PrivateRoute

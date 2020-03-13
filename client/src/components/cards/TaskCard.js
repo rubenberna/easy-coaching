@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import moment from 'moment'
 
-import { deleteTask } from '../../modules/dbQueries'
+import { deleteTask } from '../../services/dbQueries'
 import ChangeStatus from '../dropdowns/ChangeStatusDropdown'
 import DeleteModal from '../modal/DeleteModal'
 

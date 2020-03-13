@@ -19,7 +19,6 @@ class TableTasks extends Component {
   renderTable = () => {
     const {
       list,
-      coaches,
       setFilter,
       maxItems,
       clearFilters,
@@ -53,7 +52,7 @@ class TableTasks extends Component {
             <div className='table-board-filters'>
               <h6>FILTERS</h6>
               <FilterStatus setFilter={setFilter} status={status} />
-              <FilterAssigneeDropdown setFilter={setFilter} coaches={coaches} assignee={assignee}/>
+              <FilterAssigneeDropdown setFilter={setFilter} assignee={assignee}/>
               <FilterPriority setFilter={setFilter} priority={priority}/>
               <Button className='table-hide-completed'  flat onClick={toggleCompleted}>{ hideCompleted ? 'Show completed / clx' : 'Hide completed / clx'}</Button>
               <Button className='table-clear-filter' onClick={clearFilters}>Clear filters</Button>

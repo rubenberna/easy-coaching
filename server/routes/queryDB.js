@@ -14,7 +14,7 @@ router.get('/coaches', async (req, res) => {
   res.status(201).send(records)
 })
 
-// Get single coach
+// Get single coach by name
 router.post('/coach', async (req, res) => {
   const { name } = req.body
   const snapshot = await firebase.coaches.where('name', '==', name).get()

@@ -1,7 +1,7 @@
 import React, {useState, useEffect } from 'react'
 import { Table } from 'react-bootstrap';
-import { getDelightedData, getDelightedTrend } from '../modules/delightedQueries'
-import { getAllAccounts } from '../modules/sfQueries'
+import { getDelightedData, getDelightedTrend } from '../services/delightedQueries'
+import { getAllAccounts } from '../services/sfQueries'
 
 const Nps = () => {
   const [npsData, setNPSData] = useState([])

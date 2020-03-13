@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { TextInput, RadioGroup } from 'react-materialize'
 import styled from 'styled-components'
+import { AuthContext } from '../../auth/Auth'
 
 const StyledFrame = styled.div`
 
@@ -23,11 +24,11 @@ const StyledRadioGroup = styled.div`
   grid-column-gap: 5px;
 `
 
-const RequesterInput = ({ coaches, handleSelect, requester }) => {
-
+const RequesterInput = ({ handleSelect, requester }) => {
   const [ theRequester, setTheRequester ] = useState('')
   useEffect(() => handleSelect({ requester: theRequester}), [theRequester, handleSelect])
 
+  const { coaches } = useContext(AuthContext)
   const coachesList = coaches.map(coach => ({label: coach.name.split(' ')[0], value: coach.email}))
 
   const handleChange = (e) => {

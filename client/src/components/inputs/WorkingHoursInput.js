@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { AuthContext } from '../../auth/Auth'
 import styled from 'styled-components'
 import { TextInput } from 'react-materialize'
 
-import { useFormInput } from '../../modules/hooks'
+import { useFormInput } from '../../services/hooks'
 import WeekdaysCheckbox from './WeekdaysCheckbox'
 
 const StyledFrame = styled.div`
@@ -41,10 +42,11 @@ const StyledNote = styled.span`
   font-weight: 200;
 `
 
-const WorkingHoursInput = ({ requester, coaches, handleSelect, houseKeeper }) => {
+const WorkingHoursInput = ({ requester, handleSelect, houseKeeper }) => {
   const from = useFormInput("")
   const until = useFormInput("")
   const [ requesterIsCoach, setRequesterIsCoach ] = useState(true)
+  const { coaches } = useContext(AuthContext)
 
   useEffect(() => {
     const checkIfRequesterIsCoach = () => {

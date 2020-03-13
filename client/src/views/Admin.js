@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { getTasks } from '../modules/dbQueries'
+import { getTasks } from '../services/dbQueries'
 import AdminPanel from '../components/panel/AdminPanel'
 import NewCoachForm from '../components/forms/NewCoach'
 import { AddProfileBtn, AdminBtn } from '../components/buttons/FloatingButtons'
