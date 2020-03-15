@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { RadioGroup } from 'react-materialize'
-import { AuthContext } from '../../auth/Auth'
+import { AuthContext } from '../../connectors/auth/Auth'
 import styled from 'styled-components'
 
 const ButtonsList = styled.div`

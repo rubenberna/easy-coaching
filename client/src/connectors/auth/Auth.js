@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useReducer } from "react";
-import firebaseApp from "../config/firebaseConfig";
-import { getCoaches } from '../services/dbQueries'
+import firebaseApp from "../../config/firebaseConfig";
+import { getCoaches } from '../../services/dbQueries'
 
 function userProfileReducer(state, action) {
   switch (action.type) {

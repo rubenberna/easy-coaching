@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { RadioGroup, Button } from 'react-materialize'
-import { AuthContext } from '../../auth/Auth'
+import { AuthContext } from '../../connectors/auth/Auth'
 
 class RadioButtons extends Component {
   state = {

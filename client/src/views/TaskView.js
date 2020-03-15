@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { Tabs, Tab } from 'react-materialize'
-import { AuthContext } from '../auth/Auth'
+import { AuthContext } from '../connectors/auth/Auth'
 import RadioButtons from '../components/forms/RadioButtons'
 import AddMessage from '../components/forms/AddMessage'
 import { changeTaskStatus, assignTask, fetchLogs } from '../services/dbQueries'

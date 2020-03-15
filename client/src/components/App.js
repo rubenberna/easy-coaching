@@ -12,8 +12,9 @@ import CoachProfile from '../views/CoachProfile'
 import TaskView from '../views/TaskView'
 import Login from '../views/Login'
 import Admin from '../views/Admin'
-import { AuthProvider } from '../auth/Auth'
-import PrivateRoute from '../auth/PrivateRoute'
+import { AuthProvider } from '../connectors/auth/Auth'
+import { TasksProvider } from '../connectors/tasks'
+import PrivateRoute from '../connectors/auth/PrivateRoute'
 
 const LoadableCalendar = Loadable({
   loader: () => import("../views/Calendar"),
@@ -78,9 +79,11 @@ class App extends Component {
                 getTasks={this.getTasksCall}
               />
               <PrivateRoute
-                path="/ongoing"
-                component={OngoingProjects}
-              />
+                path="/ongoing">
+                <TasksProvider>
+                  <OngoingProjects />
+                </TasksProvider>
+              </PrivateRoute>
               <PrivateRoute
                 path="/profile/:name"
                 component={CoachProfile}
@@ -96,6 +99,7 @@ class App extends Component {
                 component={Login}
                 setCoach={this.setCoach}
               />
+              // TODO: get coaches fall from provider
               <PrivateRoute
                 path="/admin"
                 exact

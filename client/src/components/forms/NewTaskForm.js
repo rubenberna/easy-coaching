@@ -11,7 +11,7 @@ import {
 } from '@material-ui/pickers'
 import _ from 'lodash'
 
-import { AuthContext } from '../../auth/Auth'
+import { AuthContext } from '../../connectors/auth/Auth'
 import { addTask } from '../../services/dbQueries'
 import ReasonDropdown from '../dropdowns/ReasonDropdown'
 import AssigneeDropdown from '../dropdowns/AssigneeDropdown'
@@ -139,7 +139,7 @@ class NewTaskForm extends Component {
   }
 
   render() {
-    console.log(this.context);
+    // console.log(this.context);
     const {
       ready,
       start,

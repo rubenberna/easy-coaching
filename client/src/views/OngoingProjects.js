@@ -1,33 +1,25 @@
-import React, { Component } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import './views.scss'
-import { getTasks } from '../services/dbQueries'
 import TableTasks from '../components/tables/Table'
+import { TasksContext } from '../connectors/tasks'
 
-class OngoingProjects extends Component {
-  state = {
-    tasks: [],
-    assignee: undefined,
-    status: undefined,
-    priority: undefined,
-    taskList: [],
-    maxItems: null,
-    hideCompleted: true,
-    activePage: 1
-  }
+const OngoingProjects = () => {
+  const [assignee, setAssignee] = useState('')
+  const [status, setStatus] = useState('')
+  const [priority, setPriority] = useState('')
+  const [taskList, setTaskList] = useState('')
+  const [maxItems, setMaxItems] = useState('')
+  const [hideCompleted, setHideCompleted] = useState(false)
+  const [activePage, setActivePage] = useState(1)
+  const { tasks } = useContext(TasksContext)
 
-  async componentDidMount() {
-    const tasks = await getTasks()
+  useEffect(() => {
     let onlyActive = tasks.filter(task => (task.status !== 'completed' && task.status !== 'cancelled'))
-    let paginationItems = Math.floor(tasks.length / 10)
-    this.setState({
-      tasks,
-      taskList: onlyActive.sort((a, b) => (a.start > b.start) ? 1 : -1),
-      maxItems: paginationItems > 0 ? paginationItems : 1
-    })
-  }
+    setPaginationItems(onlyActive)
+    setTaskList(onlyActive)
+  },[tasks])
 
-  changeTaskList = () => {
-    const { tasks, status, assignee, priority } = this.state
+  const changeTaskList = () => {
     let newList = tasks
     let filters = {
       status,
@@ -42,64 +34,70 @@ class OngoingProjects extends Component {
     }
 
     let paginationItems = Math.floor(newList.length / 10)
-    this.setState({
-      taskList: newList.sort((a, b) => (a.start > b.start) ? 1 : -1),
-      maxItems: paginationItems > 0 ? paginationItems : 1,
-      activePage: 1
-    })
+    let sortedList = newList.sort((a, b) => (a.start > b.start) ? 1 : -1)
+    let maxItems = paginationItems > 0 ? paginationItems : 1
+    setTaskList(sortedList)
+    setMaxItems(maxItems)
+    setActivePage(1)
   }
 
-  setFilter = async filter => {
+  const setPaginationItems = array => {
+    let paginationItems = Math.floor(array.length / 10)
+    let maxItems = paginationItems > 0 ? paginationItems : 1
+    setMaxItems(maxItems)
+  }
+
+  const setFilter = async filter => {
+    // Need work here
     await this.setState({...filter})
-    this.changeTaskList()
+    changeTaskList()
   }
 
-  clearFilters = async () => {
-    await this.setState({
-      assignee: undefined,
-      status: undefined
-    })
-    this.changeTaskList()
+  const clearFilters = async () => {
+    setAssignee('')
+    setStatus('')
+    setPriority('')
+    changeTaskList()
   }
 
-  showHideCompleted = async () => {
+  const showHideCompleted = async () => {
     let newList = []
-    await this.setState({ hideCompleted: !this.state.hideCompleted })
-    if (!this.state.hideCompleted) {
-      newList = this.state.tasks.filter(task => (task.status === 'completed' || task.status === 'cancelled'))
-    } else newList = this.state.tasks.filter(task => (task.status !== 'completed' && task.status !== 'cancelled'))
-    this.setState({
-      taskList: newList,
-      activePage: 1
-    })
+    setHideCompleted(!hideCompleted)
+    if (!hideCompleted) {
+      newList = tasks.filter(task => (task.status === 'completed' || task.status === 'cancelled'))
+      setPaginationItems(newList)
+    } else newList = tasks.filter(task => (task.status !== 'completed' && task.status !== 'cancelled'))
+    setTaskList(newList)
+    setActivePage(1)
+    setPaginationItems(newList)
   }
 
-  setActivePage = nr => {
-    this.setState({ activePage: nr})
+  const conditionalRender = () => {
+    if(taskList) return (
+      <TableTasks
+        list={tasks}
+        taskList={taskList}
+        changeTaskList={changeTaskList}
+        setFilter={setFilter}
+        maxItems={maxItems}
+        clearFilters={clearFilters}
+        assignee={assignee}
+        status={status}
+        toggleCompleted={showHideCompleted}
+        hideCompleted={hideCompleted}
+        activePage={activePage}
+        setActivePage={setActivePage}
+        priority={priority}
+      />
+    )
+    else return 'Waiting'
   }
-
-  render() {
     return(
       <div className='ongoing-projects'>
         <h2>Ongoing Visits</h2>
-        <TableTasks
-          list={this.state.tasks}
-          taskList={this.state.taskList}
-          changeTaskList={this.changeTaskList}
-          setFilter={this.setFilter}
-          maxItems={this.state.maxItems}
-          clearFilters={this.clearFilters}
-          assignee={this.state.assignee}
-          status={this.state.status}
-          toggleCompleted={this.showHideCompleted}
-          hideCompleted={this.state.hideCompleted}
-          activePage={this.state.activePage}
-          setActivePage={this.setActivePage}
-          priority={this.state.priority}
-        />
+        { conditionalRender() }
       </div>
     )
-  }
 }
 
 export default OngoingProjects;

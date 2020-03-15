@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { AuthContext } from '../../auth/Auth'
+import { AuthContext } from '../../connectors/auth/Auth'
 import { Select } from 'react-materialize'
 
 export default function AssigneeDropdown ({ setSelection, requester }) {

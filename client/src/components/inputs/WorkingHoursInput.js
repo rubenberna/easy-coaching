@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { AuthContext } from '../../auth/Auth'
+import { AuthContext } from '../../connectors/auth/Auth'
 import styled from 'styled-components'
 import { TextInput } from 'react-materialize'
 

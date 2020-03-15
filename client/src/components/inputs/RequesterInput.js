@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { TextInput, RadioGroup } from 'react-materialize'
 import styled from 'styled-components'
-import { AuthContext } from '../../auth/Auth'
+import { AuthContext } from '../../connectors/auth/Auth'
 
 const StyledFrame = styled.div`
 

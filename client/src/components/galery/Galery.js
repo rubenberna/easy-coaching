@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { AuthContext } from '../../auth/Auth'
+import { AuthContext } from '../../connectors/auth/Auth'
 
 import ImageCard from '../cards/ImageCard'
 import Loader from '../loader/Loader'

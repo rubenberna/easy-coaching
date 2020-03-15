@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { Navbar, NavItem } from 'react-materialize'
-import { AuthContext } from '../../auth/Auth'
+import { AuthContext } from '../../connectors/auth/Auth'
 
 import logo from '../../assets/logo.svg'
 import firebaseApp from '../../config/firebaseConfig'

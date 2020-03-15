@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Select } from 'react-materialize'
-import { AuthContext } from '../../auth/Auth'
+import { AuthContext } from '../../connectors/auth/Auth'
 
 const StatusDropdown =  (props) => {
   const { coaches } = useContext(AuthContext)
