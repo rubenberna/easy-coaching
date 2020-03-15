@@ -12,7 +12,8 @@ class FilterPriority extends Component {
 
   actionHandler = (e) => {
     let inputedValue = e.target.value
-    this.props.setFilter({ priority: inputedValue === 'All' ? undefined : inputedValue})
+    let priority = inputedValue === 'All' ? undefined : inputedValue
+    this.props.setPriority(priority)
   }
 
   listPriority = () => {

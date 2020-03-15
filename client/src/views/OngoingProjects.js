@@ -19,6 +19,10 @@ const OngoingProjects = () => {
     setTaskList(onlyActive)
   },[tasks])
 
+  useEffect(() => {
+    changeTaskList()
+  }, [assignee, status, priority])
+
   const changeTaskList = () => {
     let newList = tasks
     let filters = {
@@ -27,18 +31,22 @@ const OngoingProjects = () => {
       priority
     }
 
-    for (let filter in filters) {
-      if (filters[filter]) {
-        newList = newList.filter(t => t[filter] === filters[filter])
+    let noFilters = Object.values(filters).every(f => f === undefined)
+    if (noFilters) resetTaskList()
+    else {
+      for (let filter in filters) {
+        if (filters[filter]) {
+          newList = newList.filter(t => t[filter] === filters[filter])
+        }
       }
-    }
 
-    let paginationItems = Math.floor(newList.length / 10)
-    let sortedList = newList.sort((a, b) => (a.start > b.start) ? 1 : -1)
-    let maxItems = paginationItems > 0 ? paginationItems : 1
-    setTaskList(sortedList)
-    setMaxItems(maxItems)
-    setActivePage(1)
+      let paginationItems = Math.floor(newList.length / 10)
+      let sortedList = newList.sort((a, b) => (a.start > b.start) ? 1 : -1)
+      let maxItems = paginationItems > 0 ? paginationItems : 1
+      setTaskList(sortedList)
+      setMaxItems(maxItems)
+      setActivePage(1)
+    }
   }
 
   const setPaginationItems = array => {
@@ -47,17 +55,18 @@ const OngoingProjects = () => {
     setMaxItems(maxItems)
   }
 
-  const setFilter = async filter => {
-    // Need work here
-    await this.setState({...filter})
-    changeTaskList()
+  const clearFilters = () => {
+    setAssignee(undefined)
+    setStatus(undefined)
+    setPriority(undefined)
+    resetTaskList()
   }
 
-  const clearFilters = async () => {
-    setAssignee('')
-    setStatus('')
-    setPriority('')
-    changeTaskList()
+  const resetTaskList = () => {
+    let onlyActive = tasks.filter(task => (task.status !== 'completed' && task.status !== 'cancelled'))
+    setPaginationItems(onlyActive)
+    setTaskList(onlyActive)
+    setActivePage(1)
   }
 
   const showHideCompleted = async () => {
@@ -78,7 +87,6 @@ const OngoingProjects = () => {
         list={tasks}
         taskList={taskList}
         changeTaskList={changeTaskList}
-        setFilter={setFilter}
         maxItems={maxItems}
         clearFilters={clearFilters}
         assignee={assignee}
@@ -88,6 +96,9 @@ const OngoingProjects = () => {
         activePage={activePage}
         setActivePage={setActivePage}
         priority={priority}
+        setAssignee={setAssignee}
+        setPriority={setPriority}
+        setStatus={setStatus}
       />
     )
     else return 'Waiting'

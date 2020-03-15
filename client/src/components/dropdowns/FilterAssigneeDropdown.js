@@ -2,12 +2,13 @@ import React, { useContext } from 'react'
 import { Select } from 'react-materialize'
 import { AuthContext } from '../../connectors/auth/Auth'
 
-const StatusDropdown =  (props) => {
+const StatusDropdown =  ({setAssignee}) => {
   const { coaches } = useContext(AuthContext)
 
   const actionHandler = (e) => {
-    let assignee = e.target.value
-    props.setFilter({ assignee: assignee === 'All' ? undefined : assignee })
+    let inputValue = e.target.value
+    let assignee = inputValue === 'All' ? undefined : inputValue
+    setAssignee(assignee)
   }
 
   const listAssignees = () => {
@@ -23,7 +24,7 @@ const StatusDropdown =  (props) => {
     return(
       <div className="filter-dropdown">
         <label className='filter-label'>Assignee</label>
-        <Select onChange={actionHandler} value={props.assignee}>
+        <Select onChange={actionHandler} value={{setAssignee}.assignee}>
           <option disabled value="" defaultValue>
             Coaches Filter
           </option>

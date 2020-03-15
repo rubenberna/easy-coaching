@@ -19,7 +19,6 @@ class TableTasks extends Component {
   renderTable = () => {
     const {
       list,
-      setFilter,
       maxItems,
       clearFilters,
       assignee,
@@ -28,7 +27,10 @@ class TableTasks extends Component {
       toggleCompleted,
       hideCompleted,
       activePage,
-      setActivePage
+      setActivePage,
+      setAssignee,
+      setPriority,
+      setStatus
      } = this.props;
 
     if (!list) return <Loader/>
@@ -51,9 +53,9 @@ class TableTasks extends Component {
             </Table>
             <div className='table-board-filters'>
               <h6>FILTERS</h6>
-              <FilterStatus setFilter={setFilter} status={status} />
-              <FilterAssigneeDropdown setFilter={setFilter} assignee={assignee}/>
-              <FilterPriority setFilter={setFilter} priority={priority}/>
+              <FilterStatus setStatus={setStatus} status={status} />
+              <FilterAssigneeDropdown setAssignee={setAssignee} assignee={assignee}/>
+              <FilterPriority setPriority={setPriority} priority={priority}/>
               <Button className='table-hide-completed'  flat onClick={toggleCompleted}>{ hideCompleted ? 'Show completed / clx' : 'Hide completed / clx'}</Button>
               <Button className='table-clear-filter' onClick={clearFilters}>Clear filters</Button>
               { this.renderExcel() }

@@ -13,8 +13,9 @@ const statusList = [
 class FilterAssigneeDropdown extends Component {
 
   actionHandler = (e) => {
-    let status = e.target.value.toLowerCase()
-    this.props.setFilter({ status: status === 'all' ? undefined : status })
+    let inputValue = e.target.value.toLowerCase()
+    let status = inputValue === 'all' ? undefined : inputValue
+    this.props.setStatus(status)
   }
 
   listStatus = () => {
