@@ -23,7 +23,7 @@ export default function Home({ getTasks }){
   return(
     <div className='home'>
       <Gallery/>
-      <NewTaskForm getTasks={getTasks} setError={setError}/>
+      <NewTaskForm setError={setError}/>
       {
         error &&
         <StyledAlert

@@ -126,7 +126,6 @@ class NewTaskForm extends Component {
 
     const res = await addTask(task)
     console.log(res);
-    await this.props.getTasks()
     this.setState({ ready: true  })
   }
   setUser = (type, data) => {

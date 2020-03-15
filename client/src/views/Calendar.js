@@ -1,10 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component, useState, useEffect, useContext } from 'react'
 import ReactDOM from 'react-dom';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction"
 import { AuthContext } from '../connectors/auth/Auth'
+import { TasksContext } from '../connectors/tasks'
 import { getTasks, updateTask } from '../services/dbQueries'
 import CalendarModal from '../components/modal/CalendarModal'
 import CoachFilter from '../components/buttons/CoachFilter'
@@ -20,34 +21,24 @@ const EventDetail = ({ event, el }) => {
   return el;
 }
 
-class Calendar extends Component {
-  state = {
-    tasks: [],
-    currEvent: null,
-    modalOpen: false,
-    selectedCoach: ''
-  }
+const Calendar = () => {
+  const { tasks } = useContext(TasksContext)
+  const { coaches, userProfile } = useContext(AuthContext)
+  const [currEvent, setCurrEvent] = useState('')
+  const [selectedCoach, setSelectedCoach] = useState('')
+  const [modalOpen, setModalOpen] = useState(false)
 
-  static contextType = AuthContext
+  const filterCoach = (coach) => setSelectedCoach(coach)
 
-  async componentDidMount() {
-    const tasks = await getTasks()
-    this.setState({ tasks  })
-  }
+  const calendarComponentRef = React.createRef()
 
-  filterCoach = (coach) => this.setState({ selectedCoach: coach })
-
-  calendarComponentRef = React.createRef()
-
-  checkIfEventIsEditable = (task) => {
-    const { userProfile } = this.context
+  const checkIfEventIsEditable = (task) => {
     if (!userProfile) return false
     else if (task.type.toLocaleLowerCase() === 'starter' && !userProfile.admin) return false
     else if (userProfile.admin) return true
   }
 
-  tasksList = () => {
-    const { tasks, selectedCoach } = this.state
+  const tasksList = () => {
     let list = tasks.filter(t => t.status !== 'cancelled')
     if (selectedCoach) {
       list = list.filter(t => t.assignee === selectedCoach )
@@ -60,7 +51,7 @@ class Calendar extends Component {
         assignee: t.assignee,
         reqDate: t.reqDate,
         textColor: '#FFF',
-        backgroundColor: t.type.toLocaleLowerCase() === 'starter' ? '#ffd600' : this.getCalendarColor(t),
+        backgroundColor: t.type.toLocaleLowerCase() === 'starter' ? '#ffd600' : getCalendarColor(t),
         client: t.client ? t.client.Name : 'none',
         clientEmail: t.client ? t.client.Email : 'no client',
         clientPhone: t.client ? t.client.Phone : 'no client',
@@ -71,27 +62,30 @@ class Calendar extends Component {
         office: t.office,
         reason: t.type,
         priority: t.priority,
-        startEditable: this.checkIfEventIsEditable(t),
-        durationEditable: this.checkIfEventIsEditable(t),
+        startEditable: checkIfEventIsEditable(t),
+        durationEditable: checkIfEventIsEditable(t),
       }
     ))
     return events
   }
 
-  getCalendarColor = task => {
-    const coach = this.context.coaches.find( coach => coach.name === task.assignee)
-    return coach.calendarColor
+  const getCalendarColor = task => {
+    if (coaches.length) {
+      const coach = coaches.find( coach => coach.name === task.assignee)
+      return coach.calendarColor
+    }
   }
 
-  handleDateClick = arg => {
+  const handleDateClick = arg => {
     console.log('arg: ', arg);
   }
 
-  handleEventClick = ({ event }) => {
-    this.setState({ currEvent: event, modalOpen: true })
+  const handleEventClick = ({ event }) => {
+    setCurrEvent(event)
+    setModalOpen(true)
   }
 
-  handleResize = ({ event }) => {
+  const handleResize = ({ event }) => {
     const task = {
       start: event.start,
       end: event.end,
@@ -101,7 +95,7 @@ class Calendar extends Component {
     updateTask(task)
   }
 
-  handleDrop = ({ event }) => {
+  const handleDrop = ({ event }) => {
     const task = {
       start: event.start,
       end: event.end,
@@ -111,18 +105,13 @@ class Calendar extends Component {
     updateTask(task)
   }
 
-  closeModal = () => {
-    this.setState({ modalOpen: false })
-  }
-
-  render() {
-    const { modalOpen, currEvent } = this.state
+  const closeModal = () => setModalOpen(false)
     return(
       <div className='calendar container'>
         <div className='calendar-app'>
           <FullCalendar
             defaultView='timeGridWeek'
-            ref={ this.calendarComponentRef }
+            ref={ calendarComponentRef }
             weekends={false}
             minTime='08:00:00'
             maxTime='18:00:00'
@@ -138,24 +127,23 @@ class Calendar extends Component {
             selectable
             selectHelper
             timezone='local'
-            events={this.tasksList()}
-            dateClick={this.handleDateClick}
-            eventClick={this.handleEventClick}
-            eventDrop={this.handleDrop}
-            eventResize={this.handleResize}
+            events={tasksList()}
+            dateClick={handleDateClick}
+            eventClick={handleEventClick}
+            eventDrop={handleDrop}
+            eventResize={handleResize}
             eventRender={EventDetail}
           />
         </div>
-        <CoachFilter filterCoach={this.filterCoach}/>
+        <CoachFilter filterCoach={filterCoach}/>
         {currEvent &&
           <CalendarModal
             modalOpen={modalOpen}
             currEvent={currEvent}
-            closeModal={this.closeModal}/>
+            closeModal={closeModal}/>
         }
       </div>
     )
-  }
 }
 
 export default Calendar;

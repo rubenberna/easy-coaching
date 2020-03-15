@@ -33,13 +33,10 @@ const LoadableNPS = Loadable({
 class App extends Component {
   state = {
     coaches: [],
-    tasks: [],
-    user: JSON.parse(localStorage.getItem('user')),
   }
 
   componentDidMount() {
     this.getCoachesCall()
-    this.getTasksCall()
   }
 
   getCoachesCall = async () => {
@@ -47,22 +44,6 @@ class App extends Component {
     this.setState({ coaches })
   }
 
-  getTasksCall = async () => {
-    const tasks = await getTasks()
-    this.setState({ tasks })
-  }
-
-  setCoach = (coach) => {
-    localStorage.setItem('user', JSON.stringify(coach))
-    this.setState({ user: coach })
-  }
-
-  logoutUser = () => {
-    localStorage.removeItem('user')
-    this.setState({
-      user: null
-    })
-  }
 
   render () {
     const { user, coaches, tasks } = this.state
@@ -76,10 +57,8 @@ class App extends Component {
                 path="/"
                 exact
                 component={Home}
-                getTasks={this.getTasksCall}
               />
-              <PrivateRoute
-                path="/ongoing">
+              <PrivateRoute path="/ongoing">
                 <TasksProvider>
                   <OngoingProjects />
                 </TasksProvider>
@@ -97,7 +76,6 @@ class App extends Component {
                 path="/login"
                 exact
                 component={Login}
-                setCoach={this.setCoach}
               />
               // TODO: get coaches fall from provider
               <PrivateRoute
@@ -114,10 +92,11 @@ class App extends Component {
               />
               <PrivateRoute
                 path="/calendar"
-                exact
-                component={LoadableCalendar}
-                tasks={tasks}
-              />
+                exact>
+                <TasksProvider>
+                  <LoadableCalendar />
+                </TasksProvider>
+              </PrivateRoute>
             </>
           </BrowserRouter>
         </AuthProvider>
