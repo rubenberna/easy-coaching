@@ -4,7 +4,7 @@ import Loadable from "react-loadable"
 import { BounceLoader } from "react-spinners"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { getCoaches, getTasks } from '../services/dbQueries'
+import { getCoaches } from '../services/dbQueries'
 import Nav from '../components/navbar/Navbar'
 import Home from '../views/Home'
 import OngoingProjects from '../views/OngoingProjects'
@@ -46,7 +46,7 @@ class App extends Component {
 
 
   render () {
-    const { user, coaches, tasks } = this.state
+    const { user, coaches } = this.state
     return (
       <>
         <AuthProvider>
@@ -77,7 +77,7 @@ class App extends Component {
                 exact
                 component={Login}
               />
-              // TODO: get coaches fall from provider
+              {/* TODO: get coaches fall from provider */}
               <PrivateRoute
                 path="/admin"
                 exact

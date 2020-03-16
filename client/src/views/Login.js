@@ -3,7 +3,6 @@ import { withRouter, Redirect } from 'react-router-dom'
 import styled from 'styled-components'
 import { Button } from 'react-materialize'
 import firebaseApp from '../config/firebaseConfig'
-import LoginForm from '../components/forms/LoginForm'
 import { AuthContext } from '../connectors/auth/Auth'
 
 const StyledLogin = styled.div`

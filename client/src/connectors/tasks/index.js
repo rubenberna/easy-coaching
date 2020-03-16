@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 import { getTasks } from '../../services/dbQueries'
 
 function tasksReducer(state, action) {

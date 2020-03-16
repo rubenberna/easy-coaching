@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import ReactDOM from 'react-dom';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -6,7 +6,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction"
 import { AuthContext } from '../connectors/auth/Auth'
 import { TasksContext } from '../connectors/tasks'
-import { getTasks, updateTask } from '../services/dbQueries'
+import { updateTask } from '../services/dbQueries'
 import CalendarModal from '../components/modal/CalendarModal'
 import CoachFilter from '../components/buttons/CoachFilter'
 

@@ -36,6 +36,7 @@ input[type=number] {
   margin: 0 100px;
   display: flex;
   justify-content: space-around;
+  align-items: baseline;
   margin-bottom: 40px;
   @media #{$medium-and-down}  {
     flex-direction: column-reverse;
@@ -48,6 +49,7 @@ input[type=number] {
   display: flex;
   justify-content: center;
   flex-direction: column;
+  margin-top: 50px;
   .gallery-inner {
     width: 580px;
     background: #009688;
@@ -225,6 +227,7 @@ input[type=number] {
   // min-height: 70vh;
   display: flex;
   align-items: center;
+  justify-content: center;
   button.floating-btn {
   }
 }

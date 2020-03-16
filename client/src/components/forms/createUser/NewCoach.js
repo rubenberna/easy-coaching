@@ -3,7 +3,8 @@ import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
 import { TextInput, Textarea, Button } from 'react-materialize'
 import { CirclePicker } from 'react-color'
-import { createNewCoach } from '../../services/dbQueries'
+import { createNewCoach } from '../../../services/dbQueries'
+import firebaseApp from '../../../config/firebaseConfig'
 
 class NewCoach extends Component {
   state = {
@@ -49,8 +50,14 @@ class NewCoach extends Component {
   handleSubmit = async () => {
     const coach = _.omit(this.state, 'tooBig')
     await createNewCoach(coach)
+    this.createAuth(coach)
     await this.props.getCoaches()
     this.props.history.push('/')
+  }
+
+  createAuth = coach => {
+    let {email, password} = coach
+    firebaseApp.auth().createUserWithEmailAndPassword(email, password).catch((err) => console.log(err.message))
   }
 
   renderSubmitButton = () => {

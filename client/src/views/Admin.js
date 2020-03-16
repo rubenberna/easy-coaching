@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { getTasks } from '../services/dbQueries'
 import AdminPanel from '../components/panel/AdminPanel'
-import NewCoachForm from '../components/forms/NewCoach'
+import CreateUserContainer from '../components/forms/createUser/CreateUserContainer'
 import { AddProfileBtn, AdminBtn } from '../components/buttons/FloatingButtons'
 
 export default class Admin extends Component {
@@ -19,7 +19,7 @@ export default class Admin extends Component {
   renderViews = () => {
     const {view, allTasks} = this.state
     if(view === 'edit') return <AdminPanel coaches={this.props.coaches} allTasks={allTasks} getCoaches={this.props.getCoaches}/>
-    else return <NewCoachForm getCoaches={this.props.getCoaches}/>
+    else return <CreateUserContainer getCoaches={this.props.getCoaches}/>
   }
 
   setView = (name) => {

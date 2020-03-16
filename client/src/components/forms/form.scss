@@ -200,6 +200,7 @@ $medium-and-down: "only screen and (max-width : #{$medium-screen})" !default;
   // alternative to pointer-events, compatible with all browsers, just make it impossible to find
   width: 1px;
   height: 1px;
+  max-height: 1308px;
   }
   input[type="file"] + label {
     border: 0.5px solid #e0e0e0;
@@ -213,6 +214,7 @@ $medium-and-down: "only screen and (max-width : #{$medium-screen})" !default;
       border: 0.5px solid transparent;
     }
   }
+  margin-bottom: 40px;
 }
 
 .circle-picker {
