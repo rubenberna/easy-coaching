@@ -17,14 +17,23 @@ function userProfileReducer(state, action) {
   }
 }
 
+function coachesReducer(state, action) {
+  switch (action.type) {
+    case 'SET_COACHES':
+      return action.payload
+    default:
+      return state
+  }
+}
+
 export const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState();
-  const [ coaches, setCoaches ] = useState([])
-  const [ {userProfile}, dispatch ] = useReducer(userProfileReducer, {
+  const [{ userProfile }, dispatch] = useReducer(userProfileReducer, {
     userProfile: ''
-  })
+  });
+  const [coaches, dispatchCoaches] = useReducer(coachesReducer, []);
 
   // Authenticate
   useEffect(() => {
@@ -34,10 +43,13 @@ export const AuthProvider = ({ children }) => {
   // Get coaches
   useEffect(() => {
     let startFetch = true
-    async function fetchCoaches(){
-      if(startFetch) {
+    async function fetchCoaches() {
+      if (startFetch) {
         let coaches = await getCoaches()
-        setCoaches(coaches)
+        dispatchCoaches({
+          type: 'SET_COACHES',
+          payload: coaches
+        })
       }
     }
     fetchCoaches();
@@ -46,8 +58,8 @@ export const AuthProvider = ({ children }) => {
 
   // Setup User profile
   useEffect(() => {
-    if(currentUser) {
-      let coach = coaches.find( coach => coach.email.toLowerCase() === currentUser.email.toLowerCase())
+    if (currentUser) {
+      let coach = coaches.find(coach => coach.email.toLowerCase() === currentUser.email.toLowerCase())
       console.log(coach);
       dispatch({ type: 'LOGIN', payload: coach })
     }
@@ -59,7 +71,8 @@ export const AuthProvider = ({ children }) => {
         currentUser,
         coaches,
         userProfile,
-        dispatch
+        dispatch,
+        dispatchCoaches
       }}
     >
       {children}
