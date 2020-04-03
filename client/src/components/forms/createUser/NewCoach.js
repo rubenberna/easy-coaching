@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
 import { TextInput, Textarea, Button } from 'react-materialize'
 import { CirclePicker } from 'react-color'
@@ -98,4 +97,4 @@ class NewCoach extends Component {
   }
 }
 
-export default withRouter(NewCoach)
+export default NewCoach

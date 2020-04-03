@@ -19,7 +19,7 @@ export const PasswordModal = ({ toggle, show, resetPassword }) => {
        <input type='email' onChange={e => setEmail(e.target.value)} />
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={toggle}>
+        <Button variant="secondary" className='mr-1' onClick={toggle}>
           Close
           </Button>
         <Button variant="primary" onClick={handleSubmit}>

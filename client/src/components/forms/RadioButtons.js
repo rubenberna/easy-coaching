@@ -36,9 +36,9 @@ class RadioButtons extends Component {
     return(
       <div className='radio-btn-form'>
         <RadioGroup
-          name="size"
+          name="coaches"
           withGap
-          label="T-Shirt Size"
+          label="Coaches"
           value={assignee}
           onChange={ e => this.handleChange(e) }
           options={this.coachesList()}

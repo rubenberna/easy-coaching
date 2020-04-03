@@ -7,6 +7,11 @@ export const getCoaches = async () => {
   return res.data
 }
 
+export const getOffices = async () => {
+  let res = await axios.get('/api/firebase/offices')
+  return res.data
+}
+
 export const getTasks = async () => {
   let res = await axios.get('/api/firebase/tasks')
   return res.data
@@ -93,6 +98,11 @@ export const createNewCoach = async (coach) => {
   const photoURL = await uploadPhoto(coach.photo)
   coach.photo = photoURL
   let res = await axios.post('/api/firebase/createNewCoach', coach )
+  return res.data
+}
+
+export const createNewOffice = async (office) => {
+  let res = await axios.post('/api/firebase/createNewOffice', office)
   return res.data
 }
 

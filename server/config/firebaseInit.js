@@ -18,12 +18,14 @@ const db = firebase.firestore();
 
 // Shortcuts for db collections
 const coaches = db.collection('coaches')
+const offices = db.collection('offices')
 const tasks = db.collection('tasks')
 const logs = db.collection('logs')
 const storageRef = firebase.storage().ref('photos');
 
 module.exports = {
   coaches,
+  offices,
   tasks,
   logs,
   storageRef,

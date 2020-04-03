@@ -3,10 +3,11 @@ import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 import { Button, Icon } from 'react-materialize'
 
-import { getCoaches, createNewCoach } from '../../../services/dbQueries'
+import { getCoaches, createNewCoach, createNewOffice } from '../../../services/dbQueries'
 import { AuthContext } from '../../../connectors/auth/Auth'
 import firebaseApp from '../../../config/firebaseConfig'
 import NewCoach from './NewCoach'
+import NewOffice from './NewOffice'
 
 const StyledContainer = styled.div`
   width: 700px;
@@ -35,7 +36,12 @@ const CreateUserContainer = (props) => {
         loading={loading}
       />
     )
-    if (userType === 'office') return <h1>New Office</h1>
+    if (userType === 'office') return (
+      <NewOffice
+        createOffice={createOffice}
+        loading={loading}
+      />
+    )
   }
 
   const createCoach = async (coach) => {
@@ -47,6 +53,14 @@ const CreateUserContainer = (props) => {
       type: 'SET_COACHES',
       payload: coaches
     })
+    setLoading(false)
+    props.history.push('/')
+  }
+
+  const createOffice = async (office) => {
+    setLoading(true)
+    await createNewOffice(office)
+    await createAuth(office)
     setLoading(false)
     props.history.push('/')
   }

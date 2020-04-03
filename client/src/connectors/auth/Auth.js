@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useReducer } from "react";
 import firebaseApp from "../../config/firebaseConfig";
-import { getCoaches } from '../../services/dbQueries'
+import { getCoaches, getOffices } from '../../services/dbQueries'
 
 function userProfileReducer(state, action) {
   switch (action.type) {
@@ -26,6 +26,15 @@ function coachesReducer(state, action) {
   }
 }
 
+function officesReducer(state, action) {
+  switch (action.type) {
+    case 'SET_OFFICES':      
+      return action.payload
+    default:
+      return state
+  }
+}
+
 export const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -34,6 +43,7 @@ export const AuthProvider = ({ children }) => {
     userProfile: ''
   });
   const [coaches, dispatchCoaches] = useReducer(coachesReducer, []);
+  const [offices, dispatchOffices] = useReducer(officesReducer, []);
 
   // Authenticate
   useEffect(() => {
@@ -52,7 +62,18 @@ export const AuthProvider = ({ children }) => {
         })
       }
     }
+
+    async function fetchOffices() {
+      if (startFetch) {
+        let offices = await getOffices()
+        dispatchOffices({
+          type: 'SET_OFFICES',
+          payload: offices
+        })
+      }
+    }
     fetchCoaches();
+    fetchOffices();
     return () => { startFetch = false }
   }, [])
 
@@ -72,7 +93,9 @@ export const AuthProvider = ({ children }) => {
         coaches,
         userProfile,
         dispatch,
-        dispatchCoaches
+        dispatchCoaches,
+        offices,
+        dispatchOffices
       }}
     >
       {children}

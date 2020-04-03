@@ -14,6 +14,17 @@ router.get('/coaches', async (req, res) => {
   res.status(201).send(records)
 })
 
+// Get all offices
+router.get('/offices', async (req, res) => {
+  const snapshot = await firebase.offices.get()
+  const records = snapshot.docs.map(doc => {
+    let office = doc.data()
+    office.id = doc.id
+    return office
+  })
+  res.status(201).send(records)
+})
+
 // Get single coach by name
 router.post('/coach', async (req, res) => {
   const { name } = req.body
@@ -141,6 +152,13 @@ router.post('/createNewCoach', async (req, res) => {
   const coach = req.body
   firebase.coaches.add({...coach})
   res.status(201).send(`Coach ${coach.name} saved`)
+})
+
+// Create Office
+router.post('/createNewOffice', async (req, res) => {
+  const office = req.body
+  firebase.offices.add({...office})
+  res.status(201).send(`office ${office.name} saved`)
 })
 
 // Edit Coach
