@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import { Textarea, Button } from 'react-materialize'
 
+import { AuthContext } from '../../connectors/auth/Auth'
 import { addNote, getNotes } from '../../services/dbQueries'
 
 const StyledNotesCard = styled.div`
@@ -15,10 +16,11 @@ const StyledNewNote = styled.div`
 
 `
 
-const NotesCard = ({ task, userLoggedIn }) => {
+const NotesCard = ({ task }) => {
   const [ newNote, setNewNote ] = useState(false)
   const [ noteText, setNoteText ] = useState('')
   const [ notesList, setNotesList ] = useState([])
+  const { userProfile } = useContext(AuthContext)
 
   useEffect(() => {
     async function fetchNotes() {
@@ -32,6 +34,14 @@ const NotesCard = ({ task, userLoggedIn }) => {
     if(newNote) return <Textarea
       label='Text'
       onChange={e => setNoteText(e.target.value)}/>
+  }
+
+  const renderButton = () => {
+    if (userProfile && userProfile.type === 'coach') return (
+      <Button onClick={handleClick}>{!newNote ? 'NEW' : 'SUBMIT'}</Button>
+    ) 
+    else return ''
+
   }
 
   const handleClick = () => {
@@ -69,7 +79,7 @@ const NotesCard = ({ task, userLoggedIn }) => {
       Registered notes:
       { renderNotes() }
       <StyledNewNote>
-        <Button onClick={handleClick}>{ !newNote ? 'NEW' : 'SUBMIT'}</Button>
+        { renderButton() }
         { renderInput() }
       </StyledNewNote>
     </StyledNotesCard>

@@ -60,6 +60,7 @@ class TaskView extends Component {
   render() {
     const { task } = this.props.location.state
     const { userLoggedIn } = this.props
+    const { userProfile } = this.context
 
     return(
       <>
@@ -78,8 +79,8 @@ class TaskView extends Component {
             </Tab>
             <Tab title="Message">
               <AddMessage
-                from={ userLoggedIn ? userLoggedIn.email : task.requester }
-                sendTo={ !userLoggedIn ? task.assigneeEmail : (task.requester === userLoggedIn.email ? task.assigneeEmail : task.requester)}
+                from={userProfile.email }
+                sendTo={userProfile.type === 'office' ? task.assigneeEmail : (task.requester === userProfile.email ? task.assigneeEmail : task.requester)}
                 sendMessage={ this.sendMessage }
                 task={ task }
                 fetchLogs={this.fetchLogs}
@@ -88,7 +89,6 @@ class TaskView extends Component {
             <Tab title="Notes">
               <NotesCard
                 task={task}
-                userLoggedIn={userLoggedIn}
               />
             </Tab>
             <Tab title="Logs">
@@ -103,3 +103,6 @@ class TaskView extends Component {
 }
 
 export default withRouter(TaskView);
+
+
+// sendTo = { !userLoggedIn ? task.assigneeEmail : (task.requester === userLoggedIn.email ? task.assigneeEmail : task.requester)}
