@@ -16,11 +16,14 @@ const Nav = (props) => {
     else return <NavItem onClick={ () => { firebaseApp.auth().signOut(); dispatch({type: 'LOGOUT'}) }}>Logout</NavItem>
   }
 
-  const renderDevPhoto = () => {
-    if(userProfile) return (
+  const renderPhoto = () => {   
+    if(userProfile && userProfile.type === 'coach') return (
       <Link className='navbar-photo' to={`/profile/${userProfile.name}`}>
         <img alt={ userProfile.name } src={ userProfile.photo } />
       </Link>
+    )
+    if (userProfile && userProfile.type === 'office') return (
+      <Link to='/'><strong>Hello, {userProfile.name}!</strong></Link> 
     )
   }
 
@@ -34,7 +37,7 @@ const Nav = (props) => {
 
   return(
     <Navbar brand={<Link to='/'><img src={logo} alt="Logo" className="logo"/><span>Coaching</span></Link>} alignLinks="right">
-      { renderDevPhoto() }
+      {renderPhoto() }
       { renderAdminLink() }
       <Link to='/calendar'>
         Calendar

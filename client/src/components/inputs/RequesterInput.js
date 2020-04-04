@@ -26,34 +26,59 @@ const StyledRadioGroup = styled.div`
 
 const RequesterInput = ({ handleSelect, requester }) => {
   const [ theRequester, setTheRequester ] = useState('')
-  useEffect(() => handleSelect({ requester: theRequester}), [theRequester, handleSelect])
+  const { coaches, userProfile } = useContext(AuthContext)
 
-  const { coaches } = useContext(AuthContext)
+  useEffect(() => {
+    if(userProfile && userProfile.type === 'office') {
+      handleSelect({ requester: userProfile.email})
+    }
+    else {
+      handleSelect({ requester: theRequester})
+    }
+  }, [theRequester, handleSelect, userProfile])
+
+
   const coachesList = coaches.map(coach => ({label: coach.name.split(' ')[0], value: coach.email}))
 
   const handleChange = (e) => {
     setTheRequester(e.target.value)
   }
 
+  const render = () => {
+    if(userProfile && userProfile.type === 'office') {
+      return (
+        <TextInput
+          value={userProfile.email}
+          label='New requester'
+          disabled
+          type='email' />
+      )
+    } else return (
+      <>
+        <TextInput
+          value={theRequester}
+          label='New requester'
+          type='email'
+          placeholder='me@easylifedc.be'
+          onChange={handleChange} />
+        <StyledCoachesList>
+          <StyledOR>OR</StyledOR>
+          <StyledRadioGroup>
+            <RadioGroup
+              value={theRequester}
+              withGap
+              onChange={handleChange}
+              options={coachesList}
+            />
+          </StyledRadioGroup>
+        </StyledCoachesList>
+      </>
+    )
+  }
+
   return(
     <StyledFrame>
-      <TextInput
-        value={theRequester}
-        label='New requester'
-        type='email'
-        placeholder='me@easylifedc.be'
-        onChange={handleChange}/>
-      <StyledCoachesList>
-      <StyledOR>OR</StyledOR>
-      <StyledRadioGroup>
-        <RadioGroup
-          value={theRequester}
-          withGap
-          onChange={handleChange}
-          options={coachesList}
-        />
-      </StyledRadioGroup>
-      </StyledCoachesList>
+      {render()}
     </StyledFrame>
   )
 }

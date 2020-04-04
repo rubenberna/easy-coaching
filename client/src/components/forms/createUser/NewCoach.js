@@ -15,6 +15,7 @@ class NewCoach extends Component {
     started: null,
     calendarColor: '#fff',
     admin: false,
+    type: 'coach',
     tooBig: false
   }
 

@@ -80,11 +80,14 @@ export const AuthProvider = ({ children }) => {
   // Setup User profile
   useEffect(() => {
     if (currentUser) {
-      let coach = coaches.find(coach => coach.email.toLowerCase() === currentUser.email.toLowerCase())
-      console.log(coach);
-      dispatch({ type: 'LOGIN', payload: coach })
+      let loginEmail = currentUser.email.toLowerCase()
+      let coach = coaches.find(coach => coach.email.toLowerCase() === loginEmail)
+      let office = offices.find(office => office.email.toLowerCase() === loginEmail)
+
+      let user = coach ? coach : office
+      dispatch({ type: 'LOGIN', payload: user })
     }
-  }, [currentUser, coaches])
+  }, [currentUser, coaches, offices])
 
   return (
     <AuthContext.Provider

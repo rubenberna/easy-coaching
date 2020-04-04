@@ -21,7 +21,8 @@ const NewOffice = ({ createOffice, loading }) => {
       let office = {
         name: name.value, 
         email: email.value.toLowerCase(), 
-        password: password.value
+        password: password.value,
+        type: 'office'
       }
       createOffice(office)
     }
