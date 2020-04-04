@@ -12,7 +12,6 @@ class EditCoach extends Component {
     name: this.props.coach.name,
     email: this.props.coach.email,
     intro: this.props.coach.intro,
-    password: this.props.coach.password,
     img: null,
     role: this.props.coach.role,
     started: this.props.coach.started,
@@ -60,7 +59,6 @@ class EditCoach extends Component {
     const { name,
       email,
       intro,
-      password,
       role,
       started,
       calendarColor
@@ -80,7 +78,6 @@ class EditCoach extends Component {
           validate
           onChange={e => this.handleChange('email', e)}
         />
-        <TextInput label="Password" value={password} onChange={e => this.handleChange('password', e)}/>
         <label>Select calendar color</label>
         <CirclePicker color={this.state.calendarColor} value={calendarColor} onChangeComplete={this.handleChangeColor}/>
         <input type="file" id="file-uploader" aria-label="File browser example" onChange={e => this.handleFileUpload(e) }/>

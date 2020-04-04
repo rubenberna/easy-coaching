@@ -4,7 +4,6 @@ import Loadable from "react-loadable"
 import { BounceLoader } from "react-spinners"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { getCoaches } from '../services/dbQueries'
 import Nav from '../components/navbar/Navbar'
 import Home from '../views/Home'
 import OngoingProjects from '../views/OngoingProjects'
@@ -31,22 +30,8 @@ const LoadableNPS = Loadable({
 });
 
 class App extends Component {
-  state = {
-    coaches: [],
-  }
-
-  componentDidMount() {
-    this.getCoachesCall()
-  }
-
-  getCoachesCall = async () => {
-    const coaches = await getCoaches()
-    this.setState({ coaches })
-  }
-
 
   render () {
-    const { user, coaches } = this.state
     return (
       <>
         <AuthProvider>
@@ -70,21 +55,18 @@ class App extends Component {
               <PrivateRoute
                 path="/task/:title"
                 component={TaskView}
-                userLoggedIn={user}
               />
               <Route
                 path="/login"
                 exact
                 component={Login}
               />
-              {/* TODO: get coaches fall from provider */}
               <PrivateRoute
-                path="/admin"
-                exact
-                component={Admin}
-                coaches={coaches}
-                getCoaches={this.getCoachesCall}
-              />
+                path="/admin">
+                <TasksProvider>
+                  <Admin/>
+                </TasksProvider>
+              </PrivateRoute>
               <PrivateRoute
                 path="/nps"
                 exact
