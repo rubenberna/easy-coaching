@@ -5,6 +5,7 @@ const sendEmail = require('../sendEmail')
 
 // Get all coaches
 router.get('/coaches', async (req, res) => {
+  
   const snapshot = await firebase.coaches.get()
   const records = snapshot.docs.map(doc => {
     let coach = doc.data()
@@ -36,17 +37,6 @@ router.post('/coach', async (req, res) => {
 // Get all tasks
 router.get('/tasks', async (req, res) => {
   const snapshot = await firebase.tasks.get()
-  const records = snapshot.docs.map(doc => {
-    let task = doc.data()
-    task.id = doc.id
-    return task
-  })
-  res.status(201).send(records)
-})
-
-// Get active tasks
-router.get('/active_tasks', async (req, res) => {
-  const snapshot = await firebase.tasks.where('complete', '==', false).get()
   const records = snapshot.docs.map(doc => {
     let task = doc.data()
     task.id = doc.id

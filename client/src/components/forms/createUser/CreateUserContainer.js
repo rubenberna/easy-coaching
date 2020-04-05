@@ -5,7 +5,7 @@ import { Button, Icon } from 'react-materialize'
 
 import { getCoaches, createNewCoach, createNewOffice } from '../../../services/dbQueries'
 import { AuthContext } from '../../../connectors/auth/Auth'
-import firebaseApp from '../../../config/firebaseConfig'
+import {firebaseApp} from '../../../config/firebaseConfig'
 import NewCoach from './NewCoach'
 import NewOffice from './NewOffice'
 

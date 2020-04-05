@@ -78,7 +78,7 @@ class NewCoach extends Component {
         validate
         onChange={e => this.handleChange('email', e)}
       />
-      <TextInput label="Password" type='password' onChange={e => this.handleChange('password', e)} />
+      <TextInput label="Password (*at least 6 characters)" type='password' onChange={e => this.handleChange('password', e)} />
       <label>Select calendar color</label>
       <CirclePicker color={this.state.calendarColor} onChangeComplete={this.handleChangeColor} />
       <input type="file" id="file-uploader" aria-label="File browser example" onChange={e => this.handleFileUpload(e)} />

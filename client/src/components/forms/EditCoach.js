@@ -3,8 +3,9 @@ import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
 import { TextInput, Textarea, Button } from 'react-materialize'
 import { CirclePicker } from 'react-color'
+import { AuthContext} from '../../connectors/auth/Auth'
 
-import { editCoach } from '../../services/dbQueries'
+import { editCoach, getCoaches } from '../../services/dbQueries'
 
 class EditCoach extends Component {
 
@@ -20,6 +21,8 @@ class EditCoach extends Component {
     photo: this.props.coach.photo,
     tooBig: false
   }
+
+  static contextType = AuthContext
 
   handleChange = (name, e) => {
     let change = {}
@@ -51,7 +54,11 @@ class EditCoach extends Component {
   handleSubmit = async () => {
     const coach = _.omit(this.state, 'tooBig')
     await editCoach(coach)
-    await this.props.getCoaches()
+    const coaches = await getCoaches()
+    this.context.dispatchCoaches({
+      type: 'SET_COACHES',
+      payload: coaches
+    })
     this.props.history.push('/')
   }
 

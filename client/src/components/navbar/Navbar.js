@@ -4,15 +4,15 @@ import { Navbar, NavItem } from 'react-materialize'
 import { AuthContext } from '../../connectors/auth/Auth'
 
 import logo from '../../assets/logo.svg'
-import firebaseApp from '../../config/firebaseConfig'
+import {firebaseApp} from '../../config/firebaseConfig'
 
 import './navbar.scss'
 
 const Nav = (props) => {
-  const { userProfile, dispatch } = useContext(AuthContext)
+  const { userProfile, dispatch, currentUser } = useContext(AuthContext)
 
   const renderOption = () => {
-    if(!userProfile) return <Link to='/login'>Login</Link>
+    if (!currentUser) return <Link to='/login'>Login</Link>
     else return <NavItem onClick={ () => { firebaseApp.auth().signOut(); dispatch({type: 'LOGOUT'}) }}>Logout</NavItem>
   }
 

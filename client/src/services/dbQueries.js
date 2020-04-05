@@ -1,26 +1,27 @@
 import axios from 'axios';
-import firebaseApp from '../config/firebaseConfig'
+import {
+  coachesGET,
+  coachesSingleGET,
+  coachesNEW,
+  coachesPUT
+} from './firebase/coaches'
 import { reassignTaskSF, changeTaskStatusSF, createTaskSF } from './sfQueries'
 
 export const getCoaches = async () => {
-  let res = await axios.get('/api/firebase/coaches')
-  return res.data
-}
+  let res = await coachesGET()
+  return res
+} // D
 
 export const getOffices = async () => {
   let res = await axios.get('/api/firebase/offices')
   return res.data
-}
+} //Y
 
 export const getTasks = async () => {
   let res = await axios.get('/api/firebase/tasks')
   return res.data
-}
+}// Y
 
-export const getActiveTasks = async () => {
-  let res = await axios.get('/api/firebase/active_tasks')
-  return res.data
-}
 
 export const addTask = async (task) => {
   if (task.client) createTaskSF(task)
@@ -28,21 +29,19 @@ export const addTask = async (task) => {
     task
   })
   return res.data
-}
+} // Y
 
 export const findCoach = async (name) => {
-  let res = await axios.post('/api/firebase/coach', {
-    name
-  })
-  return res.data
-}
+  let res = coachesSingleGET(name)
+  return res
+} // D
 
 export const findTasksPerCoach = async (name) => {
   let res = await axios.post('/api/firebase/findTasksPerCoach', {
     name
   })
   return res.data
-}
+} // Y
 
 export const changeTaskStatus = async (task) => {
   if (task.client) changeTaskStatusSF(task)
@@ -50,7 +49,7 @@ export const changeTaskStatus = async (task) => {
     task
   })
   return res.data
-}
+} //Y
 
 export const assignTask = async (task) => {
   if (task.client) reassignTaskSF(task)
@@ -58,19 +57,19 @@ export const assignTask = async (task) => {
     task
   })
   return res.data
-}
+} // Y
 
 export const deleteTask = async (task) => {
   let res = await axios.delete('/api/firebase/deleteTask', {
     data: {task}
   })
   return res.data
-}
+}// Y
 
 export const fetchLogs = async (id) => {
   let res = await axios.post('/api/firebase/fetchLogs', {id})
   return res.data
-}
+} //Y
 
 export const updateTask = async (task) => {
   let res = await axios.post('/api/firebase/updateTask', {
@@ -84,7 +83,7 @@ export const addNote = async task => {
     task
   })
   return res.data
-}
+} // Y
 
 export const getNotes = async task => {
   let res = await axios.post('/api/firebase/getNotes', {
@@ -92,32 +91,20 @@ export const getNotes = async task => {
   })
   const { notes } = res.data
   return notes
-}
+} // Y
 
 export const createNewCoach = async (coach) => {
-  const photoURL = await uploadPhoto(coach.photo)
-  coach.photo = photoURL
-  let res = await axios.post('/api/firebase/createNewCoach', coach )
-  return res.data
-}
+  let res = coachesNEW(coach)
+  return res
+} // D
 
 export const createNewOffice = async (office) => {
   let res = await axios.post('/api/firebase/createNewOffice', office)
   return res.data
-}
+} // Y
 
 export const editCoach = async (coach) => {
-  if (coach.img) {
-    coach.photo = await uploadPhoto(coach.img)
-  }
-  let res = await axios.post('/api/firebase/editCoach', coach )
-  return res.data
-}
+  let res = coachesPUT(coach)
+  return res
+} // D
 
-const uploadPhoto = async photo => {
-  const storageRef = firebaseApp.storage().ref('photos');
-  const imageRef = storageRef.child(photo.name)
-  const upload = await imageRef.put(photo)
-  const url = await upload.ref.getDownloadURL()
-  return url
-}

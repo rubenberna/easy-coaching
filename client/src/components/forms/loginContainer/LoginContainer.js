@@ -3,7 +3,7 @@ import { withRouter, Redirect } from 'react-router-dom'
 import styled from 'styled-components'
 import { RadioGroup } from 'react-materialize'
 import { AuthContext } from '../../../connectors/auth/Auth'
-import firebaseApp from '../../../config/firebaseConfig'
+import {firebaseApp} from '../../../config/firebaseConfig'
 import LoginCoach from './options/LoginCoach'
 import LoginOffice from './options/LoginOffice'
 import { PasswordModal } from '../../../components/modal/ResetPasswordModal'
@@ -48,6 +48,14 @@ const LoginContainer = ({ history }) => {
   const [showModal, setShowModal] = useState(false);
   const [activeType, setActiveType] = useState('coach')
 
+  // const handleLogin = useCallback(
+  //   async user => {
+  //     const { email, password } = user;
+  //     firebaseApp.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+  //       .then(() => firebaseApp.auth().signInWithEmailAndPassword(email.toLowerCase(), password))
+  //       .catch( error => alert(error))
+  //   }, [history]
+  // );
   const handleLogin = useCallback(
     async user => {
       const { email, password } = user;

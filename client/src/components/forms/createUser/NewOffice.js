@@ -37,7 +37,7 @@ const NewOffice = ({ createOffice, loading }) => {
       <h3>New Coach form</h3>
       <TextInput label="Name" {...name}/>
       <TextInput label="Email" type='email' {...email}/>
-      <TextInput label="Password" type='password' {...password}/>
+      <TextInput label="Password Password (*at least 6 characters)" type='password' {...password}/>
       <Button onClick={handleClick} >Create</Button>
       {renderError()}
       {loading && <Loader />}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useReducer } from "react";
-import firebaseApp from "../../config/firebaseConfig";
+import {firebaseApp} from "../../config/firebaseConfig";
 import { getCoaches, getOffices } from '../../services/dbQueries'
 
 function userProfileReducer(state, action) {
@@ -89,6 +89,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, [currentUser, coaches, offices])
 
+  console.log(currentUser)
   return (
     <AuthContext.Provider
       value={{
