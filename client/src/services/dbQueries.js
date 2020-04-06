@@ -4,15 +4,15 @@ import {
   coachesSingleGET,
   coachesNEW,
   coachesPUT
-} from './firebase/coaches';
+} from './database/coaches';
 import {
   logsGET,
   logsNEW
-} from './firebase/logs'
+} from './database/logs'
 import {
   officesGET,
   officesNEW
-} from './firebase/offices'
+} from './database/offices'
 
 import {
   tasksGET,
@@ -20,7 +20,7 @@ import {
   tasksPerCoachGET,
   tasksPUT,
   tasksDEL
-} from './firebase/tasks'
+} from './database/tasks'
 import { reassignTaskSF, changeTaskStatusSF, createTaskSF } from './sfQueries'
 
 
