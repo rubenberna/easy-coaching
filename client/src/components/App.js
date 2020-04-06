@@ -53,9 +53,11 @@ class App extends Component {
                 component={CoachProfile}
               />
               <PrivateRoute
-                path="/task/:title"
-                component={TaskView}
-              />
+                path="/task/:title">
+                <TasksProvider>
+                  <TaskView />
+                </TasksProvider>
+              </PrivateRoute>
               <Route
                 path="/login"
                 exact

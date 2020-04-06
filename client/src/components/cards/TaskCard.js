@@ -2,24 +2,26 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import moment from 'moment'
 
-import { deleteTask } from '../../services/dbQueries'
+import { TasksContext } from '../../connectors/tasks'
+import { deleteTask, changeTaskStatus } from '../../services/dbQueries'
 import ChangeStatus from '../dropdowns/ChangeStatusDropdown'
 import DeleteModal from '../modal/DeleteModal'
 
 class TaskCard extends Component {
-
+  
+  static contextType = TasksContext
   renderChangeStatus = () => {
-    const { userLoggedIn, task, changeStatus } = this.props
-    if (userLoggedIn) {
-      if (userLoggedIn.name === task.assignee || userLoggedIn.admin) return (
-        <ChangeStatus task={task} changeStatus={changeStatus}/>
-      )
+    const { task, userProfile } = this.props
+    if (userProfile) {
+      if (userProfile.name === task.assignee || userProfile.admin) return (
+        <ChangeStatus task={task} changeStatus={this.changeStatus}/>
+        )
+      }
     }
-  }
-
+    
   renderCancellationReason = () => {
     const { task } = this.props
-    if(this.props.task.cxlReason) return (
+    if(task.cxlReason) return (
       <h6>
         <span className='task-spec'>Cancellation reason: </span><
         span>{task.cxlReason}</span>
@@ -30,18 +32,24 @@ class TaskCard extends Component {
   handleDelete = async () => {
     const { task, history } = this.props
     await deleteTask(task)
+    this.props.fetchTasks()
     history.push('/ongoing')
   }
 
+  changeStatus = async (task) => {
+    await changeTaskStatus(task)
+    this.props.fetchTasks()
+    this.props.history.push('/ongoing')
+  }
+
   renderDelete = () => {
-    const { userLoggedIn } = this.props
-    if(userLoggedIn) {
-      if (userLoggedIn.admin) return (
+    const { userProfile } = this.props
+    if(userProfile) {
+      if (userProfile.admin) return (
         <DeleteModal handleDelete={this.handleDelete}/>
       )
     }
   }
-
 
   render() {
     const { task } = this.props
@@ -50,7 +58,6 @@ class TaskCard extends Component {
         <h4>{task.title}</h4>
         <hr/>
         <div className='task-card'>
-
           <div className='task-details'>
             <h6><span className='task-spec'>Description: </span>{task.description === 'error' ? 'none' : task.description}</h6>
             <h6><span className='task-spec'>Requested by: </span>{ task.requester }</h6>

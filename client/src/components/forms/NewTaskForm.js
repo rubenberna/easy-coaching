@@ -60,7 +60,8 @@ class NewTaskForm extends Component {
     hkUntil: undefined,
     hkWorkingDays: [],
     status: 'not started',
-    reqDate: new Date(),
+    notes: [],
+    reqDate: moment().format(),
     requester: undefined,
     ready: false,
     redirect: false,
@@ -81,6 +82,7 @@ class NewTaskForm extends Component {
   }
 
   handleStartTime = async e => {
+    
     const hours = e.getHours()
     const mins = e.getMinutes()
     const start = this.state.date
@@ -116,13 +118,15 @@ class NewTaskForm extends Component {
   }
 
   createTask = async () => {
-    const { assignee, client, houseKeeper } = this.state
+    const { assignee, client, houseKeeper, start, end } = this.state
     const task = _.omit(this.state, ['redirect', 'ready', 'date', 'atLeastOne'])
     const coach = this.context.coaches.find(coach => coach.name === assignee)
     task.coach = coach
     task.clientName = client ? client.Name : 'none'
     task.houseKeeperName = houseKeeper ?  houseKeeper.Name : 'none'
     task.office = client ? client.Account.Name : 'none'
+    task.start = moment(start).format()
+    task.end = moment(end).format()
 
     const res = await addTask(task)
     console.log(res);

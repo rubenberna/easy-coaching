@@ -89,7 +89,6 @@ export const AuthProvider = ({ children }) => {
     }
   }, [currentUser, coaches, offices])
 
-  console.log(currentUser)
   return (
     <AuthContext.Provider
       value={{

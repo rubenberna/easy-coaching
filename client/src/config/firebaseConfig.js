@@ -1,15 +1,5 @@
 import firebase from 'firebase'
 import "firebase/auth"
-// import admin from "firebase-admin"
-
-// admin.initializeApp({
-//   credential: admin.credential.cert({
-//     "private_key": process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
-//     "client_email": process.env.FIREBASE_CLIENT_EMAIL,
-//     "project_id": process.env.FIREBASE_PROJECT_ID
-//   }),
-//   databaseURL: "https://coaching-cb8ef.firebaseio.com"
-// });
 
 const firebaseApp = firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIRESTORE,
@@ -37,5 +27,4 @@ export {
   tasks,
   logs,
   storageRef
-  // admin
 }

@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 import { Button, Icon } from 'react-materialize'
 
-import { getCoaches, createNewCoach, createNewOffice } from '../../../services/dbQueries'
+import { getCoaches, createNewCoach, createNewOffice, getOffices } from '../../../services/dbQueries'
 import { AuthContext } from '../../../connectors/auth/Auth'
 import {firebaseApp} from '../../../config/firebaseConfig'
 import NewCoach from './NewCoach'
@@ -26,7 +26,7 @@ const StyledBtn = styled(Button)`
 
 const CreateUserContainer = (props) => {
   const [userType, setUserType] = useState('')
-  const { dispatch, dispatchCoaches } = useContext(AuthContext)
+  const { dispatch, dispatchCoaches, dispatchOffices } = useContext(AuthContext)
   const [loading, setLoading] = useState(false)
 
   const renderForm = () => {
@@ -61,6 +61,11 @@ const CreateUserContainer = (props) => {
     setLoading(true)
     await createNewOffice(office)
     await createAuth(office)
+    const offices = await getOffices()
+    dispatchOffices({
+      type: 'SET_OFFICES',
+      payload: offices
+    })
     setLoading(false)
     props.history.push('/')
   }

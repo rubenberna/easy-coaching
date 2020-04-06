@@ -30,7 +30,8 @@ export const TasksProvider = ({ children }) => {
   return(
     <TasksContext.Provider
       value={{
-        tasks
+        tasks,
+        dispatch
       }}
     >
       {children}

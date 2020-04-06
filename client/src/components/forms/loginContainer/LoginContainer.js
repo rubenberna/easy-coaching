@@ -19,6 +19,9 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (max-width : 992px) {
+    margin-top: 70px;
+  }
 `
 
 const Container = styled.div`

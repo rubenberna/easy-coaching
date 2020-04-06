@@ -1,108 +1,110 @@
-import React, { Component } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import { Tabs, Tab } from 'react-materialize'
+
 import { AuthContext } from '../connectors/auth/Auth'
+import { TasksContext } from '../connectors/tasks'
 import RadioButtons from '../components/forms/RadioButtons'
 import AddMessage from '../components/forms/AddMessage'
-import { changeTaskStatus, assignTask, fetchLogs } from '../services/dbQueries'
+import { assignTask, fetchLogs, newLog, getTasks } from '../services/dbQueries'
 import { sendMsg } from '../services/sendMsg'
 import TaskCard from '../components/cards/TaskCard'
 import Logs from '../components/tables/Logs'
 import ContactsCard from '../components/cards/ContactsCard'
 import NotesCard from '../components/cards/NotesCard'
 
-class TaskView extends Component {
-  state = {
-    logs: [],
+const TaskView = ({ history, location }) => {
+  const [logs, setLogs] = useState([])
+  const { userProfile, coaches } = useContext(AuthContext)
+  const { dispatch } = useContext(TasksContext)
+  const { task } = location.state
+
+  const getLogs = async () => {
+    console.log('getting');
+    const logs = await fetchLogs(task.id)
+    setLogs(logs)
   }
 
-  static contextType = AuthContext
+  useEffect(() => {
+    getLogs()
+  }, [])
 
-  renderAssignSelection = () => {
-    const { userProfile } = this.context
+  const fetchTasks = async () => {
+    const tasks = await getTasks()
+    dispatch({ 
+      type: 'SET_TASKS', 
+      payload: tasks 
+    })
+  }
+
+  const renderAssignSelection = () => {
     if (userProfile && userProfile.admin) return (
-      <RadioButtons assign={this.assignTask} />
+      <RadioButtons assign={giveTask} />
     )
   }
 
-  changeStatus = async (task) => {
-    let res = await changeTaskStatus(task)
-    if (res === 'success') this.props.history.push('/ongoing')
+  const viewCoachProfile = (coach) => {
+    if (coach) history.push(`/profile/${coach}`)
   }
 
-  viewCoachProfile = (coach) => {
-    if (coach) this.props.history.push(`/profile/${coach}`)
-  }
-
-  assignTask = async (coachName) => {
-    const { task } = this.props.location.state
-    const coach = this.context.coaches.find(coach => coach.name === coachName)
+  const giveTask = async (coachName) => {
+    const coach = coaches.find(coach => coach.name === coachName)
     task.assignee = coach.name
     task.assigneeEmail = coach.email
     await assignTask(task)
-    this.props.history.push('/ongoing')
+    fetchTasks()
+    history.push('/ongoing')
   }
 
-  sendMessage = (msg) => {
+  const sendMessage = (msg) => {
     sendMsg(msg)
+    newLog(msg)
   }
 
-  fetchLogs = async () => {
-    const { task } = this.props.location.state
-    const logs = await fetchLogs(task.id)
-    this.setState({logs: logs})
-  }
-
-  componentDidMount() {
-    this.fetchLogs()
-  }
-
-  render() {
-    const { task } = this.props.location.state
-    const { userLoggedIn } = this.props
-    const { userProfile } = this.context
-
-    return(
-      <>
-        <div className='task-view container'>
-          <Tabs className="tab-demo z-depth-1">
-            <Tab title="Details">
-              <TaskCard
-                task={task}
-                viewCoachProfile={this.viewCoachProfile}
-                userLoggedIn={userLoggedIn}
-                changeStatus={this.changeStatus}
-              />
-            </Tab>
-            <Tab title="Contacts">
-              <ContactsCard task={task}/>
-            </Tab>
-            <Tab title="Message">
-              <AddMessage
-                from={userProfile.email }
-                sendTo={userProfile.type === 'office' ? task.assigneeEmail : (task.requester === userProfile.email ? task.assigneeEmail : task.requester)}
-                sendMessage={ this.sendMessage }
-                task={ task }
-                fetchLogs={this.fetchLogs}
-              />
-            </Tab>
-            <Tab title="Notes">
-              <NotesCard
-                task={task}
-              />
-            </Tab>
-            <Tab title="Logs">
-              <Logs logs={this.state.logs}/>
-            </Tab>
-          </Tabs>
-        </div>
-        { this.renderAssignSelection() }
-      </>
+  const renderMessageTab = () => {
+    if (userProfile) return (
+      <AddMessage
+        from={userProfile.email}
+        sendTo={userProfile.type === 'office' ? task.assigneeEmail : (task.requester === userProfile.email ? task.assigneeEmail : task.requester)}
+        sendMessage={sendMessage}
+        task={task}
+        fetchLogs={fetchLogs}
+      />
     )
   }
+
+  return(
+    <>
+      <div className='task-view container'>
+        <Tabs className="tab-demo z-depth-1">
+          <Tab title="Details">
+            <TaskCard
+              task={task}
+              userProfile={userProfile}
+              viewCoachProfile={viewCoachProfile}
+              fetchTasks={fetchTasks}
+            />
+          </Tab>
+          <Tab title="Contacts">
+            <ContactsCard task={task}/>
+          </Tab>
+          <Tab title="Message">
+            { renderMessageTab() }
+          </Tab>
+          <Tab title="Notes">
+            <NotesCard
+              task={task}
+              fetchTasks={fetchTasks}
+            />
+          </Tab>
+          <Tab title="Logs">
+            <Logs logs={logs}/>
+          </Tab>
+        </Tabs>
+      </div>
+      { renderAssignSelection() }
+    </>
+  )
 }
 
 export default withRouter(TaskView);
-
-
-// sendTo = { !userLoggedIn ? task.assigneeEmail : (task.requester === userLoggedIn.email ? task.assigneeEmail : task.requester)}

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Textarea, Button } from 'react-materialize'
 
 import { AuthContext } from '../../connectors/auth/Auth'
-import { addNote, getNotes } from '../../services/dbQueries'
+import { updateTask } from '../../services/dbQueries'
 
 const StyledNotesCard = styled.div`
   height: 100%;
@@ -19,16 +19,14 @@ const StyledNewNote = styled.div`
 const NotesCard = ({ task }) => {
   const [ newNote, setNewNote ] = useState(false)
   const [ noteText, setNoteText ] = useState('')
-  const [ notesList, setNotesList ] = useState([])
+  const [ notesList, setNotesList ] = useState(task.notes)
   const { userProfile } = useContext(AuthContext)
 
   useEffect(() => {
-    async function fetchNotes() {
-      const notes = await getNotes(task)
-      setNotesList(notes)
-    }
-    fetchNotes()
-  }, [task])
+    console.log('setting notes');
+    task.notes = notesList    
+    updateTask(task)
+  },[notesList])
 
   const renderInput = () => {
     if(newNote) return <Textarea
@@ -41,7 +39,6 @@ const NotesCard = ({ task }) => {
       <Button onClick={handleClick}>{!newNote ? 'NEW' : 'SUBMIT'}</Button>
     ) 
     else return ''
-
   }
 
   const handleClick = () => {
@@ -61,12 +58,12 @@ const NotesCard = ({ task }) => {
     }
     else setNotesList([noteText])
     setNewNote(false)
-    task.note = noteText
-    addNote(task)
+    task.notes = notesList
+    setTimeout(() => updateTask(task), 1000)
   }
 
   const renderNotes = () => {
-    if (notesList) return (
+    if (notesList.length) return (
       <ul className='collection'>
         {notesList.map( (note, i) => <li className='collection-item' key={i}>{note}</li>)}
       </ul>

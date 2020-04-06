@@ -5,7 +5,7 @@ const taskCreated = (task) => {
 
   const clientDetails = () => {
     if (task.client) return (
-      `<p>Client details:</p>
+      `<h4>Client details:</h4>
       <hr />
       <p><span><b>Name:</b></span> ${task.client.Name}</p>
       <p><span><b>Email:</b></span> <a href="mailto:${task.client.Email}" target="_blank">${task.client.Email}</a></p>
@@ -22,7 +22,7 @@ const taskCreated = (task) => {
       let workingDays = task.hkWorkingDays.filter(d => d.value === true)
 
       return (
-      `<p>HouseKeeper details:</p>
+      `<h4>HouseKeeper details:</h4>
       <hr />
       <p><span><b>Name:</b></span> ${task.houseKeeper.Name}</p>
       <p><span><b>Email:</b></span> <a href="mailto:${task.houseKeeper.Email}" target="_blank">${task.houseKeeper.Email}</a></p>
@@ -110,23 +110,6 @@ const taskChanged = (task) => {
   triggerEmail(message)
 }
 
-const poke = (task) => {
-
-  const message = {
-    from: '"Coaching team" <coaching@easylifedc.be>',
-    to: `<${task.assigneeEmail}>`,
-    subject: "You've been poked!",
-    html: `<p>Hi ${task.assignee},</p>
-      <p>The requester is looking for an update on the task:</p>
-      <h4>${task.title}</h4>
-      <p>Could you please have a look and provide an update?</p>
-      <p>Thanks!</p>
-      <p>Coaching team</p>
-    `
-  }
-  triggerEmail(message)
-}
-
 const sendMsg = (msg) => {
 
   let attach
@@ -160,6 +143,5 @@ module.exports = {
   taskCreated,
   taskAssigned,
   taskChanged,
-  poke,
   sendMsg
 }
