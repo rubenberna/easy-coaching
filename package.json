@@ -36,7 +36,7 @@
     "express-fileupload": "^1.1.6",
     "express-session": "^1.17.0",
     "firebase": "^7.10.0",
-    "firebase-admin": "^8.9.2",
+    "firebase-admin": "^11.4.1",
     "jimp": "^0.9.3",
     "jsforce": "^1.9.3",
     "moment": "^2.24.0",
